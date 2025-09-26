@@ -1,5 +1,5 @@
 ---
-title: Before we Start
+title: Перед тим як почати
 teaching: 25
 exercises: 15
 source: Rmd
@@ -23,7 +23,7 @@ source("data/download_data.R")
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- Install latest version of R.
+- Встановити останню версію R.
 - Install latest version of RStudio.
 - Navigate the RStudio GUI.
 - Install additional packages using the packages tab.
