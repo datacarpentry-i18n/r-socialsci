@@ -12,9 +12,7 @@ source("data/download_data.R")
 ::: instructor
 
 - Основна мета цього епізоду - допомогти слухачам комфортно почуватися під час користування інтерфейсом RStudio.
-- Повільно перейдіть у розділ «Налаштування». Make sure everyone is following
-  along (remind learners to use the stickies). Plan with the helpers at this
-  point to go around the room, and be available to help. It's important to make
+- Повільно перейдіть у розділ «Налаштування». Переконайтеся, що всі стежать за вами (нагадайте  учням використовувати наліпки). На цьому етапі сплануйте з помічниками ходити по кімнаті й будьте готові допомогти. It's important to make
   sure that learners are in the correct working directory, and that they create
   a `data` (all lowercase) subfolder.
 
@@ -24,42 +22,33 @@ source("data/download_data.R")
 
 - Встановити останню версію R.
 - Встановити останню версію RStudio.
-- Navigate the RStudio GUI.
-- Install additional packages using the packages tab.
-- Install additional packages using R code.
+- Ознайомитися з інтерфейсом RStudio.
+- Встановити додаткові пакети за допомогою вкладки пакети.
+- Встановити додаткові пакети за допомогою R коду.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- How to find your way around RStudio?
-- How to interact with R?
-- How to manage your environment?
-- How to install packages?
+- Як орієнтуватися в RStudio?
+- Як взаємодіяти з R?
+- Як керувати робочим середовищем?
+- Як встановити пакети?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## What is R? What is RStudio?
+## Що таке R? Що таке RStudio?
 
-The term "`R`" is used to refer to both the programming language and the
-software that interprets the scripts written using it.
+Термін «R» використовується як для позначення мови програмування, так і для програмного забезпечення, яке виконує скрипти, написані цією мовою.
 
-[RStudio](https://rstudio.com) is currently a very popular way to not only write
-your R scripts but also to interact with the R software. To function correctly,
-RStudio needs R and therefore both need to be installed on your computer.
+[RStudio] (https://rstudio.com) нині є дуже популярним способом не тільки писати ваші скрипти на R, але й взаємодіяти з програмним забезпеченням R. Для правильної роботи RStudio потребує R і тому обидва необхідно встановити на ваш комп'ютер.
 
-To make it easier to interact with R, we will use RStudio. RStudio is the most
-popular IDE (Integrated Development Environment) for R. An IDE is a piece of
-software that provides
-tools to make programming easier.
+Щоб полегшити роботу з R, ми будемо використовувати RStudio. RStudio є найпопулярнішим IDE (інтегроване середовище розробки) для R. IDE - це частина програмного забезпечення, яка надає інструменти
+для полегшення програмування.
 
-You can also use the R Presentations feature to present your work in an HTML5
-presentation mixing Markdown and R code. You can display these within R Studio
-or your browser. There are many options for customising your presentation slides,
-including an option for showing LaTeX equations. This can help you collaborate
-with others and also has an application in teaching and classroom use.
+Також ви можете використовувати функцію R Presentations, щоб представляти свою роботу у вигляді презентації HTML5, поєднуючи Markdown і код на R. Ви можете переглядати їх безпосередньо в R Studio або у браузері. Є багато варіантів налаштування слайдів презентації, зокрема можливість зображати рівняння у форматі LaTeX. Це може допомогти вам співпрацювати з іншими, а також застосовувати для викладання та використання в класі.
 
-## Why learn R?
+## Навіщо вивчати R?
 
 ### R does not involve lots of pointing and clicking, and that's a good thing
 
