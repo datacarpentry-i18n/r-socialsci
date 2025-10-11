@@ -12,7 +12,7 @@ source("data/download_data.R")
 ::: instructor
 
 - Основна мета цього епізоду - допомогти слухачам комфортно почуватися під час користування інтерфейсом RStudio.
-- Go very slowly in the "Getting set up" section. Make sure everyone is following
+- Повільно перейдіть у розділ «Налаштування». Make sure everyone is following
   along (remind learners to use the stickies). Plan with the helpers at this
   point to go around the room, and be available to help. It's important to make
   sure that learners are in the correct working directory, and that they create
