@@ -251,8 +251,8 @@ class(interviews)
 
 У підсумку:
 
-- `str (інтерв'ю) `- структура об'єкта та інформація про клас,
-  довжина та зміст кожної колонки
+- `str(interviews)` - структура об'єкта та інформація про клас,
+  довжину та зміст кожної колонки
 - `summary(interviews)` - summary statistics for each column
 - `glimpse(interviews)` - returns the number of columns and rows of the tibble,
   the names and class of each column, and previews as many values will fit on the
