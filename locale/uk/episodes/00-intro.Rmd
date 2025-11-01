@@ -48,23 +48,15 @@ source("data/download_data.R")
 
 ## Навіщо вивчати R?
 
-### R does not involve lots of pointing and clicking, and that's a good thing
+### У R не потрібно багато клацати мишкою — і це добре
 
-The learning curve might be steeper than with other software but with R, the
-results of your analysis do not rely on remembering a succession of pointing
-and clicking, but instead on a series of written commands, and that's a good
-thing! So, if you want to redo your analysis because you collected more data,
-you don't have to remember which button you clicked in which order to obtain
-your results; you just have to run your script again.
+Крива навчання може бути крутішою, ніж в інших програм, але в R результати аналізу залежать не від того, чи ви запам’ятали послідовність клацань мишкою, а від написаних команд — і це добре! Тому, якщо ви хочете повторити аналіз після того, як зібрали більше даних, вам не потрібно згадувати, у якому порядку ви натискали кнопки, щоб отримати результат — достатньо просто знову запустити свій скрипт.
 
-Working with scripts makes the steps you used in your analysis clear, and the
-code you write can be inspected by someone else who can give you feedback and
-spot mistakes.
+Робота зі скриптами робить кроки вашого аналізу зрозумілими, а написаний вами код може переглянути інша людина, щоб дати відгук і помітити помилки.
 
-Working with scripts forces you to have a deeper understanding of what you are
-doing, and facilitates your learning and comprehension of the methods you use.
+Робота зі скриптами змушує вас глибше розуміти те, що ви робите, і допомагає краще вивчати та усвідомлювати методи, які ви використовуєте.
 
-### R code is great for reproducibility
+### Код R чудовий для відтворюваності
 
 Reproducibility is when someone else (including your future self) can obtain the
 same results from the same dataset when using the same analysis.
