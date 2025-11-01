@@ -1,5 +1,5 @@
 ---
-title: Вступ до R
+title: Введення до R
 teaching: 50
 exercises: 30
 source: Rmd
