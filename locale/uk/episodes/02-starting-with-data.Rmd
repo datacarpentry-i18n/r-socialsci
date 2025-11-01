@@ -144,119 +144,115 @@ knitr: :include_graphics (» fig/here_horst.png «)
 Перш ніж ми зможемо використовувати функції `read_csv () `і `here ()`, нам потрібно завантажити пакунки
 tidyverse і here.
 
-Also, if you recall, the missing data is encoded as "NULL" in the dataset.
-We'll tell it to the function, so R will automatically convert all the "NULL"
-entries in the dataset into `NA`.
+Крім того, якщо ви пам'ятаєте, відсутні дані кодуються як «NULL» у наборі даних.
+Ми повідомимо це функції, тому R автоматично перетворить усі записи «NULL»
+у наборі даних у `NA`.
 
 ```{r, eval=TRUE, message=FALSE, purl=FALSE}
-library(tidyverse)
-library(here)
+library (tidyverse)
+library (here)
 
 interviews <- read_csv(
   here("data", "SAFI_clean.csv"), 
   na = "NULL")
 ```
 
-In the above code, we notice the `here()` function takes folder and file names
-as inputs (e.g., `"data"`, `"SAFI_clean.csv"`), each enclosed in quotations
-(`""`) and separated by a comma. The `here()` will accept as many names as are
-necessary to navigate to a particular file
-(e.g., `here("analysis", "data", "surveys", "clean", "SAFI_clean.csv)`).
+У наведеному вище коді ми помічаємо, що функція `here () `приймає імена тек і файлів
+як вхідні дані (наприклад, `"data"`,`» SAFI_clean.csv «`), кожна з яких укладена в лапки
+(`""`) і розділена комою. Значок `here () `прийме стільки імен, скільки
+необхідно для переходу до певного файлу
+(наприклад, `here («analysis», «data», «survey», «clean», "SAFI_clean.csv)`).
 
-The `here()` function can accept the folder and file names in an alternate format,
-using a slash ("/") rather than commas to separate the names. The two methods are
-equivalent, so that `here("data", "SAFI_clean.csv")` and
-`here("data/SAFI_clean.csv")` produce the same result. (The slash is used on all
-operating systems; backslashes are not used.)
+Функція `here () `може приймати імена тек і файлів в альтернативному форматі,
+, використовуючи риску («/») замість коми для розділення імен. Ці два методи еквівалентні
+, так що `here («data», "SAFI_clean.csv «) `і
+`here (» data/SAFI_clean.csv «)` дають однаковий результат. (Слеш використовується у всіх операційних системах
+; зворотні риски не використовуються.)
 
-If you were to type in the code above, it is likely that the `read.csv()`
-function would appear in the automatically populated list of functions. This
-function is different from the `read_csv()` function, as it is included in the
-"base" packages that come pre-installed with R. Overall, `read.csv()` behaves
-similar to `read_csv()`, with a few notable differences. First, `read.csv()`
-coerces column names with spaces and/or special characters to different names
-(e.g. `interview date` becomes `interview.date`). Second, `read.csv()`
-stores data as a `data.frame`, where `read_csv()` stores data as a different kind of data frame called a `tibble`.
-We prefer tibbles because they have nice printing properties among other
-desirable qualities. Read more about tibbles
-[here](https://tibble.tidyverse.org/).
+Якщо ви вводите код вище, ймовірно, що функція `read.csv () `
+з'явиться в автоматично заповненому списку функцій. Ця функція
+відрізняється від функції `read_csv () `, оскільки вона включена в пакунки
+«base», які поставляються з попередньо встановленим R. Загалом, `read.csv ()` поводиться
+подібно до `read_csv () `, з деякими помітними відмінностями. По-перше, `read.csv () `
+примушує назви стовпців з пробілами та/або спеціальними символами до різних імен
+(наприклад, \`\`дата інтерв'ю`стає`interview.date`). По-друге, `read.csv () `зберігає дані у вигляді`data.frame`, де `read_csv ()`зберігає дані як інший тип кадру даних, який називається`tibble\`.
+Ми надаємо перевагу сучасним фрейм даних у пакеті tidyverse мови програмування R, оскільки вони мають гарні друкарські властивості серед інших
+бажаних якостей. Детальніше про сучасний фрейм даних у пакеті tidyverse мови програмування R
+[тут] (https://tibble.tidyverse.org/).
 
-The second statement in the code above creates a data frame but doesn't output
-any data because, as you might recall, assignments (`<-`) don't display
-anything. (Note, however, that `read_csv` may show informational
-text about the data frame that is created.) If we want to check that our data
-has been loaded, we can see the contents of the data frame by typing its name:
-`interviews` in the console.
+Другий оператор у наведеному вище коді створює кадр даних, але не виводить
+жодних даних, оскільки, як ви пам'ятаєте, призначення (`<-`) нічого не відображають
+. (Однак зауважте, що `read_csv` може показувати інформаційний текст
+про створений кадр даних.) Якщо ми хочемо перевірити, чи завантажені наші дані
+, ми можемо побачити вміст кадру даних, ввівши його назву:
+`інтерв'ю` в консолі.
 
 ```{r, results="hold", purl=FALSE}
 interviews
 ## Try also
-## view(interviews)
-## head(interviews)
+## view (interviews)
+## head (interviews) (інтерв'ю)
 ```
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
-## Note
+## Примітка
 
-`read_csv()` assumes that fields are delimited by commas. However, in several
-countries, the comma is used as a decimal separator and the semicolon (;) is
-used as a field delimiter. If you want to read in this type of files in R,
-you can use the `read_csv2` function. It behaves exactly like `read_csv` but
-uses different parameters for the decimal and the field separators. If you are
-working with another format, they can be both specified by the user. Check out
-the help for `read_csv()` by typing `?read_csv` to learn more. There is also
-the `read_tsv()` for tab-separated data files, and `read_delim()` allows you
-to specify more details about the structure of your file.
+`read_csv ()` передбачає, що поля розділені комами. Однак у кількох країнах
+кома використовується як десятковий роздільник, а крапка з комою (;) -
+використовується як роздільник полів. Якщо ви хочете читати цей тип файлів у R,
+, ви можете використовувати функцію `read_csv2`. Він поводиться точно так само, як `read_csv`, але
+використовує різні параметри для десяткових і розділювачів полів. Якщо ви
+працюєте з іншим форматом, обидва вони можуть бути вказані користувачем. Перегляньте
+довідку для `read_csv () `, ввівши`? читайте csv`, щоб дізнатися більше. Існує також
+`read_tsv () `для файлів даних, розділених табуляціями, а `read_delim ()` дозволяє
+вказати більше деталей про структуру вашого файлу.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-Note that `read_csv()` actually loads the data as a tibble.
-A tibble is an extension of `R` data frames used by the **`tidyverse`**. When
-the data is read using `read_csv()`, it is stored in an object of class
-`tbl_df`, `tbl`,  and `data.frame`. You can see the class of an object with
+Зверніть увагу, що `read_csv () `фактично завантажує дані як сучасний дата фрейм.
+Tibble — це розширення кадрів даних `R`, що використовуються **`tidyverse`**. Коли
+дані читаються за допомогою `read_csv () `, вони зберігаються в об'єкті класу
+`tbl_df`, `tbl` і `data.frame`. Ви можете побачити клас об'єкта за допомогою
 
 ```{r, results="hold", purl=FALSE}
 class(interviews)
 ```
 
-As a `tibble`, the type of data included in each column is listed in an
-abbreviated fashion below the column names. For instance, here `key_ID` is a
-column of floating point numbers (abbreviated `<dbl>` for the word 'double'),
-`village` is a column of characters (`<chr>`) and the `interview_date` is a
-column in the "date and time" format (`<dttm>`).
+Як `tibble` тип даних, включених у кожен стовпець, перелічено скороченим
+під назвами стовпців. <dttm>, наприклад, тут `Key_ID` - це стовпець
+з числами з комою (скорочено `<dbl>` для слова 'double'),
+`селище` - стовпець символів (`<chr>`), а `interview_date` - це колонка
+у форматі «дата та час» (\`\` \`).
 
-## Inspecting data frames
+## Перевірка двовимірної  табличної структури даних (дата фрейму)
 
-When calling a `tbl_df` object (like `interviews` here), there is already a lot
-of information about our data frame being displayed such as the number of rows,
-the number of columns, the names of the columns, and as we just saw the class of
-data stored in each column. However, there are functions to extract this
-information from data frames.  Here is a non-exhaustive list of some of these
-functions. Let's try them out!
+Під час виклику об'єкта `tbl_df` (наприклад, `interview` тут), вже є багато інформації
+про наш дата фрейм, що має, наприклад кількість рядків,
+кількість стовпців, назви стовпців, а також як ми щойно бачили клас даних
+, що зберігаються в кожному стовпці. Однак існують функції для вилучення цієї інформації
+з двовимірної табличної структури даних.  Ось невичерпний перелік деяких з цих функцій. Випробуймо їх.
 
-Size:
+Розмір:
 
-- `dim(interviews)` - returns a vector with the number of rows as the first
-  element, and the number of columns as the second element (the **dim**ensions of
-  the object)
-- `nrow(interviews)` - returns the number of rows
-- `ncol(interviews)` - returns the number of columns
+- `dim(interviews) `- повертає вектор з кількістю рядків як перший елемент, а кількість стовпців як другий елемент (**dim** межами об'єкта)
+- `nrow(interviews) `- повертає кількість рядків
+- `ncol(інтерв'ю) `- повертає кількість стовпців
 
-Content:
+Зміст:
 
-- `head(interviews)` - shows the first 6 rows
-- `tail(interviews)` - shows the last 6 rows
+- `head (інтерв'ю) `- показує перші 6 рядів
+- `tail (інтерв'ю) `- показує останні 6 рядків
 
-Names:
+Імена:
 
-- `names(interviews)` - returns the column names (synonym of `colnames()` for
-  `data.frame` objects)
+- `names(interviews) `- повертає імена стовпців (синонім `colnames ()` для об'єктів
+  `data.frame`)
 
-Summary:
+У підсумку:
 
-- `str(interviews)` - structure of the object and information about the class,
-  length and content of each column
+- `str (інтерв'ю) `- структура об'єкта та інформація про клас,
+  довжина та зміст кожної колонки
 - `summary(interviews)` - summary statistics for each column
 - `glimpse(interviews)` - returns the number of columns and rows of the tibble,
   the names and class of each column, and previews as many values will fit on the
