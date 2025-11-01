@@ -13,7 +13,7 @@ source("data/download_data.R")
 
 - Основна мета - познайомити користувачів з різними об'єктами в R, від атомних типів
   до створення власних об'єктів.
-- Хоча цей розділ є базовим, будьте обережні, щоб не «загрузнути в деталях», адже різноманіття типів і операцій може бути надто складним для новачків — особливо до того, як вони зрозуміють, як усе це вписується у їх власний «робочий процес».
+- Хоча цей розділ є базовим, будьте обережні, щоб не "загрузнути в деталях", адже різноманіття типів і операцій може бути надто складним для новачків — особливо до того, як вони зрозуміють, як усе це вписується у їх власний "робочий процес".
 
 ::::::::::::
 
@@ -45,16 +45,16 @@ source("data/download_data.R")
 
 ## Створення об'єктів в R
 
-Ви можете отримати вихід з R, просто ввівши математику в консолі:
+Ви можете використовувати R для простих математичних обчислень, друкуючи формули у консолі:
 
 ```{r, purl=FALSE}
 3 + 5
 12 / 7
 ```
 
-Все, що існує в `R` - це об'єкти: від простих чисельних значень до рядків, до складніших об'єктів, таких як вектори, матриці та списки. Навіть вирази й функції є об'єктами в `R`.
+Все, що існує в `R` - це об'єкти: від простих числових значень та рядків до складніших об'єктів, таких як вектори, матриці та списки. Навіть вирази й функції є об'єктами в `R`.
 
-Однак, щоб робити корисні та цікаві речі, нам потрібно назвати об'єкти. Для цього нам потрібно дати _ім'я_, за яким слідує оператор присвоєння `<-`, і _об'єкт_, який ми хочемо назвати:
+Однак, щоб робити корисні та цікаві речі, нам потрібно звертатися до об'єктів. Для цього нам потрібно вказати _ім'я_, за яким слідує оператор присвоєння `<-`, і _об'єкт_, який ми хочемо назвати:
 
 ```{r, purl=FALSE}
 areaHectares <- 1.0
@@ -63,16 +63,15 @@ areaHectares <- 1.0
 `<-` - оператор присвоєння. Він призначає значення (об'єкти) праворуч іменам (також званим _символами_) на
 ліворуч. Отже, після виконання `x <- 3` значення `x` дорівнює `3`. Стрілку
 можна прочитати як 3 **переходить в** `x`.  З історичних причин ви також можете використовувати `=`
-для завдань, але не в кожному контексті. Через
-[незначні відмінності] (https://blog.revolutionanalytics.com/2008/12/use-equals-or-arrow-for-assignment.html)
-у синтаксисі, рекомендується завжди використовувати `<-` для завдань. Більше
+для присвоєння, але не в кожному контексті. Через
+[незначні відмінності](https://blog.revolutionanalytics.com/2008/12/use-equals-or-arrow-for-assignment.html)
+у синтаксисі, рекомендується завжди використовувати `<-` для присвоєння. Більше
 загалом ми віддаємо перевагу синтаксису `<-` перед `=`, оскільки він дає зрозуміти, в якому напрямку
 працює призначення (ліве призначення), і це збільшує читабельність коду
 .
 
-У RStudio ввівши <0>Alt</0> + <0>\ -</0> натискайте <0>Alt</0>
-одночасно з клавішею <0>\ -</0>  запише `<- `одним натисканням клавіші на ПК, при цьому набираючи <0>Option
-</0> + <0>\ -</0> натискайте <0>Варіант</0> одночасно з клавішею <0>\ -</0>  робить те ж саме в Mac.
+У RStudio ввівши <kbd>Alt</kbd> + <kbd>\-</kbd> (натискайте <kbd>Alt</kbd>
+одночасно з клавішею <kbd>\-</kbd>) запише `<- ` за допомогою лише однієї комбінації швидких клавіш у Windows. На Mac, те ж саме можна зробити, вводячи <kbd>Option</kbd> + <kbd>\-</kbd> (натискайте <kbd>Option</kbd> одночасно з клавішею <kbd>\-</kbd>).
 
 Об'єктам можна дати будь-яку назву, наприклад `x`, `current_temperature` або
 `subject_id`. Ви хочете, щоб ваші назви об'єктів були явними й не надто довгими. Вони
@@ -84,117 +83,116 @@ areaHectares <- 1.0
 для повного списку). Загалом, навіть якщо це дозволено, краще не використовувати їх
 (наприклад, `c`, `T`, `mean`, `data`, `df`, `weights`). Якщо ви
 сумніваєтесь, перевірте довідку, щоб побачити, чи ім'я вже використовується. Також краще
-уникати крапок (`.`) у назві об'єкта, як у `my.dataset`. There are many
-objects in R with dots in their names for historical reasons, but because dots
-have a special meaning in R (for methods) and other programming languages, it's
-best to avoid them. The recommended writing style is called snake\_case, which
-implies using only lowercaseletters and numbers and separating each word with
-underscores (e.g., animals\_weight, average\_income). It is also recommended to use nouns for object names, and
-verbs for function names. It's important to be consistent in the styling of your
-code (where you put spaces, how you name objects, etc.). Using a consistent
-coding style makes your code clearer to read for your future self and your
-collaborators. In R, three popular style guides are
-[Google's](https://google.github.io/styleguide/Rguide.xml), Jean
-Fan's and the
-[tidyverse's](https://style.tidyverse.org/). The tidyverse's is very
-comprehensive and may seem overwhelming at first. You can install the
-[**`lintr`**](https://github.com/jimhester/lintr) package to automatically check
-for issues in the styling of your code.
+уникати крапок (`.`) у назві об'єкта, як у `my.dataset`. Існує багато об'єктів
+в R з крапками в назвах з історичних причин, але оскільки точки
+мають особливе значення в R (для методів) та інших мовах програмування,
+краще уникати їх. Рекомендований стиль написання називається snake\ _case, що
+передбачає використання лише малих літер та цифр та розділення кожного слова підкресленням
+(наприклад, animal\ _weight, average\ _income). Також рекомендується використовувати іменники для назв об'єктів, а дієслова
+для назв функцій. Важливо бути послідовним у стилізації вашого коду
+(де ви розміщуєте пробіли, як ви називаєте об'єкти тощо). Використання послідовного стилю кодування
+робить ваш код зрозумілішим для читання для вашого майбутнього я та ваших співробітників
+. У R три популярні посібники зі стилю:
+[Google] (https://google.github.io/styleguide/Rguide.xml), [Jean
+Fan's] (https://jef.works/R-style-guide/) та
+[tidyverse] (https://style.tidyverse.org/). Tidyverse дуже вичерпний
+і спочатку може здатися приголомшливим. Ви можете встановити пакет
+[**`lintr`**] (https://github.com/jimhester/lintr), щоб автоматично перевіряти
+на наявність проблем у стилі вашого коду.
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
 ## Objects vs. variables
 
-The naming of objects in `R` is somehow related to `variables` in many other
-programming languages. In many programming languages, a variable has three aspects: a name, a memory location, and the current value stored in this location. `R` abstracts from modifiable memory locations. In `R` we only have objects which cn be named.
-Depending on the context, `name (of an object)` and `variable` can
-have drastically different meanings. However, in this lesson, the two words
-are used synonymously. For more information see:
-[https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Objects](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Objects)
+Іменування об'єктів у `R` якось пов'язане з `змінними` у багатьох інших мовах програмування
+. У багатьох мовах програмування змінна має три аспекти: ім'я, місце розташування пам'яті та поточне значення, що зберігається в цьому місці. `R` абстракції з модифікованих місць пам'яті. У `R` ми маємо лише об'єкти, які можна назвати.
+Залежно від контексту `name (of a object) `і `variable`
+можуть мати різко різні значення. Однак у цьому уроці два слова
+використовуються як синоніми. Для отримання додаткової інформації див.:
+[https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Objects] (https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Objects)
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-When assigning an value to a name, R does not print anything. You
-can force R to print the value by using parentheses or by typing
-the object name:
+При присвоюванні значення назви, R не друкує нічого. Ви можете змусити R надрукувати значення за допомогою дужок або ввівши
+назву об'єкта:
 
 ```{r, purl=FALSE}
-area_hectares <- 1.0    # doesn't print anything
-(area_hectares <- 1.0)  # putting parenthesis around the call prints the value of `area_hectares`
-area_hectares         # and so does typing the name of the object
+areaHectares <- 1.0 # не виводить нічого
+(areaHectares <- 1.) # поміщати дужки навколо принтів виклику значення `area_hectares`
+area_hectares # і так робить введення назви об'єкта
 ```
 
-Now that R has `area_hectares` in memory, we can do arithmetic with it. For
-instance, we may want to convert this area into acres (area in acres is 2.47 times the area in hectares):
+Тепер, коли R має `area_hectares` в пам'яті, ми можемо робити з ним арифметику. Наприклад
+, ми можемо захотіти перетворити цю площу на гектари (площа в акрах дорівнює 2,47 р. більше площі в гектарах):
 
 ```{r, purl=FALSE}
-2.47 * area_hectares
+2.47 *  areaHectares
 ```
 
-We can also change an the value assigned to an name by assigning it a new one:
+Ми також можемо змінити значення, присвоєне імені, призначивши йому нове:
 
 ```{r, purl=FALSE}
-area_hectares <- 2.5
-2.47 * area_hectares
+areaHectares <- 2.5
+2.47 * areaHectares
 ```
 
-This means that assigning a value to one name does not change the values of
-other names. For example, let's name the plot's area in acres
-`area_acres`:
+Це означає, що присвоєння значення одному імені не змінює значення інших імен. Наприклад, назвемо площу ділянки в акрах
+`areaAcres`:
 
 ```{r, purl=FALSE}
-area_acres <- 2.47 * area_hectares
+areaAcres <- 2.47 * areaHectares
 ```
 
-and then change (reassign) `area_hectares` to 50.
+потім змінити (перепризначити) `area_hectares` на 50.
 
 ```{r, purl=FALSE}
-area_hectares <- 50
+areaHectares <- 50
 ```
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Exercise
+## Завдання
 
-What do you think is the current value of `area_acres`? 123.5 or
-6\.175?
+Як ви думаєте, яке поточне значення `area_acres`? 123.5 або
+6\ .175?
 
 :::::::::::::::  solution
 
-## Solution
+## Рішення
 
-The value of `area_acres` is still 6.175 because you have not
-re-run the line `area_acres <- 2.47 * area_hectares` since
-changing the value of `area_hectares`.
+Значення `area_acres` залишається 6,175, оскільки у вас не було
+повторно запущено рядок `area_acres <- 2.47 * area_hectares`, оскільки
+змінило значення `area_hectares`.
 
 :::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Comments
+## Коментарі
 
-All programming languages allow the programmer to include comments in their code. Including comments to your code has many advantages: it helps you explain your reasoning and it forces you to be tidy. A commented code is also a great tool not only to your collaborators, but to your future self. Comments are the key to a reproducible analysis.
+Всі мови програмування дозволяють програмісту включати коментарі у свій код. Включення коментарів до вашого коду має багато переваг: це допомагає пояснити свої міркування і змушує вас бути охайними. Коментований код також є чудовим інструментом не тільки для ваших співробітників, але і для вас самих. Коментарі є ключем до відтворюваного аналізу.
 
-To do this in R we use the `#` character.
-Anything to the right of the `#` sign and up to the end of the line is treated as a comment and is ignored by R. You can start lines with comments
-or include them after any code on the line.
+Для цього в R ми використовуємо символ `#`.
+Все, що знаходиться праворуч від знака `#` і до кінця рядка, розглядається як коментар і ігнорується R. Ви можете почати рядки з коментарів
+або включати їх після будь-якого коду в рядку.
 
 ```{r}
-area_hectares <- 1.0			# land area in hectares
-area_acres <- area_hectares * 2.47	# convert to acres
-area_acres				# print land area in acres.
+areaHectares  <- 1,0 # площа земельної ділянки в гектарах
+area_acres <- areaHectares * 2,47 # перетворити на акри
+area_acres		 # площа друкованої землі в акрах.
 ```
 
-RStudio makes it easy to comment or uncomment a paragraph: after selecting the
-lines you  want to comment, press at the same time on your keyboard <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd>. If you only want to comment
-out one line, you can put the cursor at any location of that line (i.e. no need
-to select the whole line), then press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd>.
+RStudio дозволяє легко коментувати або відкоментувати абзац: після вибору рядків
+, які ви хочете прокоментувати, натисніть одночасно на клавіатурі <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd>. Якщо ви хочете прокоментувати
+лише в одному рядку, ви можете поставити курсор у будь-яке місце цього рядка (тобто не потрібно
+, щоб вибрати весь рядок), а потім натисніть <0>Ctrl</0> + <0>Shift</0> +
+<0>C</0>.
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Exercise
+## Завдання
 
-Create two variables `r_length` and `r_width` and assign them values. It should be noted that,
+Створіть дві змінні `r_longitud` і `r_width` і призначте їм значення. It should be noted that,
 because `length` is a built-in R function, R Studio might add "()" after you type `length` and
 if you leave the parentheses you will get unexpected results.
 This is why you might see other programmers abbreviate common words.
@@ -317,57 +315,54 @@ How do you use the `digits` parameter in the round function?
 ### Vectors and data types
 ```
 
-A vector is the most common and basic data type in R, and is pretty much
-the workhorse of R. A vector is composed by a series of values, which can be
-either numbers or characters. We can assign a series of values to a vector using
-the `c()` function. For example we can create a vector of the number of household
-members for the households we've interviewed and assign
-it to `hh_members`:
+Вектор є найпоширенішим і основним типом даних у R, і це майже
+робоча конячка R. Вектор складається з ряду значень, які можуть бути
+або числами, або символами. Ми можемо призначити ряд значень вектору, використовуючи
+функцію `c () `. Наприклад, ми можемо створити вектор кількості членів домогосподарства
+для домогосподарств, з якими ми опитали, і призначити
+його до `hh_members`:
 
 ```{r, purl=FALSE}
-hh_members <- c(3, 7, 10, 6)
-hh_members
+hhMembers <- c(3, 7, 10, 6)
+hhMembers
 ```
 
-A vector can also contain characters. For example, we can have
-a vector of the building material used to construct our
-interview respondents' walls (`respondent_wall_type`):
+Вектор також може містити символи. Наприклад, ми можемо мати
+вектор будівельного матеріалу, який використовується для побудови стін респондентів інтерв'ю
+(`respondent_wall_type`):
 
 ```{r, purl=FALSE}
-respondent_wall_type <- c("muddaub", "burntbricks", "sunbricks")
-respondent_wall_type
+respondentWallType <- c("muddaub", "burntbricks", "sunbricks")
+respondentWallType
 ```
 
-The quotes around "muddaub", etc. are essential here. Without the quotes R
-will assume there are objects called `muddaub`, `burntbricks` and `sunbricks`. As these names
-don't exist in R's memory, there will be an error message.
+Лапки навколо "muddaub" і т.п. мають важливе значення. Без лапок R
+буде вважати, що існують об'єкти під назвою `muddaub`, `burntbricks` і `sunbricks`. Оскільки цих імен
+не існує в пам'яті R, з'явиться повідомлення про помилку.
 
-There are many functions that allow you to inspect the content of a
-vector. `length()` tells you how many elements are in a particular vector:
+Існує багато функцій, які дозволяють перевіряти вміст вектора. `length()` повідомляє вам, скільки елементів в конкретному векторі:
 
 ```{r, purl=FALSE}
 length(hh_members)
 length(respondent_wall_type)
 ```
 
-An important feature of a vector, is that all of the elements are the same type of data.
-The function `typeof()` indicates the type of an object:
+Важливою особливістю вектора є те, що всі елементи є однаковим типом даних.
+Функція `typeof () `вказує тип об'єкта:
 
 ```{r, purl=FALSE}
 typeof(hh_members)
 typeof(respondent_wall_type)
 ```
 
-The function `str()` provides an overview of the structure of an object and its
-elements. It is a useful function when working with large and complex
-objects:
+Функція `str () `надає огляд структури об'єкта та його елементів. Це корисна функція при роботі з великими і складними об'єктами:
 
 ```{r, purl=FALSE}
 str(hh_members)
 str(respondent_wall_type)
 ```
 
-You can use the `c()` function to add other elements to your vector:
+Ви можете використовувати функцію `c () `, щоб додати інші елементи до вашого вектора:
 
 ```{r, purl=FALSE}
 possessions <- c("bicycle", "radio", "television")
@@ -376,50 +371,47 @@ possessions <- c("car", possessions) # add to the beginning of the vector
 possessions
 ```
 
-In the first line, we take the original vector `possessions`,
-add the value `"mobile_phone"` to the end of it, and save the result back into
-`possessions`. Then we add the value `"car"` to the beginning, again saving the result
-back into `possessions`.
+У першому рядку беремо вихідний вектор `possessions`,
+додаємо значення `"mobile_phone"` до кінця і збережемо результат назад у
+`possessions`. Потім додаємо значення `"car"` на початок, знову зберігаючи результат
+назад у `possessions`.
 
-We can do this over and over again to grow a vector, or assemble a dataset.
-As we program, this may be useful to add results that we are collecting or
-calculating.
+Ми можемо робити це знову і знову, щоб виростити вектор або зібрати набір даних.
+Під час програмування це може бути корисним для додавання результатів, які ми збираємо, або обчислення.
 
-An **atomic vector** is the simplest R **data type** and is a linear vector of a single type. Above, we saw
-2 of the 6 main **atomic vector** types  that R
-uses: `"character"` and `"numeric"` (or `"double"`). These are the basic building blocks that
-all R objects are built from. The other 4 **atomic vector** types are:
+**Атомний вектор** є найпростішим R **типом даних** і є лінійним вектором одного типу. Наостанок, ми побачили
+2 з 6 основних **атомних векторів** типів, які використовують R
+: `"символ "` і "Число"`(або`"подвоєний"\`). Це основні будівельні блоки, з яких побудовані
+всі об'єкти R. Інші 4 типи **атомних векторів**:
 
-- `"logical"` for `TRUE` and `FALSE` (the boolean data type)
-- `"integer"` for integer numbers (e.g., `2L`, the `L` indicates to R that it's an integer)
-- `"complex"` to represent complex numbers with real and imaginary parts (e.g.,
-  `1 + 4i`) and that's all we're going to say about them
-- `"raw"` for bitstreams that we won't discuss further
+- `"logical"` для `TRUE` і `FALSE` (тип логічних даних)
+- `"integer"` для цілих чисел (напр., `2L`, `L` вказує на R, що це ціле число)
+- `"комплекс"` для представлення комплексних чисел з дійсними та уявними частинами (наприклад,
+  `1 + 4i`), і це все, що ми збираємось сказати про них
+- `"raw"` для бітових потоків, про які ми не будемо обговорювати далі
 
-You can check the type of your vector using the `typeof()` function and inputting your vector as the argument.
+Ви можете перевірити тип вашого вектора за допомогою функції `typeof () `і вводячи ваш вектор як аргумент.
 
-Vectors are one of the many **data structures** that R uses. Other important
-ones are lists (`list`), matrices (`matrix`), data frames (`data.frame`),
-factors (`factor`) and arrays (`array`).
+Вектори є однією з багатьох **структур даних**, які використовує R. Іншими важливими
+є списки (`list`), матриці (\`\`матриця `), кадри даних (`data.frame`), фактори (`factor`) та масиви (`маси\`).
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Exercise
+## Завдання
 
-We've seen that atomic vectors can be of type character, numeric (or double),
-integer, and logical. But what happens if we try to mix these types in a
-single vector?
+Ми бачили, що атомні вектори можуть бути типових символів, числових (або подвійних), цілих
+та логічних. Але що станеться, якщо ми спробуємо змішати ці типи в одному векторі?
 
 :::::::::::::::  solution
 
-## Solution
+## Рішення
 
-R implicitly converts them to all be the same type.
+R неявно перетворює їх на всі одного типу.
 
 :::::::::::::::::::::::::
 
-What will happen in each of these examples? (hint: use `class()`
-to check the data type of your objects):
+Що буде в кожному з цих прикладів? (підказка: використовуйте `class () `
+для перевірки типу даних ваших об'єктів):
 
 ```{r, results="hide"}
 num_char <- c(1, 2, 3, "a")
@@ -428,20 +420,19 @@ char_logical <- c("a", "b", "c", TRUE)
 tricky <- c(1, 2, 3, "4")
 ```
 
-Why do you think it happens?
+Як ви думаєте, чому це відбувається?
 
 :::::::::::::::  solution
 
-## Solution
+## Рішення
 
-Vectors can be of only one data type. R tries to
-convert (coerce) the content of this vector to find a "common
-denominator" that doesn't lose any information.
+Вектори можуть бути тільки одного типу даних. R намагається
+перетворити (примусити) вміст цього вектора, щоб знайти «загальний знаменник
+», який не втрачає жодної інформації.
 
 :::::::::::::::::::::::::
 
-How many values in `combined_logical` are `"TRUE"` (as a character) in the
-following example:
+Скільки значень у `combined_logical` є `"TRUE"` (як символ) у наступному прикладі:
 
 ```{r, results="hide"}
 num_logical <- c(1, 2, 3, TRUE)
@@ -451,121 +442,114 @@ combined_logical <- c(num_logical, char_logical)
 
 :::::::::::::::  solution
 
-## Solution
+## Рішення
 
-Only one. There is no memory of past data types, and the coercion
-happens the
-first time the vector is evaluated. Therefore, the `TRUE` in
+Тільки один. Бракує пам'яті минулих типів даних, і приведення
+сталося вперше виконання вектора. Отже, `TRUE` у
 `num_logical`
-gets converted into a `1` before it gets converted into `"1"` in
+перетворюється на `1`, перш ніж перетвориться на `"1"` у
 `combined_logical`.
 
 :::::::::::::::::::::::::
 
-You've probably noticed that objects of different types get
-converted into a single, shared type within a vector. In R, we
-call converting objects from one class into another class
-_coercion_. These conversions happen according to a hierarchy,
-whereby some types get preferentially coerced into other
-types. Can you draw a diagram that represents the hierarchy of how
-these data types are coerced?
+Ви, напевно, помітили, що об'єкти різних типів перетворюють
+в єдиний спільний тип у векторі. У R ми
+викликаємо перетворення об'єктів з одного класу в інший клас
+_примус_. Ці перетворення відбуваються відповідно до ієрархії
+, за допомогою якої деякі типи переважно примушуються до інших типів. Чи можете ви намалювати діаграму, яка представляє ієрархію того, як примусово примушуються ці типи даних?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Subsetting vectors
+## Вектори підмножини
 
-Subsetting (sometimes referred to as extracting or indexing) involves accessing out one or more values based on their numeric placement or "index" within a vector. If we want to subset one or several values from a vector, we must provide one index or several indices in square brackets.  For instance:
+Під множення (іноді називають вилученням або індексацією) передбачає доступ до одного або декількох значень на основі їх числового розміщення або «індексу» у векторі. Якщо ми хочемо перевстановити один або кілька значень із вектора, ми повинні вказати один індекс або кілька індексів у квадратних дужках.  Наприклад:
 
 ```{r, results="show", purl=FALSE}
-respondent_wall_type <- c("muddaub", "burntbricks", "sunbricks")
-respondent_wall_type[2]
-respondent_wall_type[c(3, 2)]
+respondentWallType <- c("muddaub", "burntbricks", "sunbricks")
+respondentWallType)]
 ```
 
-We can also repeat the indices to create an object with more elements than the
-original one:
+Ми також можемо повторити індекси, щоб створити об'єкт з більшою кількістю елементів, ніж оригінальний:
 
 ```{r, results="show", purl=FALSE}
-more_respondent_wall_type <- respondent_wall_type[c(1, 2, 3, 2, 1, 3)]
+more_respondent_wall_type <- respondent_wall_type[c(1, 2, 3, 2, 1, 1, 1, 1, 1, 3)]
 more_respondent_wall_type
 ```
 
-R indices start at 1. Programming languages like Fortran, MATLAB, Julia, and R
-start counting at 1, because that's what human beings typically do. Languages in
-the C family (including C++, Java, Perl, and Python) count from 0 because that's
-simpler for computers to do.
+Індекси R починаються з 1. Мови програмування, такі як Fortran, MATLAB, Julia та R, починають рахувати з 1, тому що це те, що зазвичай роблять люди. Мови в
+сімейства C (включаючи C++, Java, Perl і Python) обчислюються від 0, оскільки це
+простіше для комп'ютерів.
 
-### Conditional subsetting
+### Умовна підмножина
 
-Another common way of subsetting is by using a logical vector. `TRUE` will
-select the element with the same index, while `FALSE` will not:
-
-```{r, results="show", purl=FALSE}
-hh_members <- c(3, 7, 10, 6)
-hh_members[c(TRUE, FALSE, TRUE, TRUE)]
-```
-
-Typically, these logical vectors are not typed by hand, but are the output of
-other functions or logical tests. For instance, if you wanted to select only the
-values above 5:
+Іншим поширеним способом під множення є використання логічного вектора. `TRUE` вибере
+елемент з тим самим індексом, а `FALSE` не буде:
 
 ```{r, results="show", purl=FALSE}
-hh_members > 5    # will return logicals with TRUE for the indices that meet the condition
-## so we can use this to select only the values above 5
-hh_members[hh_members > 5]
+hhMembers <- c (3, 7, 10, 6)
+hhMembers [c (ПРАВДА, НЕПРАВДА, ПРАВДА, ПРАВДА)]
 ```
 
-You can combine multiple tests using `&` (both conditions are true, AND) or `|`
-(at least one of the conditions is true, OR):
+Як правило, ці логічні вектори не друкуються вручну, а є виходом інших функцій
+або логічних тестів. Наприклад, якщо ви хочете вибрати лише значення
+вище 5:
 
 ```{r, results="show", purl=FALSE}
-hh_members[hh_members < 4 | hh_members > 7]
-hh_members[hh_members >= 4 & hh_members <= 7]
+hhMembers > 5 # повертають логічні дані з TRUE для індексів, що відповідають умові
+##  так що ми можемо використовувати це, щоб вибрати тільки значення вище 5
+h_members[h_members > 5]
 ```
 
-Here, `<` stands for "less than", `>` for "greater than", `>=` for "greater than
-or equal to", and `==` for "equal to". The double equal sign `==` is a test for
-numerical equality between the left and right hand sides, and should not be
-confused with the single `=` sign, which performs variable assignment (similar
-to `<-`).
+Ви можете об'єднати кілька тестів, використовуючи `&` (обидві умови відповідають дійсності, AND) або `|`
+(принаймні одна з умов є істинною, OR):
 
-A common task is to search for certain strings in a vector.  One could use the
-"or" operator `|` to test for equality to multiple values, but this can quickly
-become tedious.
+```{r, results="show", purl=FALSE}
+hhMembers[hhMembers < 4 | hhMembers > 7]
+hhMembers[hhMembers >= 4 & hhMembers <= 7]
+```
+
+Тут `<` означає «менше ніж», `>` означає «більше ніж», `>=` означає «більше
+або дорівнює», а `==` - «дорівнює». Подвійний знак рівності `==` є тестом на числову рівність
+між лівою та правою сторонами, і його не слід плутати
+з єдиним знаком `=`, який виконує призначення змінних (аналогічно
+до `<-`).
+
+Поширеним завданням є пошук певних рядків у векторі.  Можна використовувати оператор
+«або» `|` для перевірки рівності до кількох значень, але це може швидко
+стати нудним.
 
 ```{r, results="show", purl=FALSE}
 possessions <- c("car", "bicycle", "radio", "television", "mobile_phone")
-possessions[possessions == "car" | possessions == "bicycle"] # returns both car and bicycle
+possessions[possessions == "car" | possessions == "bicycle"] # повертає автомобіль і велосипед
 ```
 
-The function `%in%` allows you to test if any of the elements of a search vector
-(on the left hand side) are found in the target vector (on the right hand side):
+Функція `%in%`  дозволяє перевірити, чи є якийсь із елементів вектора пошуку
+(зліва) знайдений у цільовому векторі (праворуч):
 
 ```{r, results="show", purl=FALSE}
 possessions %in% c("car", "bicycle")
 ```
 
-Note that the output is the same length as the search vector on the left hand
-side, because `%in%` checks whether each element of the search vector is found
-somewhere in the target vector. Thus, you can use `%in%` to select the elements
-in the search vector that appear in your target vector:
+Зверніть увагу, що вихідний результат має таку ж довжину, як вектор пошуку на лівій стороні
+, оскільки `%in%` перевіряє, чи кожен елемент вектора пошуку знайдений десь у цільовому векторі
+. Таким чином, ви можете використовувати `%in%`, щоб вибрати елементи
+у векторі пошуку, які з'являються у вашому цільовому векторі:
 
 ```{r, results="show", purl=FALSE}
 possessions %in% c("car", "bicycle", "motorcycle", "truck", "boat", "bus")
 possessions[possessions %in% c("car", "bicycle", "motorcycle", "truck", "boat", "bus")]
 ```
 
-## Missing data
+## Відсутні дані
 
-As R was designed to analyze datasets, it includes the concept of missing data
-(which is uncommon in other programming languages). Missing data are represented
-in vectors as `NA`.
+Оскільки R був розроблений для аналізу наборів даних, він включає концепцію відсутніх даних
+(що є рідкістю в інших мовах програмування). Відсутні дані представлені
+у векторах як `NA`.
 
-When doing operations on numbers, most functions will return `NA` if the data
-you are working with include missing values. This feature
-makes it harder to overlook the cases where you are dealing with missing data.
-You can add the argument `na.rm=TRUE` to calculate the result while ignoring
-the missing values.
+При виконанні операцій з числами більшість функцій повернуть `NA`, якщо дані, з якими ви працюєте, містять відсутні значення. Ця функція
+ускладнює пропуск випадків, коли ви маєте справу з відсутніми даними.
+Ви можете додати аргумент `na.rm=true` для обчислення результату, ігноруючи
+відсутні значення.
 
 ```{r, purl=FALSE}
 rooms <- c(2, 1, 1, NA, 7)
@@ -575,9 +559,8 @@ mean(rooms, na.rm = TRUE)
 max(rooms, na.rm = TRUE)
 ```
 
-If your data include missing values, you may want to become familiar with the
-functions `is.na()`, `na.omit()`, and `complete.cases()`. See below for
-examples.
+Якщо ваші дані містять відсутні значення, ви можете ознайомитися з функціями
+`is.na () `, `na.omit ()` і `complete.cases () `. Дивіться нижче приклади.
 
 ```{r, purl=FALSE}
 ## Extract those elements which are not missing values.
