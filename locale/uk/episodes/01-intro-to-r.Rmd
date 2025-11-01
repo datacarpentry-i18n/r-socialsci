@@ -102,7 +102,7 @@ Fan's] (https://jef.works/R-style-guide/) та
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
-## Objects vs. variables
+## Об'єкти проти змінних
 
 Іменування об'єктів у `R` якось пов'язане з `змінними` у багатьох інших мовах програмування
 . У багатьох мовах програмування змінна має три аспекти: ім'я, місце розташування пам'яті та поточне значення, що зберігається в цьому місці. `R` абстракції з модифікованих місць пам'яті. У `R` ми маємо лише об'єкти, які можна назвати.
@@ -192,28 +192,28 @@ RStudio дозволяє легко коментувати або відкоме
 
 ## Завдання
 
-Створіть дві змінні `r_longitud` і `r_width` і призначте їм значення. It should be noted that,
-because `length` is a built-in R function, R Studio might add "()" after you type `length` and
-if you leave the parentheses you will get unexpected results.
-This is why you might see other programmers abbreviate common words.
-Create a third variable `r_area` and give it a value based on the current values of `r_length`
-and `r_width`.
-Show that changing the values of either `r_length` and `r_width` does not affect the value of
+Створіть дві змінні `r_longitud` і `r_width` і призначте їм значення. Слід зазначити, що
+, оскільки `longitud` є вбудованою функцією R, R Studio може додати «()» після введення `longitud` і
+, якщо ви залишите дужки, ви отримаєте несподівані результати.
+Ось чому ви можете побачити, як інші програмісти скорочують загальні слова.
+Створіть третю змінну `r_area` і дайте їй значення на основі поточних значень `r_longitud`
+та `r_width`.
+Покажіть, що зміна значень `r_longitud` і `r_width` не впливає на значення
 `r_area`.
 
 :::::::::::::::  solution
 
-## Solution
+## Рішення
 
 ```{r}
 r_length <- 2.5
 r_width <- 3.2
 r_area <- r_length * r_width
 r_area
-# change the values of r_length and r_width
+# змініть значення r_length та r_width
 r_length <- 7.0
 r_width <- 6.5
-# the value of r_area isn't changed
+# значення r_area не змінено
 r_area
 ```
 
@@ -221,48 +221,43 @@ r_area
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-### Functions and their arguments
+### Функції та їх аргументи
 
-Functions are "canned scripts" that automate more complicated sets of commands
-including operations assignments, etc. Many functions are predefined, or can be
-made available by importing R _packages_ (more on that later). A function
-usually gets one or more inputs called _arguments_. Functions often (but not
-always) return a _value_. A typical example would be the function `sqrt()`. The
-input (the argument) must be a number, and the return value (in fact, the
-output) is the square root of that number. Executing a function ('running it')
-is called _calling_ the function. An example of a function call is:
+Функції - це «консервовані скрипти», які автоматизують складніші набори команд, включаючи призначення операцій тощо. Багато функцій попередньо визначені або можуть бути доступними, імпортуючи R _packages_ (докладніше про це пізніше). Функція
+зазвичай отримує один або кілька входів під назвою _аргумент_. Функції часто (але не
+завжди) повертають _значення_. Типовим прикладом може бути функція `sqrt () `. Вхід
+(аргумент) повинен бути числом, а повернене значення (фактично вихід) є квадратним коренем цього числа. Виконання функції ('виконується так')
+називається \* виклик\* функцією. Прикладом виклику функції є:
 
 ```{r, eval=FALSE, purl=FALSE}
 b <- sqrt(a)
 ```
 
-Here, the value of `a` is given to the `sqrt()` function, the `sqrt()` function
-calculates the square root, and returns the value which is then assigned to
-the name `b`. This function is very simple, because it takes just one argument.
+Тут значення `a` задається функції `sqrt () `, функція `sqrt ()`
+обчислює квадратний корінь і повертає значення, якому потім присвоюється
+ім'я `b`. Ця функція дуже проста, тому що для неї потрібен всього один аргумент.
 
-The return 'value' of a function need not be numerical (like that of `sqrt()`),
-and it also does not need to be a single item: it can be a set of things, or
-even a dataset. We'll see that when we read data files into R.
+Повернення «значення» функції не повинно бути числовим (як у `sqrt () `),
+і воно також не повинно бути єдиним елементом: це може бути набір речей або
+навіть набір даних. Ми побачимо це, коли ми зчитуємо файли даних у R.
 
-Arguments can be anything, not only numbers or filenames, but also other
-objects. Exactly what each argument means differs per function, and must be
-looked up in the documentation (see below). Some functions take arguments which
-may either be specified by the user, or, if left out, take on a _default_ value:
-these are called _options_. Options are typically used to alter the way the
-function operates, such as whether it ignores 'bad values', or what symbol to
-use in a plot.  However, if you want something specific, you can specify a value
-of your choice which will be used instead of the default.
+Аргументами можуть бути що завгодно, не тільки цифри або назви файлів, але й інші об'єкти. Точно те, що означає кожен аргумент, відрізняється залежно від функції, і
+має бути знайдено в документації (див. Нижче). Деякі функції приймають аргументи, які
+можуть бути вказані користувачем, або, якщо їх не врахувати, наберуть значення _default_:
+вони називаються _options_. Параметри зазвичай використовуються для зміни способу роботи функції
+, наприклад, чи ігнорує вона «погані значення» або який символ
+використовує у графіку.  Однак, якщо ви хочете щось конкретне, ви можете вказати значення
+за вашим вибором, яке буде використано замість типового.
 
-Let's try a function that can take multiple arguments: `round()`.
+Давайте спробуємо функцію, яка може приймати кілька аргументів: `round () `.
 
 ```{r, results="show", purl=FALSE}
 round(3.14159)
 ```
 
-Here, we've called `round()` with just one argument, `3.14159`, and it has
-returned the value `3`.  That's because the default is to round to the nearest
-whole number. If we want more digits we can see how to do that by getting
-information about the `round` function.  We can use `args(round)` or look at the
+Тут ми викликали `round () `лише з одним аргументом, `3.14159`, і
+повернуло значення `3`.  Це тому, що за замовчуванням є округлення до найближчого цілого числа. Якщо ми хочемо більше цифр, ми можемо побачити, як це зробити, отримавши інформацію
+про функцію `round`.  We can use `args(round)` or look at the
 help for this function using `?round`.
 
 ```{r, results="show", purl=FALSE}
@@ -273,46 +268,43 @@ args(round)
 ?round
 ```
 
-We see that if we want a different number of digits, we can
-type `digits=2` or however many we want.
+Ми бачимо, що якщо ми хочемо іншу кількість цифр, ми можемо
+ввести `digits=2` або скільки завгодно.
 
 ```{r, results="show", purl=FALSE}
 round(3.14159, digits = 2)
 ```
 
-If you provide the arguments in the exact same order as they are defined you
-don't have to name them:
+Якщо ви надаєте аргументи в тому ж порядку, в якому вони визначені, вам
+не доведеться називати їх:
 
 ```{r, results="show", purl=FALSE}
 round(3.14159, 2)
 ```
 
-And if you do name the arguments, you can switch their order:
+І якщо ви все-таки назвете аргументи, ви можете змінити їх порядок:
 
 ```{r, results="show", purl=FALSE}
 round(digits = 2, x = 3.14159)
 ```
 
-It's good practice to put the non-optional arguments (like the number you're
-rounding) first in your function call, and to specify the names of all optional
-arguments.  If you don't, someone reading your code might have to look up the
-definition of a function with unfamiliar arguments to understand what you're
-doing.
+Рекомендується ставити неопціональні аргументи (наприклад, число, яке округляється) першим у виклику функції та вказати імена всіх необов'язкових аргументів.  Якщо ви цього не зробите, комусь, хто читає ваш код, можливо, доведеться шукати визначення функції
+з незнайомими аргументами, щоб зрозуміти, що ви робите.
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Exercise
+## Завдання
 
-Type in `?round` at the console and then look at the output in the Help pane.
-What other functions exist that are similar to `round`?
-How do you use the `digits` parameter in the round function?
+Введіть `? round` на консолі, а потім перегляньте вихід на панелі Довідка.
+Які інші функції існують подібні до `округлення`?
+Як ви використовуєте параметр `cifre` у функції round?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Vectors and data types
+## Вектори та типи даних
 
 ```{r, echo=FALSE, purl=TRUE}
-### Vectors and data types
+### Вектори та типи даних
 ```
 
 Вектор є найпоширенішим і основним типом даних у R, і це майже
@@ -563,40 +555,40 @@ max(rooms, na.rm = TRUE)
 `is.na () `, `na.omit ()` і `complete.cases () `. Дивіться нижче приклади.
 
 ```{r, purl=FALSE}
-## Extract those elements which are not missing values.
-## The ! character is also called the NOT operator
-rooms[!is.na(rooms)]
+## Витягніть ті елементи, у яких не відсутні значення.
+## Це! персонаж також називають НЕ оператором
+rooms [! is.na (rooms)]
 
-## Count the number of missing values.
-## The output of is.na() is a logical vector (TRUE/FALSE equivalent to 1/0) so the sum() function here is effectively counting
-sum(is.na(rooms))
+## Підрахуйте кількість відсутніх значень.
+## Вихід is.na () є логічним вектором (TRUE/FALSE еквівалентно 1/0), тому функція sum () тут фактично підраховує
+sum (is.na (rooms))
 
-## Returns the object with incomplete cases removed. The returned object is an atomic vector of type `"numeric"` (or `"double"`).
-na.omit(rooms)
+## Повертає об'єкт з видаленими неповними випадками. Повернутий об'єкт є атомним вектором типу `"numeric"` (або `"подвійний"`).
+na.omit (rooms)
 
-## Extract those elements which are complete cases. The returned object is an atomic vector of type `"numeric"` (or `"double"`).
-rooms[complete.cases(rooms)]
+## Витягніть ті елементи, які є повними відмінками. Повернутий об'єкт є атомним вектором типу `"numeric"` (або `"подвійний"`).
+кімнати [повні.кейси (кімнати)]
 ```
 
-Recall that you can use the `typeof()` function to find the type of your atomic vector.
+Нагадаємо, що ви можете використовувати функцію `typeof () `, щоб знайти тип вашого атомного вектора.
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Exercise
+## Завдання
 
-1. Using this vector of rooms, create a new vector with the NAs removed.
+1. Використовуючи цей вектор кімнат, створіть новий вектор з NA  значеннями.
 
 ```r
 rooms <- c(1, 2, 1, 1, NA, 3, 1, 3, 2, 1, 1, 8, 3, 1, NA, 1)
 ```
 
-2. Use the function `median()` to calculate the median of the `rooms` vector.
+2. Використовуйте функцію `median () `для обчислення медіани вектора `rooms`.
 
-3. Use R to figure out how many households in the set use more than 2 rooms for sleeping.
+3. Використовуйте R, щоб з'ясувати, скільки домогосподарств у наборі використовує більше 2 кімнат для сну.
 
 :::::::::::::::  solution
 
-## Solution
+## Рішення
 
 ```{r, answer=TRUE}
 rooms <- c(1, 2, 1, 1, NA, 3, 1, 3, 2, 1, 1, 8, 3, 1, NA, 1)
@@ -614,15 +606,14 @@ length(rooms_above_2)
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-Now that we have learned how to write scripts, and the basics of R's data
-structures, we are ready to start working with the SAFI dataset we have been
-using in the other lessons, and learn about data frames.
+Тепер, коли ми навчилися писати сценарії та основи структур даних R, ми готові почати працювати з набором даних SAFI, який ми використовували
+на інших уроках, і дізнатися про кадри даних.
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
-- Access individual values by location using `[]`.
-- Access arbitrary sets of data using `[c(...)]`.
-- Use logical operations and logical vectors to access subsets of data.
+- Доступ до індивідуальних значень за допомогою `[]`.
+- Доступ до довільних наборів даних за допомогою `[c (...)]`.
+- Використовуйте логічні операції та логічні вектори для доступу до підмножин даних.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
