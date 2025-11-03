@@ -263,154 +263,141 @@ class(interviews)
 Примітка: більшість цих функцій є «загальними». Їх можна використовувати на інших типах об'єктів
 , окрім дата фреймів або сучасних дата фреймів.
 
-## Subsetting data frames
+## Перевірка двовимірної  табличної структури даних (дата фрейму)
 
-Our `interviews` data frame has rows and columns (it has 2 dimensions).
-In practice, we may not need the entire data frame; for instance, we may only
-be interested in a subset of the observations (the rows) or a particular set
-of variables (the columns). If we want to
-access some specific data from it, we need to specify the "coordinates" (i.e., indices) we
-want from it. Row numbers come first, followed by column numbers.
+Наш блок даних `interviews` має рядки й стовпці (він має 2 розміри).
+На практиці нам може не знадобитися весь дата сет; наприклад, нас може зацікавити лише
+підмножина спостережень (рядки) або певний набір
+змінних (стовпці). Якщо ми хочемо, отримати доступ до деяких конкретних даних з нього, нам потрібно вказати «координати» (тобто індекси), які ми
+хочемо від нього. На першому місці йдуть номери рядків, а потім номери стовпців.
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
-## Tip
+## Порада
 
-Subsetting a `tibble` with `[` always results in a `tibble`.
-However, note this is not true in general for data frames, so be careful!
-Different ways of specifying these coordinates can lead to results with
-different classes. This is covered in the Software Carpentry lesson
-[R for Reproducible Scientific Analysis](https://swcarpentry.github.io/r-novice-gapminder/).
+Підставлення `tibble` до `[` завжди призводить до `tibble`.
+Однак зауважте, що це взагалі не відповідає дійсності для дата сетів, тому будьте обережні!
+Різні способи вказання цих координат можуть призвести до результатів з даними
+різних класів. Це вкрите уроком програмного забезпечення Carpentry [R для відтворюваних наукових аналізів(https://swcarpentry.github.io/r-novice-gapminder/).
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ```{r, purl=FALSE}
-## first element in the first column of the tibble
-interviews[1, 1]
+## перший елемент у першому стовпці таблиці  interviews
+[1, 1]
 
-## first element in the 6th column of the tibble 
-interviews[1, 6]
+## перший елемент у 6-ому стовпці таблиці  interviews
+ [1, 6]
 
-## first column of the tibble (as a vector)
-interviews[[1]]
+## перший стовпець таблиці (як вектор)  interviews [[1]]
 
-## first column of the tibble
-interviews[1]
+## перший стовпець таблиці  interviews
+ [1]
 
-## first three elements in the 7th column of the tibble
-interviews[1:3, 7]
+## перші три елементи в 7-ому стовпці таблиці  interviews
+[1:3, 7]
 
-## the 3rd row of the tibble
-interviews[3, ]
+## 3-й рядок таблиці
+інтерв'ю [3,]
 
-## equivalent to head_interviews <- head(interviews)
-head_interviews <- interviews[1:6, ]
+## еквівалентно head_interviews <- head (interviews)
+head_interviews <- interviews <- interviews [1:6,]
 ```
 
-`:` is a special function that creates numeric vectors of integers in increasing
-or decreasing order, test `1:10` and `10:1` for instance.
+`:` - це спеціальна функція, яка створює числові вектори цілих чисел у збільшенні
+або порядку зменшення, наприклад test `1:10` і `10:1`.
 
-You can also exclude certain indices of a data frame using the "`-`" sign:
+Ви також можете виключити певні індекси дата сету за допомогою знака «`-`»:
 
 ```{r, purl=FALSE}
-interviews[, -1]          # The whole tibble, except the first column
+interviews [, -1] # Весь титул, крім першої колонки
 
-interviews[-c(7:131), ]   # Equivalent to head(interviews)
+interviews [-c (7:131),] # Еквівалент заголовку (interviews)
 ```
 
-`tibble`s can be subset by calling indices (as shown previously), but also by
-calling their column names directly:
+`tibble`s можна підмножити, викликаючи індекси (як показано раніше), а також шляхом
+викликаючи їх імена стовпців безпосередньо:
 
 ```{r, eval=FALSE, purl=FALSE}
-interviews["village"]       # Result is a tibble
+interviews ["село"] # Результат - таблиця
 
-interviews[, "village"]     # Result is a tibble
+interviews [, «село"] # Результат - таблиця
 
-interviews[["village"]]     # Result is a vector
+interviews [["village"]] # Результат - вектор
 
-interviews$village          # Result is a vector
+interviews$village          # Результат - вектор
 ```
 
-In RStudio, you can use the autocompletion feature to get the full and correct
-names of the columns.
+У RStudio ви можете використовувати функцію автоматичного доповнення, щоб отримати повні та правильні назви
+стовпців.
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Exercise
+## Завдання
 
-1. Create a tibble (`interviews_100`) containing only the data in
-   row 100 of the `interviews` dataset.
+1. Створіть таблицю (`interviews_100`), що містить лише дані в рядку
+   100 набору даних `interviews  `.
 
-Now, continue using `interviews` for each of the following activities:
+Тепер продовжуйте використовувати `interviews` для кожної з наступних видів діяльності:
 
-2. Notice how `nrow()` gave you the number of rows in the tibble?
+2. Зверніть увагу, як `nrow () `дав вам кількість рядків у таблиці?
 
-- Use that number to pull out just that last row in the tibble.
-- Compare that with what you see as the last row using `tail()` to make
-  sure it's meeting expectations.
-- Pull out that last row using `nrow()` instead of the row number.
-- Create a new tibble (`interviews_last`) from that last row.
+- Використовуйте це число, щоб витягнути саме той останній ряд у таблиці.
+- Порівняйте це з тим, що ви бачите як останній рядок, використовуючи `tail () `, щоб переконатися, що
+  відповідає очікуванням.
+- Витягніть останній рядок, використовуючи `nrow () `замість номера рядка.
+- Створіть нову табличку (`interviews_last`) з останнього рядка.
 
-3. Using the number of rows in the interviews dataset that you found in
-   question 2, extract the row that is in the middle of the dataset. Store
-   the content of this middle row in an object named `interviews_middle`.
-   (hint: This dataset has an odd number of rows, so finding the middle is a
-   bit trickier than dividing n\_rows by 2. Use the median( ) function and what
-   you've learned about sequences in R to extract the middle row!
+3. Використовуючи кількість рядків у наборі даних інтерв'ю, який ви знайшли у питанні
+   2, витягніть рядок, який знаходиться посередині набору даних. Зберігайте
+   вміст цього середнього рядка в об'єкті з назвою `interviews_middle`.
+   (підказка: Цей набір даних має непарну кількість рядків, тому знайти середину
+   трохи складніше, ніж ділити n\ _rows на 2. Використовуйте функцію median () і те, що
+   ви дізналися про послідовності в R, щоб витягти середній рядок!
 
-4. Combine `nrow()` with the `-` notation above to reproduce the behavior of
-   `head(interviews)`, keeping just the first through 6th rows of the
-   interviews dataset.
+4. Об'єднайте `nrow () `з позначенням `-` вище, щоб відтворити поведінку
+   `head (interviews)`, зберігаючи лише перші-6-й рядки набору даних інтерв'ю.
 
 :::::::::::::::  solution
 
-## Solution
+## Рішення
 
 ```{r}
 ## 1.
-interviews_100 <- interviews[100, ]
+interviews_100 <- interviews [100,]
 ## 2.
-# Saving `n_rows` to improve readability and reduce duplication
-n_rows <- nrow(interviews)
-interviews_last <- interviews[n_rows, ]
+# Збереження `n_rows` для поліпшення читабельності та зменшення дублювання
+n_rows <- nrow (interviews)
+interviews_last<- interviews [n_rows,]
 ## 3.
-interviews_middle <- interviews[median(1:n_rows), ]
+interviews_middle <- interviews [median (1:n_rows),]
 ## 4.
-interviews_head <- interviews[-(7:n_rows), ]
+interviews_head <- interviews [- (7:n_rows),]
 ```
 
 :::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Factors
+## Фактори
 
-R has a special data class, called factor, to deal with categorical data that
-you may encounter when creating plots or doing statistical analyses. Factors are
-very useful and actually contribute to making R particularly well suited to
-working with data. So we are going to spend a little time introducing them.
+R має спеціальний клас даних, який називається фактором, для роботи з категоріальними даними, з якими ви можете зіткнутися під час створення графіків або проведення статистичного аналізу. Фактори
+дуже корисні й фактично сприяють тому, що R особливо добре підходить для роботи
+з даними. Тож ми збираємось витратити трохи часу на їх представлення.
 
-Factors represent categorical data. They are stored as integers associated with
-labels and they can be ordered (ordinal) or unordered (nominal). Factors
-create a structured  relation between the different levels (values) of a
-categorical variable, such as days of the week or responses to a question in
-a survey. This can make it easier to see how one element relates to the
-other elements in a column. While factors look (and often behave) like
-character vectors, they are actually treated as integer vectors by `R`. So
-you need to be very careful when treating them as strings.
+Фактори представляють категоричні дані. Вони зберігаються як цілі числа, пов'язані з мітками, і вони можуть бути впорядковані (порядкові) або неупорядковані (номінальні). Фактори
+створюють структурований зв'язок між різними рівнями (значеннями) категоріальної змінної, такими як дні тижня або відповіді на запитання в опитуванні. Це може полегшити розуміння того, як один елемент пов'язаний з іншими у стовпці. Хоча фактори виглядають  як вектори символів, вони фактично розглядаються як цілочисельні вектори `R`. Так що
+потрібно бути дуже обережним, розглядаючи їх як рядки.
 
-Once created, factors can only contain a pre-defined set of values, known as
-_levels_. By default, R always sorts levels in alphabetical order. For
-instance, if you have a factor with 2 levels:
+Після створення коефіцієнти можуть містити лише попередньо визначений набір значень, відомий як
+_levels_. За замовчуванням R завжди сортує рівні в алфавітному порядку. Наприклад, якщо у вас є коефіцієнт з 2 рівнями:
 
 ```{r, purl=TRUE}
 respondent_floor_type <- factor(c("earth", "cement", "cement", "earth"))
 ```
 
-R will assign `1` to the level `"cement"` and `2` to the level `"earth"`
-(because `c` comes before `e`, even though the first element in this vector is
-`"earth"`). You can see this by using the function `levels()` and you can find
-the number of levels using `nlevels()`:
+R призначить `1` рівню `"cement» і `2`рівню`"earth"`(оскільки`c`стоїть перед`e`, хоча перший елемент у цьому векторі `"земля"`). Ви можете побачити це за допомогою функції `levels () `і ви можете знайти
+кількість рівнів за допомогою `nlevels ()\`:
 
 ```{r, purl=FALSE}
 levels(respondent_floor_type)
@@ -418,48 +405,43 @@ levels(respondent_floor_type)
 nlevels(respondent_floor_type)
 ```
 
-Sometimes, the order of the factors does not matter. Other times you might want
-to specify the order because it is meaningful (e.g., "low", "medium", "high").
-It may improve your visualization, or it may be required by a particular type of
-analysis. Here, one way to reorder our levels in the `respondent_floor_type`
-vector would be:
+Іноді, порядок факторів не має значення. В інших випадках ви можете бажати, вказати порядок, оскільки він має значення (наприклад, «низький», «середній», «високий»).
+Це може покращити вашу візуалізацію, або це може знадобитися для аналізу даних. Тут одним зі способів змінити порядок наших рівнів у векторі `respondent_floor_type` буде:
 
 ```{r, results=TRUE, purl=FALSE}
-respondent_floor_type # current order
+respondent_floor_type # поточний порядок
 
 respondent_floor_type <- factor(respondent_floor_type, 
                                 levels = c("earth", "cement"))
 
-respondent_floor_type # after re-ordering
+respondent_floor_type # після перезавантаження
 ```
 
-In R's memory, these factors are represented by integers (1, 2), but are more
-informative than integers because factors are self describing: `"cement"`,
-`"earth"` is more descriptive than `1`, and `2`. Which one is "earth"? You
-wouldn't be able to tell just from the integer data. Factors, on the other hand,
-have this information built in. It is particularly helpful when there are many
-levels. It also makes renaming levels easier. Let's say we made a mistake and
-need to recode "cement" to "brick". We can do this using the `fct_recode()`
-function from the **`forcats`** package (included in the **`tidyverse`**) which
-provides some extra tools to work with factors.
+У пам'яті R ці фактори представлені цілими числами (1, 2), але є більш інформативними
+, ніж цілі числа, оскільки фактори описуються: `"цемент"`,
+`"земля"` є більш описовим, ніж `1`, і `2`. Котрий з них "earth"? Ви
+не зможете визначити лише з цілочисельних даних. Фактори, з іншого боку,
+мають цю інформацію вбудованою. Це особливо корисно, коли є багато рівнів. Це також полегшує перейменування рівнів. Припустимо, ми помилилися і нам потрібно перекодувати "cement" to "brick". Ми можемо зробити це за допомогою функції `fct_recode () `
+з пакета **`forcats`** (включеного в **`tidyverse`**), який
+надає деякі додаткові інструменти для роботи з факторами.
 
 ```{r, results=TRUE, purl=FALSE}
 levels(respondent_floor_type)
 
-respondent_floor_type <- fct_recode(respondent_floor_type, brick = "cement")
+respondent_floor_type <- fct_recode(respondent_floor_type, цеглина = "cement")
 
-## as an alternative, we could change the "cement" level directly using the
-## levels() function, but we have to remember that "cement" is the second level
+## як альтернативу, ми можемо змінити рівень "це" безпосередньо використовуючи
+## levels() функцію, але ми повинні пам'ятати, що "cement" це другий рівень
 # levels(respondent_floor_type)[2] <- "brick"
 
 levels(respondent_floor_type)
 
-respondent_floor_type
+respondent_floor_floor_type
 ```
 
-So far, your factor is unordered, like a nominal variable. R does not know the
-difference between a nominal and an ordinal variable. You make your factor an
-ordered factor by using the `ordered=TRUE` option inside your factor function.
+Досі ваш фактор невпорядкований, наприклад, номінальна змінна. R не знає відмінності
+між номінальною і звичайною змінною. Ви робите свій фактор
+упорядкованим фактором, використовуючи параметр "ordered=TRUE" у вашій кодовій функції.
 Note how the reported levels changed from the unordered factor above to the
 ordered version below. Ordered levels use the less than sign `<` to denote
 level ranking.
