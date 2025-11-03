@@ -1,5 +1,5 @@
 ---
-title: Переробка даних за допомогою пакету dplyr
+title: Трансформація даних за допомогою пакету dplyr
 teaching: 25
 exercises: 15
 source: Rmd
