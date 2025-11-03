@@ -194,17 +194,11 @@ RStudio поділено на чотири "панелі". Розміщення 
 Робочий каталог - важливе поняття для розуміння. Це місце, де R буде шукати та зберігати файли. Коли ви пишете код для свого проєкту, ваші скрипти повинні посилатися на файли відносно кореня робочої директорії й лише на файли в межах цієї структури.
 
 Використання проєктів RStudio полегшує роботу і гарантує належне налаштування робочого каталогу. Якщо вам потрібно перевірити це, ви можете використовувати `getwd ()`. Якщо з якоїсь причини ваш робочий каталог не збігається з місцем розташування вашого проєкту RStudio, ймовірно, ви відкрили R-скрипт або файл RMarkDown **не** ваш файл `.Rproj`. Вам необхідно закрити RStudio і відкрити файл `.Rproj`, двічі клацнувши на синьому кубі! Якщо вам коли-небудь потрібно змінити робочий каталог
-у скрипті, `setwd ('my/path')` змінює робочий каталог. This
-should be used with caution since it makes analyses hard to share across devices
-and with other users.
+у скрипті, `setwd ('my/path')` змінює робочий каталог. Це слід використовувати обережно, оскільки такий підхід ускладнює обмін аналізом між різними пристроями та іншими користувачами.
 
-### Downloading the data and getting set up
+### Завантаження даних та налаштування
 
-For this lesson we will use the following folders in our working directory:
-**`data/`**, **`data_output/`** and **`fig_output/`**. Let's write them all in
-lowercase to be consistent. We can create them using the RStudio interface by
-clicking on the "New Folder" button in the file pane (bottom right), or directly
-from R by typing at console:
+Для цього уроку ми будемо використовувати такі теки в нашому робочому каталозі: **`data/`**, **`data_output/`** та **`fig_output/`**. Давайте послідовно запишемо все з малих літер. Ми можемо створити їх через інтерфейс RStudio, натиснувши кнопку “New Folder” у панелі файлів (справа внизу), або безпосередньо в R, ввівши в консолі:
 
 ```{r create-dirs, eval=FALSE}
 dir.create("data")
@@ -212,11 +206,9 @@ dir.create("data_output")
 dir.create("fig_output")
 ```
 
-You can either download the data used for this lesson from GitHub or with R.
-You can copy the data from this [GitHub link](https://github.com/datacarpentry/r-socialsci/blob/main/episodes/data/SAFI_clean.csv)
-and paste it into a file called `SAFI_clean.csv` in the `data/` directory you just created.
-Or you can do this directly from R by copying and pasting this in your terminal
-(your instructor can place this chunk of code in the Etherpad):
+Ви можете завантажити дані, використані для цього уроку, з GitHub або за допомогою R. Ви можете скопіювати дані з цього [посилання GitHub](https://github.com/datacarpentry/r-socialsci/blob/main/episodes/data/SAFI_clean.csv)
+і вставити їх у файл під назвою `Safi_clean.csv` у каталозі `data/`, який ви щойно створили.
+Або ви можете зробити це безпосередньо в R, скопіювавши та вставивши це у свій термінал (викладач може розмістити цей фрагмент коду в Etherpad):
 
 ```{r download-data, eval=FALSE}
 download.file(
@@ -225,58 +217,33 @@ download.file(
   )
 ```
 
-## Interacting with R
+## Взаємодія з R
 
-The basis of programming is that we write down instructions for the computer to
-follow, and then we tell the computer to follow those instructions. We write, or
-_code_, instructions in R because it is a common language that both the computer
-and we can understand. We call the instructions _commands_ and we tell the
-computer to follow the instructions by _executing_ (also called _running_) those
-commands.
+Основою програмування є те, що ми записуємо інструкції, які комп’ютер має виконати, а потім даємо йому команду їх виконати. Ми записуємо або _кодуємо_ інструкції в R, тому що це спільна мова, яку розуміє і комп’ютер, і ми. Ми називаємо ці інструкції _командами_ і просимо комп’ютер виконати їх, тобто _виконати_ (або _запустити_) ці команди.
 
-There are two main ways of interacting with R: by using the console or by using
-script files (plain text files that contain your code). The console pane (in
-RStudio, the bottom left panel) is the place where commands written in the R
-language can be typed and executed immediately by the computer. It is also where
-the results will be shown for commands that have been executed. You can type
-commands directly into the console and press <kbd>Enter</kbd> to execute those
-commands, but they will be forgotten when you close the session.
+Існує два основних способи взаємодії з R: за допомогою консолі або за допомогою файлів скриптів
+(звичайних текстових файлів, які містять ваш код). Консоль (у RStudio — це нижня ліва панель) — це місце, де можна вводити команди мовою R і комп’ютер одразу їх виконає. Це також місце, де будуть показані результати виконаних команд. Ви можете ввести команди безпосередньо в консоль і натиснути <kbd>Enter</kbd>, щоб виконати їх, але вони будуть втрачені, щойно ви закриєте сесію.
 
-Because we want our code and workflow to be reproducible, it is better to type
-the commands we want in the script editor and save the script. This way, there
-is a complete record of what we did, and anyone (including our future selves!)
-can easily replicate the results on their computer.
+Оскільки ми хочемо, щоб наш код і робочий процес були відтворюваними, краще вводити потрібні команди в редактор скриптів і зберігати цей скрипт. Таким чином у нас залишається повний запис того, що ми зробили й будь-хто (включно з нами в майбутньому!)
+зможуть легко відтворити результати на своєму комп'ютері.
 
-RStudio allows you to execute commands directly from the script editor by using
-the <kbd>Ctrl</kbd> + <kbd>Enter</kbd> shortcut (on Mac, <kbd>Cmd</kbd> + <kbd>Return</kbd> will work). The command on the current line in the
-script (indicated by the cursor) or all of the commands in
-selected text will be sent to the console and executed when you press <kbd>Ctrl</kbd> + <kbd>Enter</kbd>. If there is information in the console
-you do not need anymore, you can clear it with <kbd>Ctrl</kbd> + <kbd>L</kbd>.
-You can find other keyboard shortcuts in this
-[RStudio cheatsheet about the RStudio IDE](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rstudio-ide.pdf).
+RStudio дозволяє виконувати команди прямо з редактора скриптів за допомогою комбінації клавіш <kbd>Ctrl</kbd> + <kbd>Enter</kbd> (на Mac, <kbd>Cmd</kbd> + <kbd>Return</kbd>). Команда на поточному рядку в скрипті (позначена курсором) або всі команди в виділеному тексті будуть надіслані на консоль і виконані при натисканні <kbd>Ctrl</kbd> + <kbd>Enter</kbd>. Якщо в консолі є інформація, яка вам більше не потрібна, ви можете очистити її за допомогою <kbd>Ctrl</kbd> + <kbd>L</kbd>.
+Ви можете знайти інші комбінації клавіш у цій
+[шпаргалці RStudio про RStudio IDE](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rstudio-ide.pdf).
 
-At some point in your analysis, you may want to check the content of a variable
-or the structure of an object without necessarily keeping a record of it in
-your script. You can type these commands and execute them directly in the
-console.  RStudio provides the <kbd>Ctrl</kbd> + <kbd>1</kbd> and <kbd>Ctrl</kbd> + <kbd>2</kbd> shortcuts allow you to jump between the
-script and the console panes.
+На певному етапі аналізу ви можете перевірити вміст змінної
+або структуру об'єкта без необхідності збереження запису в
+вашому скрипті. Ви можете ввести ці команди та виконати їх безпосередньо в консолі.  RStudio надає комбінації клавіш <kbd>Ctrl</kbd> + <kbd>1</kbd> та <kbd>Ctrl</kbd> + <kbd>2</kbd>, що дозволяють переходити між скриптом і консоллю.
 
-If R is ready to accept commands, the R console shows a `>` prompt. If R
-receives a command (by typing, copy-pasting, or sent from the script editor using <kbd>Ctrl</kbd> + <kbd>Enter</kbd>), R will try to execute it and, when
-ready, will show the results and come back with a new `>` prompt to wait for new
-commands.
+Якщо R готовий приймати команди, консоль R показує `>`. Якщо R отримає команду (шляхом введення, копіювання-вставлення або надіслану з редактора скриптів за допомогою <kbd>Ctrl</kbd> + <kbd>Enter</kbd>), R спробує виконати її й коли буде готовий, покаже результати та знову виведе новий `>`, щоб чекати на наступні команди.
 
-If R is still waiting for you to enter more text,
-the console will show a `+` prompt. It means that you haven't finished entering
-a complete command. This is likely because you have not 'closed' a parenthesis or
-quotation, i.e. you don't have the same number of left-parentheses as
-right-parentheses or the same number of opening and closing quotation marks.
-When this happens, and you thought you finished typing your command, click
-inside the console window and press <kbd>Esc</kbd>; this will cancel the
-incomplete command and return you to the `>` prompt. You can then proofread
-the command(s) you entered and correct the error.
+Якщо R все ще чекає, коли ви введете більше тексту,
+консоль покаже `+`. Це означає, що ви не закінчили введення
+повної команди. Ймовірно, це пов'язано з тим, що ви не «закрили» дужки або цитату, тобто у вас немає такої ж кількості лівих дужок, як
+правих дужок, або такої ж кількості початкових та закритих лапок.
+Якщо таке трапляється, а ви думали, що закінчили вводити команду, натисніть у вікні консолі та натисніть <kbd>Esc</kbd>; це скасує незавершену команду та поверне вас до запиту `>`. Потім ви можете коригувати введену команду та виправити помилку.
 
-## Installing additional packages using the packages tab
+## Встановлення додаткових пакетів за допомогою вкладки "пакети"
 
 In addition to the core R installation, there are in excess of
 10,000 additional packages which can be used to extend the
