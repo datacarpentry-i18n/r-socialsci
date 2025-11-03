@@ -253,15 +253,15 @@ class(interviews)
 
 - `str(interviews)` - структура об'єкта та інформація про клас,
   довжину та зміст кожної колонки
-- `summary(interviews)` - summary statistics for each column
-- `glimpse(interviews)` - returns the number of columns and rows of the tibble,
-  the names and class of each column, and previews as many values will fit on the
-  screen. Unlike the other inspecting functions listed above, `glimpse()` is not a
-  "base R" function so you need to have the `dplyr` or `tibble` packages loaded to
-  be able to execute it.
+- `summary(інтерв'ю)` - підсумкова статистика для кожного стовпця
+- `( interviews) `- повертає кількість стовпців і рядків тібла,
+  назви та клас кожного стовпця, а також переглядає стільки значень, які вмістяться на екрані
+  . На відміну від інших функцій перевірки, перелічених вище, `() `не є функцією
+  «base R», тому вам потрібно мати пакети `dplyr` або `tibble` завантажені до
+  , щоб мати можливість її виконати.
 
-Note: most of these functions are "generic." They can be used on other types of
-objects besides data frames or tibbles.
+Примітка: більшість цих функцій є «загальними». Їх можна використовувати на інших типах об'єктів
+, окрім дата фреймів або сучасних дата фреймів.
 
 ## Subsetting data frames
 
