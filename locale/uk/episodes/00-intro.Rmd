@@ -189,10 +189,9 @@ RStudio поділено на чотири "панелі". Розміщення 
 
 ![](fig/rstudio_project_files.jpeg){alt='Example of a working directory structure'}
 
-### The working directory
+### Робочий каталог
 
-The working directory is an important concept to understand. It is the place
-where R will look for and save files. When you write code for your project, your
+Робочий каталог - важливе поняття для розуміння. Це місце, де R буде шукати та зберігати файли. When you write code for your project, your
 scripts should refer to files in relation to the root of your working directory
 and only to files within this structure.
 
