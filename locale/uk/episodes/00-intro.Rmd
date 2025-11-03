@@ -162,7 +162,7 @@ RStudio надає зручні інструменти для цього чер�
 
 Давайте швидко ознайомимося з RStudio.
 
-![](fig/R_00_Rstudio_01.png){alt='Screenshot of the RStudio\_startup screen'}
+![](fig/R_00_Rstudio_01.png){alt='Знімок екрану запуску RStudio\ _'}
 
 RStudio поділено на чотири "панелі". Розміщення цих панелей
 та їх вміст можна налаштувати (див. меню, Tools (Інструменти) -> Global Options (Глобальні параметри) -> Pane Layout (Макет панелі)).
@@ -187,7 +187,7 @@ RStudio поділено на чотири "панелі". Розміщення 
 
 Вам можуть знадобитися додаткові каталоги або підкаталоги залежно від потреб вашого проєкту, але вони повинні складати основу вашого робочого каталогу.
 
-![](fig/rstudio_project_files.jpeg){alt='Example of a working directory structure'}
+![](fig/rstudio_project_files.jpeg){alt='Приклад структури робочого каталогу'}
 
 ### Робочий каталог
 
@@ -245,82 +245,57 @@ RStudio дозволяє виконувати команди прямо з ре�
 
 ## Встановлення додаткових пакетів за допомогою вкладки "пакети"
 
-In addition to the core R installation, there are in excess of
-10,000 additional packages which can be used to extend the
-functionality of R. Many of these have been written by R users and
-have been made available in central repositories, like the one
-hosted at CRAN, for anyone to download and install into their own R
-environment. You should have already installed the packages 'ggplot2'
-and 'dplyr. If you have not, please do so now using these instructions.
+На додаток до базової інсталяції R, існує понад 10,000 додаткових пакетів, які можуть бути використані для розширення функціональності R. Багато з них були написані користувачами R і були доступні в центральних репозиторіях, який розміщений на CRAN, щоб кожен міг завантажити та встановити їх у власне середовище R. У вас вже має бути встановлено пакети 'ggplot2' та 'dplyr. Якщо ви цього не зробили, будь ласка, зробіть це зараз, використовуючи ці інструкції.
 
-You can see if you have a package installed by looking in the `packages` tab
-(on the lower-right by default). You can also type the command
-`installed.packages()` into the console and examine the output.
+Ви можете перевірити, чи встановлений у вас пакет, переглянувши вкладку `packages` (за замовчуванням внизу праворуч). Ви також можете ввести команду `installed.packages() `в консоль і перевірити вивід.
 
-![](fig/packages_pane.png){alt='Screenshot of Packages pane'}
+! [] (fig/packages_pane.png) {alt='Скріншот панелі пакетів'}
 
-Additional packages can be installed from the ‘packages' tab.
-On the packages tab, click the ‘Install' icon and start typing the
-name of the package you want in the text box. As you type, packages
-matching your starting characters will be displayed in a drop-down
-list so that you can select them.
+Додаткові пакунки можна встановити із вкладки 'packages'.
+На вкладці пакетів натисніть значок «Install (Встановити)» і почніть вводити назву потрібного пакета у текстовому полі. Під час введення тексту пакети, назви яких починаються з введених вами символів, будуть показуватися у випадному списку і ви зможете вибрати потрібний.
 
-![](fig/R_00_Rstudio_03.png){alt='Screenshot of Install Packages Window'}
+![](fig/R_00_Rstudio_03.png){alt='Знімок вікна встановлення пакетів'}
 
-At the bottom of the Install Packages window is a check box to
-‘Install' dependencies. This is ticked by default, which is usually
-what you want. Packages can (and do) make use of functionality
-built into other packages, so for the functionality contained in
-the package you are installing to work properly, there may be other
-packages which have to be installed with them. The ‘Install
-dependencies' option makes sure that this happens.
+У нижній частині вікна Install Packages (Встановити пакети) є прапорець ‘Install’ dependencies (Встановити залежності). Цю опцію за замовчуванням увімкнено, і зазвичай саме так і потрібно. Пакети можуть (і справді) використовувати функціональність, вбудовану в інші пакети, тому для того, щоб функції пакета, який ви встановлюєте, працювали правильно, може знадобитися встановлення інших пакетів разом із ним. Опція «Install dependencies» (встановити залежності) забезпечує, щоб ці додаткові пакети також були встановлені.
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Exercise
+## Завдання
 
-Use both the Console and the Packages tab to confirm that you have the tidyverse
-installed.
+Використовуйте вкладку Console (Консоль) і Packages (Пакети), щоб переконатися, що у вас встановлено tidyverse.
 
 :::::::::::::::  solution
 
-## Solution
+## Рішення
 
-Scroll through packages tab down to ‘tidyverse'.  You can also type a few
-characters into the searchbox.
-The ‘tidyverse' package is really a package of packages, including
-'ggplot2' and 'dplyr', both of which require other packages to run correctly.
-All of these packages will be installed automatically. Depending on what
-packages have previously been installed in your R environment, the install of
-‘tidyverse' could be very quick or could take several minutes. As the install
-proceeds, messages relating to its progress will be written to the console.
-You will be able to see all of the packages which are actually being
-installed.
+Прокрутіть вкладку пакетів вниз до ‘tidyverse'.  Ви також можете ввести кілька символів у вікно пошуку.
+Пакет "tidyverse" насправді є набором пакетів, включаючи
+'ggplot2' та 'dplyr', які обидва потребують інших пакетів для коректної роботи.
+Всі ці пакети будуть встановлені автоматично. Залежно від того, які пакети раніше були встановлені у вашому середовищі R, встановлення 'tidyverse' може бути дуже швидким або ж зайняти кілька хвилин. Під час встановлення на консолі будуть виводитися повідомлення, пов’язані з прогресом його виконання.
+Ви зможете побачити всі пакети, які фактично встановлюються.
 
 :::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-Because the install process accesses the CRAN repository, you
-will need an Internet connection to install packages.
+Оскільки процес встановлення отримує доступ до сховища CRAN, вам
+знадобиться підключення до Інтернету для встановлення пакетів.
 
-It is also possible to install packages from other repositories, as
-well as Github or the local file system, but we won't be looking at these options in this lesson.
+Також можна встановити пакети з інших сховищ, в тому числі з Github або локальної файлової системи, але ми не будемо розглядати ці позиції в цьому уроці.
 
-## Installing additional packages using R code
+## Встановлення додаткових пакетів за допомогою команд R
 
-If you were watching the console window when you started the
-install of ‘tidyverse', you may have noticed that the line
+Якщо ви дивилися вікно консолі під час запуску встановлення 'tidyverse', можливо, ви помітили, що рядок
 
 ```{r, eval=FALSE}
 install.packages("tidyverse")
 ```
 
-was written to the console before the start of the installation messages.
+був записаний на консоль до початку інсталяційних повідомлень.
 
-You could also have installed the **`tidyverse`** packages by running this command directly at the R terminal.
+Ви також могли встановити пакети **`tidyverse`**, виконавши цю команду безпосередньо в терміналі R.
 
-We will be using another package called **`here`** throughout the workshop to manage paths and directories. We will discuss it more detail in a later episode, but we will install it now in the console:
+Ми будемо використовувати ще один пакет під назвою **`here`** протягом усього курсу для керування шляхами та каталогами. Ми обговоримо це більш детально в пізньому епізоді, але зараз ми встановимо його в консолі:
 
 ```{r, eval=FALSE}
 install.packages("here")
@@ -328,8 +303,8 @@ install.packages("here")
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
-- Use RStudio to write and run R programs.
-- Use `install.packages()` to install packages (libraries).
+- Використовуйте RStudio для запису та запуску програм R.
+- Використовуйте `install.packages() `для встановлення пакетів (бібліотек).
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
