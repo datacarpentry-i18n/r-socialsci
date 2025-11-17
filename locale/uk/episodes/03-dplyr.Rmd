@@ -264,7 +264,7 @@ where respondents were members of an irrigation association
 
 :::::::::::::::  solution
 
-## Solution
+## Рішення
 
 ```{r}
 interviews %>%
@@ -276,28 +276,25 @@ interviews %>%
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Mutate
+## Створювати (або змінювати) змінні
 
-Frequently you'll want to create new columns based on the values in existing
-columns, for example to do unit conversions, or to find the ratio of values in
-two columns. For this we'll use `mutate()`.
+Часто потрібно створювати нові стовпці на основі значень наявних стовпців, наприклад, для перетворення одиниць або для пошуку співвідношення значень  двох стовпців. Для цього ми використаємо \`mutate()'.
 
-We might be interested in the ratio of number of household members
-to rooms used for sleeping (i.e. avg number of people per room):
+Нас може зацікавити співвідношення кількості членів домогосподарства до кількості кімнат, що використовуються для сну (тобто середня кількість людей на кімнату):
 
 ```{r, purl=FALSE}
 interviews %>%
     mutate(people_per_room = no_membrs / rooms)
 ```
 
-We may be interested in investigating whether being a member of an
-irrigation association had any effect on the ratio of household members
-to rooms. To look at this relationship, we will first remove
-data from our dataset where the respondent didn't answer the
-question of whether they were a member of an irrigation association.
-These cases are recorded as "NULL" in the dataset.
+Нам може бути цікаво дослідити, чи вплинуло членство в зрошувальній асоціації
+на співвідношення членів домогосподарства
+до кімнат. Щоб подивитися на цей зв'язок, ми спочатку видалимо дані
+з нашого набору даних, де респондент не відповів на питання
+про те, чи були вони членами зрошувальної асоціації.
+Ці випадки записуються як "NULL" в датасеті.
 
-To remove these cases, we could insert a `filter()` in the chain:
+Щоб видалити ці випадки, ми можемо вставити "filter()" в стрічку:
 
 ```{r, purl=FALSE}
 interviews %>%
@@ -305,28 +302,25 @@ interviews %>%
     mutate(people_per_room = no_membrs / rooms)
 ```
 
-The `!` symbol negates the result of the `is.na()` function. Thus, if `is.na()`
-returns a value of `TRUE` (because the `memb_assoc` is missing), the `!` symbol
-negates this and says we only want values of `FALSE`, where `memb_assoc` **is
-not** missing.
+Символ `!` заперечує результат функції `is.na()”. Таким чином, якщо `is.na () `повертає значення`TRUE`(оскільки`membr_assoc` відсутній), то`! `Символ
+заперечує це і говорить, що ми хочемо лише значення `FALSE`, де `membr_assoc\` \*\*
+не\*\* відсутні.
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Exercise
+## Завдання
 
-Create a new dataframe from the `interviews` data that meets the following
-criteria: contains only the `village` column and a new column called
-`total_meals` containing a value that is equal to the total number of meals
-served in the household per day on average (`no_membrs` times `no_meals`).
-Only the rows where `total_meals` is greater than 20 should be shown in the
-final dataframe.
+Створіть нову панель даних із даних `interviews`, яка відповідає наступним критеріям: містить лише стовпець `village` та новий стовпець під назвою
+`total_meals`, що містить значення, яке дорівнює загальній кількості обідів, поданих у домогосподарстві в середньому за день (`no_membrs`, \`\`no-meals`).
+У кінцевій рамці датасеті
+повинні відображатися лише рядки, де `total_meals\` більше 20.
 
-**Hint**: think about how the commands should be ordered to produce this data
+**Підказка**: подумайте, як слід впорядкувати команди для створення цих даних
 frame!
 
 :::::::::::::::  solution
 
-## Solution
+## Рішення
 
 ```{r}
 interviews_total_meals <- interviews %>%
@@ -339,20 +333,14 @@ interviews_total_meals <- interviews %>%
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Split-apply-combine data analysis and the summarize() function
+## Аналіз даних типу Split-apply-combine та функція summarize()
 
-Many data analysis tasks can be approached using the _split-apply-combine_
-paradigm: split the data into groups, apply some analysis to each group, and
-then combine the results. **`dplyr`** makes this very easy through the use of
-the `group_by()` function.
+До багатьох завдань аналізу даних можна підійти за допомогою парадигми _split-apply-combine_: розділіть дані на групи, застосуйте певний аналіз до кожної групи, а потім об'єднайте результати. **`dplyr`** робить це дуже легко завдяки використанню функції `group_by () `.
 
-### The `summarize()` function
+### Функція `summarize()`
 
-`group_by()` is often used together with `summarize()`, which collapses each
-group into a single-row summary of that group.  `group_by()` takes as arguments
-the column names that contain the **categorical** variables for which you want
-to calculate the summary statistics. So to compute the average household size by
-village:
+`group_by () `часто використовується разом з `()`, що згортає кожну групу в однорядковий підсумок цієї групи.  `group_by () `приймає як аргументи
+назви стовпців, що містять змінні**categorical**, для яких ви хочете, обчислити зведену статистику. Отже, щоб обчислити середній розмір домогосподарства за селом:
 
 ```{r, purl=FALSE}
 interviews %>%
@@ -360,7 +348,7 @@ interviews %>%
     summarize(mean_no_membrs = mean(no_membrs))
 ```
 
-You can also group by multiple columns:
+Ви можете також групувати кілька стовпців:
 
 ```{r, purl=FALSE}
 interviews %>%
@@ -368,10 +356,8 @@ interviews %>%
     summarize(mean_no_membrs = mean(no_membrs))
 ```
 
-Note that the output is a grouped tibble of nine rows by three columns
-which is indicated by the by two first lines with the `#`.
-To obtain an ungrouped tibble, use the
-`ungroup` function:
+Зверніть увагу, що вихід являє собою згруповану таблицю з дев'яти рядків трьома стовпцями , яка позначається двома першими рядками з `#`.
+Щоб отримати розгруповану таблицю, скористайтеся функцією `ungroup`:
 
 ```{r, purl=FALSE}
 interviews %>%
