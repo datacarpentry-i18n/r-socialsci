@@ -11,113 +11,105 @@ source("data/download_data.R")
 
 :::: instructor
 
-- This lesson works better if you have graphics demonstrating dplyr commands.
-  You can modify [this Google Slides deck](https://docs.google.com/presentation/d/1A9abypFdFp8urAe9z7GCMjFr4aPeIb8mZAtJA2F7H0w/edit#slide=id.g652714585f_0_114) and use it for your workshop.
-- For this lesson make sure that learners are comfortable using pipes.
-- There is also sometimes some confusion on what the arguments of `group_by`
-  should be, and when to use `filter()` and `select()`.
+- Цей урок є корисним, якщо у вас є графіка, яка демонструє команди dplyr.
+  Ви можете змінити [цю презентацію Google Slides] (https://docs.google.com/presentation/d/1A9abypFdFp8urAe9z7GCMjFr4aPeIb8mZAtJA2F7H0w/edit#slide=id.g652714585f_0_114) та використовувати її для своєї роботи.
+- Для цього уроку переконайтеся, що учні впевнено користуються оператором pipe (|>).
+- Також іноді виникає деяка плутанина щодо того, якими мають бути аргументи `group_by`
+  , а також коли використовувати `filter () `та `select ()`.
 
 ::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- Describe the purpose of an R package and the **`dplyr`** package.
-- Select certain columns in a dataframe with the **`dplyr`** function `select`.
-- Select certain rows in a dataframe according to filtering conditions with the **`dplyr`** function `filter`.
-- Link the output of one **`dplyr`** function to the input of another function with the 'pipe' operator `%>%`.
-- Add new columns to a dataframe that are functions of existing columns with `mutate`.
-- Use the split-apply-combine concept for data analysis.
-- Use `summarize`, `group_by`, and `count` to split a dataframe into groups of observations, apply a summary statistics for each group, and then combine the results.
+- Опишіть призначення пакета R та пакету\*\*`dplyr`\*\*.
+- Виділіть певні стовпці в датасеті за допомогою функції **`dplyr`** `select`.
+- Виберіть певні рядки в датасеті відповідно до умов фільтрації за допомогою функції **`dplyr`** `filter`.
+- З'єднайте результат однієї з **`dplyr`** функції з введенням іншої функції з оператором 'pipe' %>`%`.
+- Додайте нові стовпці дата сету які є функціями наявних стовпців з `mutate`.
+- Використовуйте концепцію розділення застосування-комбінування для аналізу даних.
+- Використовуйте `summarize`, `group_by` і `count`, щоб розділити набір даних на групи спостережень, застосувати зведену статистику для кожної групи, а потім об'єднати результати.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- How can I select specific rows and/or columns from a dataframe?
-- How can I combine multiple commands into a single command?
-- How can I create new columns or remove existing columns from a dataframe?
+- Як я можу вибрати певні рядки та/або стовпці з набору даних?
+- Як я можу об'єднати кілька команд в одну команду?
+- Як створити нові стовпці або видалити наявні стовпці з набору даних?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-**`dplyr`** is a package for making tabular data wrangling easier by using a
-limited set of functions that can be combined to extract and summarize insights
-from your data.
+**`dplyr`**  — це пакет, який спрощує роботу з табличними даними, використовуючи обмежений набір функцій, що можна поєднувати для отримання та узагальнення інформації з ваших даних.
 
-Like **`readr`**, **`dplyr`** is a part of the tidyverse. These packages were loaded
-in R's memory when we called `library(tidyverse)` earlier.
+Як і **`readr`**, **`dplyr`** є частиною набору пакетів tidyverse. Ці пакети були завантажені
+в пам'ять R, коли ми раніше викликали `library (tidyverse) `.
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
-## Note
+## Примітка
 
-The packages in the tidyverse, namely **`dplyr`**, **`tidyr`** and **`ggplot2`**
-accept both the British (e.g. _summarise_) and American (e.g. _summarize_) spelling
-variants of different function and option names. For this lesson, we utilize
-the American spellings of different functions; however, feel free to use
-the regional variant for where you are teaching.
+Пакети в tidyverse, а саме **`dplyr`**, **`tidyr`** та **`ggplot2`**
+приймають як британські (наприклад, _summarise_), так і американські (наприклад, _summarize_) варіанти написання
+різних назв функцій і опцій. На цьому уроці ми використовуємо
+американські написання різних функцій; Однак, можна використовувати регіональний варіант для навчання.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## What is an R package?
+## Що таке R-пакет?
 
-The package **`dplyr`** provides easy tools for the most common data
-wrangling tasks. It is built to work directly with dataframes, with many
-common tasks optimized by being written in a compiled language (C++) (not all R
-packages are written in R!).
+Пакет **`dplyr`** надає зручні інструменти для виконання найпоширеніших завдань з обробки даних. Його створено для роботи безпосередньо з датафреймами, а багато поширених операцій оптимізовано завдяки тому, що вони написані компільованою мовою (C++) (адже не всі пакети R написані мовою R!).
 
-There are also packages available for a wide range of tasks including building plots
-(**`ggplot2`**, which we'll see later), downloading data from the NCBI database, or
-performing statistical analysis on your data set. Many packages such as these are
-housed on, and downloadable from, the **C**omprehensive **R** **A**rchive **N**etwork
-(CRAN) using `install.packages`. This function makes the package accessible by your R
-installation with the command `library()`, as you did with `tidyverse` earlier.
+Існують також пакети для широкого спектра завдань, зокрема для створення графіків (ggplot2, який ми розглянемо пізніше), завантаження даних із бази NCBI або виконання статистичного аналізу вашого набору даних. Багато таких пакунків є
+, розміщеними на **C**Omgensive**R** **a**RChive **n**eWork
+(CRAN) за допомогою `install.packages` і завантажуються з нього. Ця функція робить пакет доступним для вашої інсталяції R
+за допомогою команди `library () `, як ви робили з `tidyverse` раніше.
 
-To easily access the documentation for a package within R or RStudio, use
-`help(package = "package_name")`.
+Щоб легко отримати доступ до документації для пакета в R або RStudio, скористайтеся
+`help (package = «package_name») `.
 
-To learn more about **`dplyr`** after the workshop, you may want to check out this
-[handy data transformation with **`dplyr`** cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf).
+Щоб дізнатися більше про **`dplyr`** після практичного завдання ви можете ознайомитися з цим
+[зручне перетворення даних за допомогою cheatsheet **`dplyr`**](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf).
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
-## Note
+## Примітка
 
-There are alternatives to the `tidyverse` packages for data wrangling, including
-the package [`data.table`](https://rdatatable.gitlab.io/data.table/). See this
-[comparison](https://mgimond.github.io/rug_2019_12/Index.html)
-for example to get a sense of the differences between using `base`, `tidyverse`, and
+Пакети `tidyverse` є альтернативи, включаючи
+пакет [`data.table`](https://rdatatable.gitlab.io/data.table/). Див.
+[порівняння] (https://mgimond.github.io/rug_2019_12/Index.html)
+, наприклад, щоб зрозуміти відмінності між використанням `base`, `tidyverse` і
 `data.table`.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Learning **`dplyr`**
+## Навчання **`dplyr`**
 
-To make sure everyone will use the same dataset for this lesson, we'll read
-again the SAFI dataset that we downloaded earlier.
+Щоб переконатися, що всі використовуватимуть один і той же набір даних для цього уроку, ми знову прочитаємо
+набір даних SAFI, який ми завантажили раніше.
 
 ```{r, results="hide", purl=FALSE, message=FALSE}
 
-## load the tidyverse
+## завантажити бібліотеку tidyverse
 library(tidyverse)
 library(here)
 
-interviews <- read_csv(here("data", "SAFI_clean.csv"), na = "NULL")
+інтерв'ю <- read_csv (тут («data», "SAFI_clean.csv «), na = «NULL»)
 
-## inspect the data
+## перевірте дані
 interviews
 
-## preview the data
-# view(interviews)
+## попередній перегляд даних
+# view (interviews)
 ```
 
-We're going to learn some of the most common **`dplyr`** functions:
+Ми вивчимо деякі з найпоширеніших функцій **`dplyr`**:
 
-- `select()`: subset columns
-- `filter()`: subset rows on conditions
-- `mutate()`: create new columns by using information from other columns
-- `group_by()` and `summarize()`: create summary statistics on grouped data
-- `arrange()`: sort results
-- `count()`: count discrete values
+- `select ()`: стовпці підмножини
+- `filter()`: вкладені рядки в умовах
+- `mutate () `: створити нові стовпці, використовуючи інформацію з інших стовпців
+- `group_by () `і `()`: створюємо зведену статистику щодо згрупованих даних
+- `arrangere () `: сортувати результати
+- `count()`: підрахувати окремі значення
 
 ## Selecting columns and filtering rows
 
