@@ -20,63 +20,54 @@ source("data/download_data.R")
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- How can I reformat a data frame to meet my needs?
+- Як я можу переформатувати дата фрейм відповідно до своїх потреб?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-**`dplyr`** pairs nicely with **`tidyr`** which enables you to swiftly
-convert between different data formats (long vs. wide) for plotting and analysis.
-To learn more about **`tidyr`** after the workshop, you may want to check out this
-handy data tidying with .
+**`dplyr`** чудово поєднується з **`tidyr`**, що дає змогу швидко
+перетворювати дані між різними форматами (довгим і широким) для візуалізації та аналізу.
+Щоб дізнатися більше про **`tidyr`** курсу, ви можете переглянути цю
+[зручну шпаргалку з маніпулювання даними за допомогою **`tidyr`**](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf).
 
-To make sure everyone will use the same dataset for this lesson, we'll read
-again the SAFI dataset that we downloaded earlier.
+Щоб переконатися, що всі використовуватимуть один і той самий набір даних для цього уроку, ми знову зчитаємо набір даних SAFI, який завантажили раніше.
 
 ```{r, results="hide", purl=FALSE, message=FALSE}
 
-## load the tidyverse
+## завантажити бібліотеку tidyverse
 library(tidyverse)
 library(here)
 
 interviews <- read_csv(here("data", "SAFI_clean.csv"), na = "NULL")
 
-## inspect the data
+## перевірте дані
 interviews
 
-## preview the data
+## попередній перегляд даних
 # view(interviews)
 ```
 
-## Reshaping with pivot\_wider() and pivot\_longer()
+## Переформатування даних за допомогою pivot\_wider() і pivot\_longer()
 
-There are essentially three rules that define a "tidy" dataset:
+Існує три основні правила, які визначають "охайний" набір даних:
 
-1. Each variable has its own column
-2. Each observation has its own row
-3. Each value must have its own cell
+1. Кожна змінна має свій стовпець
+2. Кожне спостереження має свій рядок
+3. Кожне значення має свою окрему клітинку
 
-This graphic visually represents the three rules that define a "tidy" dataset:
+Цей графік візуально ілюструє три правила, що визначають "охайний" набір даних:
 
 ![](fig/tidy-data-wickham.png)
 _R for Data Science_, Wickham H and Grolemund G ([https://r4ds.had.co.nz/index.html](https://r4ds.had.co.nz/index.html))
 © Wickham, Grolemund 2017
 This image is licenced under Attribution-NonCommercial-NoDerivs 3.0 United States (CC-BY-NC-ND 3.0 US)
 
-In this section we will explore how these rules are linked to the different
-data formats researchers are often interested in: "wide" and "long". This
-tutorial will help you efficiently transform your data shape regardless of
-original format. First we will explore qualities of the `interviews` data and
-how they relate to these different types of data formats.
+У цьому розділі ми розглянемо, як ці правила пов’язані з різними форматами даних, які зазвичай цікавлять дослідників: "широким" і "довгим". Цей матеріал допоможе вам ефективно змінювати форму ваших даних незалежно від їх початкового формату. Спершу ми розглянемо характеристики даних `interviews` і те, як вони пов’язані з різними типами форматів даних.
 
-### Long and wide data formats
+### Довгі та широкі формати даних
 
-In the `interviews` data, each row contains the values of variables associated
-with each record collected (each interview in the villages). It is stated
-that the `key_ID` was "added to provide a unique Id for each observation"
-and the `instanceID` "does this as well but it is not as convenient to use."
+У наборі даних `interviews` кожен рядок містить значення змінних, пов’язаних із кожним записом (кожним інтерв’ю у селах). Зазначено, що `key_ID` "додано для надання унікального ідентифікатора для кожного спостереження", а `instanceID` "робить те саме, але його не так зручно використовувати".
 
-Once we have established that `key_ID` and `instanceID` are both unique we can use
-either variable as an identifier corresponding to the 131 interview records.
+Після того, як ми визначили, що `key_ID` і `instanceID` обидва є унікальними, ми можемо використовувати будь-яку з цих змінних як ідентифікатор для 131 запису інтерв’ю.
 
 ```{r, purl=FALSE}
 interviews %>% 
@@ -85,9 +76,7 @@ interviews %>%
   nrow()
 ```
 
-As seen in the code below, for each interview date in each village no
-`instanceID`s are the same. Thus, this format is what is called a "long" data
-format, where each observation occupies only one row in the dataframe.
+Як видно з наведеного нижче коду, для кожної дати інтерв’ю в кожному селі `instanceID`s не повторюються. Таким чином, цей формат називається "довгим" форматом даних, де кожне спостереження займає лише один рядок у дата фреймі.
 
 ```{r, purl=FALSE}
 interviews %>%
@@ -96,66 +85,32 @@ interviews %>%
   sample_n(size = 10)
 ```
 
-We notice that the layout or format of the `interviews` data is in a format that
-adheres to rules 1-3, where
+Можемо помітити, що структура або формат даних `interviews` відповідає правилам 1-3, де
 
-- each column is a variable
-- each row is an observation
-- each value has its own cell
+- кожен стовпець є змінною
+- кожен ряд є спостереженням
+- кожне значення має свою окрему клітинку
 
-This is called a "long" data format. But, we notice that each column represents
-a different variable. In the "longest" data format there would only be three
-columns, one for the id variable, one for the observed variable, and one for the
-observed value (of that variable). This data format is quite unsightly
-and difficult to work with, so you will rarely see it in use.
+Це називають "довгим" форматом даних. Але зауважте, що кожен стовпець представляє різну змінну. У "найдовшому" форматі даних було б лише три стовпці: один для змінної-ідентифікатора, один для спостережуваної змінної та один для спостережуваного значення цієї змінної. Такий формат даних досить незручний і складний для роботи, тому його рідко використовують на практиці.
 
-Alternatively, in a "wide" data format we see modifications to rule 1, where
-each column no longer represents a single variable. Instead, columns can
-represent different levels/values of a variable. For instance, in some data you
-encounter the researchers may have chosen for every survey date to be a
-different column.
+Крім того, у "широкому" форматі даних спостерігаються зміни в правилі 1: тепер кожен стовпець більше не обов’язково представляє лише одну змінну. Натомість стовпці можуть зображати різні рівні/значення змінної. Наприклад, у деяких наборах даних дослідники могли обрати, щоб кожна дата опитування була окремим стовпцем.
 
-These may sound like dramatically different data layouts, but there are some
-tools that make transitions between these layouts much simpler than you might
-think! The gif below shows how these two formats relate to each other, and
-gives you an idea of how we can use R to shift from one format to the other.
+Хоча ці формати можуть здаватися радикально різними, існують інструменти, які роблять перехід між ними значно простішим, ніж може здатися! Гіф нижче показує, як ці два формати пов’язані між собою і дає уявлення про те, як можна використовувати R для переходу від одного формату до іншого.
 
 ![](fig/tidyr-pivot_wider_longer.gif)
-Long and wide dataframe layouts mainly affect readability. You may find that
-visually you may prefer the "wide" format, since you can see more of the data on
-the screen. However, all of the R functions we have used thus far expect for
-your data to be in a "long" data format. This is because the long format is more
-machine readable and is closer to the formatting of databases.
+Розташування даних у довгому та широкому форматах головним чином впливає на зручність перегляду. Візуально вам може більше подобатися "широкий" формат, оскільки на екрані можна побачити більше даних. Проте всі функції R, які ми використовували досі, очікують, що дані будуть у "довгому" форматі. Це пояснюється тим, що довгий формат легше сприймається машиною і ближчий до формату баз даних.
 
-### Questions which warrant different data formats
+### Питання, які вимагають різних форматів даних
 
-In interviews, each row contains the values of variables associated with each
-record (the unit), values such as the village of the respondent, the number
-of household members, or the type of wall their house had. This format allows
-for us to make comparisons across individual surveys, but what if we wanted to
-look at differences in households grouped by different types of items owned?
+У даних інтерв’ю кожен рядок містить значення змінних, пов’язаних із кожним записом (одиницею), такі як село респондента, кількість членів домогосподарства або тип стіни їхнього будинку. Такий формат дозволяє порівнювати окремі опитування, але що робити, якщо ми хочемо розглянути відмінності між домогосподарствами, згрупованими за різними типами власності?
 
-To facilitate this comparison we would need to create a new table where each row
-(the unit) was comprised of values of variables associated with items owned
-(i.e., `items_owned`). In practical terms this means the values of
-the items in `items_owned` (e.g. bicycle,
-radio, table, etc.) would become the names of column variables and
-the cells would contain values of `TRUE` or `FALSE`, for whether that household
-had that item.
+Щоб полегшити таке порівняння, потрібно створити нову таблицю, де кожен рядок (одиниця) складатиметься зі значень змінних, пов’язаних із власністю (тобто `items_owned`). Практично це означає, що значення елементів у `items_owned` (наприклад, велосипед, радіо, стіл тощо) стануть назвами стовпців, а клітинки міститимуть значення `TRUE` або `FALSE`, залежно від того, чи має домогосподарство цей предмет.
 
-Once we we've created this new table, we can explore the relationship within and
-between villages. The key point here is that we are still following a tidy data
-structure, but we have **reshaped** the data according to the observations of
-interest.
+Після створення такої таблиці ми можемо досліджувати взаємозв’язки всередині та між селами. Ключовий момент тут у тому, що ми все ще дотримуємося структури охайних даних, але **переформатували** дані відповідно до потрібних спостережень.
 
-Alternatively, if the interview dates were spread across multiple columns, and
-we were interested in visualizing, within each village, how irrigation
-conflicts have changed over time. This would require for the interview date to
-be included in a single column rather than spread across multiple columns. Thus,
-we would need to transform the column names into values of a variable.
+Крім того, якщо дати інтерв’ю розташовані у кількох стовпцях, а нас цікавить візуалізація того, як змінювалися конфлікти щодо зрошення з часом у кожному селі. Для цього потрібно, щоб дати інтерв’ю були включені в один стовпець, а не розкидані по кількох. Таким чином, нам потрібно перетворити назви стовпців на значення змінної.
 
-We can do both of these transformations with two `tidyr` functions,
-`pivot_wider()` and `pivot_longer()`.
+Обидві ці трансформації можна виконати за допомогою двох функцій пакета `tidyr`: `pivot_wider()` та `pivot_longer()`.
 
 ## Pivoting wider
 
