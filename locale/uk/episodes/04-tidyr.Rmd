@@ -1,5 +1,5 @@
 ---
-title: Data Wrangling with tidyr
+title: Маніпулювання даними за допомогою пакету tidyr
 teaching: 25
 exercises: 15
 source: Rmd
@@ -11,10 +11,10 @@ source("data/download_data.R")
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- Describe the concept of a wide and a long table format and for which purpose those formats are useful.
-- Describe the roles of variable names and their associated values when a table is reshaped.
-- Reshape a dataframe from long to wide format and back with the `pivot_wider` and `pivot_longer` commands from the **`tidyr`** package.
-- Export a dataframe to a csv file.
+- Описати концепцію широкого та довгого форматів таблиць, а також цілі, для яких ці формати корисні.
+- Описати ролі назв змінних та пов'язаних із ними значень під час зміни форми таблиці.
+- Переформатувати дата фрейм з довгого формату на широкий і назад за допомогою команд `pivot_wider` та `pivot_longer` з пакета **`tidyr`**.
+- Експортувати дата фрейм у файл csv.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -164,7 +164,7 @@ We can do both of these transformations with two `tidyr` functions,
 1. the data
 2. the _names\_from_ column variable whose values will become new column names.
 3. the _values\_from_ column variable whose values will fill the new column
-  variables.
+   variables.
 
 Further arguments include `values_fill` which, if set, fills in missing values
 with the value provided.
@@ -358,10 +358,10 @@ column names. We will do this in two steps to make this process a bit clearer.
 
 1. the data
 2. _cols_ are the names of the columns we use to fill the a new values variable
-  (or to drop).
+   (or to drop).
 3. the _names\_to_ column variable we wish to create from the _cols_ provided.
 4. the _values\_to_ column variable we wish to create and fill with values
-  associated with the _cols_ provided.
+   associated with the _cols_ provided.
 
 ```{r, purl=FALSE}
 interviews_long <- interviews_items_owned %>%
