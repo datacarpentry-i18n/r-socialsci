@@ -112,22 +112,18 @@ interviews %>%
 
 Обидві ці трансформації можна виконати за допомогою двох функцій пакета `tidyr`: `pivot_wider()` та `pivot_longer()`.
 
-## Pivoting wider
+## Перетворення у широкий формат
 
-`pivot_wider()` takes three principal arguments:
+`pivot_wider()` має три основні аргументи:
 
-1. the data
-2. the _names\_from_ column variable whose values will become new column names.
-3. the _values\_from_ column variable whose values will fill the new column
-   variables.
+1. дата фрейм
+2. змінна _names\_from_, значення якої стануть новими назвами стовпців.
+3. змінна _values\_from_, значення якої заповнюватимуть нові стовпці.
 
-Further arguments include `values_fill` which, if set, fills in missing values
-with the value provided.
+Додаткові аргументи включають `values_fill`, який, якщо його встановити, заповнює пропущені значення вказаним значенням.
 
-Let's use `pivot_wider()` to transform interviews to create new columns for each
-item owned by a household.
-There are a couple of new concepts in this transformation, so let's walk through
-it line by line. First we create a new object (`interviews_items_owned`) based on
+Використаймо `pivot_wider()`, щоб перетворити interviews і створити нові стовпці для кожного предмета, яким володіє домогосподарство.
+У цій трансформації є кілька нових концепцій, тому розглянемо її крок за кроком. First we create a new object (`interviews_items_owned`) based on
 the `interviews` data frame.
 
 ```{r, eval=FALSE}
