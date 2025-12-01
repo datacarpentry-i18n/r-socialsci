@@ -123,102 +123,53 @@ interviews %>%
 Додаткові аргументи включають `values_fill`, який, якщо його встановити, заповнює пропущені значення вказаним значенням.
 
 Використаймо `pivot_wider()`, щоб перетворити interviews і створити нові стовпці для кожного предмета, яким володіє домогосподарство.
-У цій трансформації є кілька нових концепцій, тому розглянемо її крок за кроком. First we create a new object (`interviews_items_owned`) based on
-the `interviews` data frame.
+У цій трансформації є кілька нових концепцій, тому розглянемо її крок за кроком. Спершу ми створимо новий об’єкт (`interviews_items_owned`) на основі дата фрейму `interviews`.
 
 ```{r, eval=FALSE}
 interviews_items_owned <- interviews %>%
 ```
 
-Then we will actually need to make our data frame longer, because we have
-multiple items in a single cell.
-We will use a new function, `separate_longer_delim()`, from the **`tidyr`** package
-to separate the values of `items_owned` based on the presence of semi-colons (`;`).
-The values of this variable were multiple items separated by semi-colons, so
-this action creates a row for each item listed in a household's possession.
-Thus, we end up with a long format version of the dataset, with multiple rows
-for each respondent. For example, if a respondent has a television and a solar
-panel, that respondent will now have two rows, one with "television" and the
-other with "solar panel" in the `items_owned` column.
+Тоді нам насправді потрібно зробити наш дата фрейм довшим, тому що в одній клітинці міститься кілька предметів.
+Ми використаємо нову функцію `separate_longer_delim()` з пакета **`tidyr`**, щоб розділити значення змінної `items_owned` за наявністю крапок з комою (`;`).
+Значення цієї змінної містили кілька предметів, розділених крапками з комою, тому ця операція створює окремий рядок для кожного предмета, зазначеного у власності домогосподарства.
+Таким чином ми отримуємо довгу версію набору даних — з кількома рядками для кожного респондента. Наприклад, якщо респондент має телевізор і сонячну панель, то тепер у нього буде два рядки: один із "television", а інший із "solar panel" у стовпці `items_owned`.
 
 ```{r, eval=FALSE}
 separate_longer_delim(items_owned, delim = ";") %>%
 ```
 
-After this transformation, you may notice that the `items_owned` column contains
-`NA` values. This is because some of the respondents did not own any of the items
-in the interviewer's list. We can use the `replace_na()` function to
-change these `NA` values to something more meaningful. The `replace_na()` function
-expects for you to give it a `list()` of columns that you would like to replace
-the `NA` values in, and the value that you would like to replace the `NA`s. This
-ends up looking like this:
+Після цього перетворення ви можете помітити, що в стовпці `items_owned` з’явилися значення NA. Це тому, що деякі респонденти не володіли жодним із предметів, зазначених у списку інтерв’юера. Ми можемо використати функцію `replace_na()`, щоб замінити ці `NA` на більш змістовне значення. Функція `replace_na()` очікує, що ви передасте їй `list()` зі стовпцями, у яких хочете замінити значення `NA`, а також значення, на яке потрібно замінити ці `NA`. У результаті це виглядає так:
 
 ```{r, eval=FALSE}
 replace_na(list(items_owned = "no_listed_items")) %>%
 ```
 
-Next, we create a new variable named `items_owned_logical`, which has one value
-(`TRUE`) for every row. This makes sense, since each item in every row was owned
-by that household. We are constructing this variable so that when we spread the
-`items_owned` across multiple columns, we can fill the values of those columns
-with logical values describing whether the household did (`TRUE`) or did not
-(`FALSE`) own that particular item.
+Далі ми створюємо нову змінну `items_owned_logical`, яка має значення (`TRUE`) для кожного рядка. Це логічно, адже кожен предмет у кожному рядку належав відповідному домогосподарству. Ми створюємо цю змінну для того, щоб під час розширення `items_owned` у кілька стовпців можна було заповнити їх логічними значеннями, які показують, чи володіло домогосподарство відповідним предметом (`TRUE`) або ні (`FALSE`).
 
 ```{r, eval=FALSE}
 mutate(items_owned_logical = TRUE) %>%
 ```
 
-![](fig/separate_longer.png){alt="Two tables shown side-by-side. The first row
-of the left table is highlighted in blue, and the first four rows of the right
-table are also highlighted in blue to show how each of the values of 'items
-owned' are given their own row with the separate longer delim function. The
-'items owned logical' column is highlighted in yellow on the right table to show
-how the mutate function adds a new column."}
+![](fig/separate_longer.png){alt="Дві таблиці, показані поруч. Перший рядок лівої таблиці виділено синім, а перші чотири рядки правої таблиці також виділено синім, щоб показати, як кожне значення з 'items owned' отримало окремий рядок за допомогою функції separate_longer_delim(). Стовпець 'items owned logical' виділено жовтим у правій таблиці, щоб показати, як функція mutate додає новий стовпець."}
 
-At this point, we can also count the number of items owned by each household,
-which is equivalent to the number of rows per `key_ID`. We can do this with a
-`group_by()` and `mutate()` pipeline that works similar to `group_by()` and
-`summarize()` discussed in the previous episode but instead of creating a
-summary table, we will add another column called `number_items`. We use the
-`n()` function to count the number of rows within each group. However, there is
-one difficulty we need to take into account, namely those households that did
-not list any items. These households now have `"no_listed_items"` under
-`items_owned`. We do not want to count this as an item but instead show zero
-items. We can accomplish this using **`dplyr`'s** `if_else()` function that
-evaluates a condition and returns one value if true and another if false. Here,
-if the `items_owned` column is `"no_listed_items"`, then a 0 is returned,
-otherwise, the number of rows per group is returned using `n()`.
+На цьому етапі ми також можемо порахувати кількість предметів, якими володіє кожне домогосподарство, що еквівалентно кількості рядків для кожного `key_ID`. Ми можемо зробити це за допомогою `group_by()` та `mutate()`, який працює схоже на комбінацію `group_by()` і `summarize()`, розглянуту в попередньому прикладі, але замість створення підсумкової таблиці ми додамо новий стовпець `number_items`. Для підрахунку кількості рядків у кожній групі використовується функція `n()`. Однак потрібно врахувати один момент: домогосподарства, які не зазначили жодного предмета. У цих домогосподарств тепер у стовпці `items_owned` зазначено `"no_listed_items"`. Ми не хочемо рахувати це як предмет, тому замість цього потрібно поставити нуль. Цього можна досягти за допомогою функції `if_else()` з пакета **`dplyr`**, яка оцінює умову і повертає одне значення, якщо умова істинна, і інше — якщо хибна. Тут, якщо стовпець `items_owned` дорівнює `"no_listed_items"`, повертається 0, інакше кількість рядків у групі повертається за допомогою `n()`.
 
 ```{r, eval=FALSE}
 group_by(key_ID) %>% 
   mutate(number_items = if_else(items_owned == "no_listed_items", 0, n())) %>% 
-
 ```
 
-Lastly, we use `pivot_wider()` to switch from long format to wide format. This
-creates a new column for each of the unique values in the `items_owned` column,
-and fills those columns with the values of `items_owned_logical`. We also
-declare that for items that are missing, we want to fill those cells with the
-value of `FALSE` instead of `NA`.
+Нарешті ми використовуємо `pivot_wider()`, щоб перейти з довгого формату в широкий. Це створює новий стовпець для кожного унікального значення у стовпці `items_owned` і заповнює ці стовпці значеннями з `items_owned_logical`. Крім того, ми вказуємо, що для відсутніх предметів клітинки потрібно заповнювати значенням `FALSE` замість `NA`.
 
 ```{r, eval=FALSE}
 pivot_wider(names_from = items_owned,
             values_from = items_owned_logical,
             values_fill = list(items_owned_logical = FALSE))
-
 ```
 
-![](fig/pivot_wider.png){alt="Two tables shown side-by-side. The 'items owned'
-column is highlighted in blue on the left table, and the column names are
-highlighted in blue on the right table to show how the values of the 'items
-owned' become the column names in the output of the pivot wider function. The
-'items owned logical' column is highlighted in yellow on the left table, and the
-values of the bicycle, television, and solar panel columns are highlighted in
-yellow on the right table to show how the values of the 'items owned logical'
-column became the values of all three of the aforementioned columns."}
+![](fig/pivot_wider.png){alt="Дві таблиці, показані поруч. Стовпець 'items owned' виділено синім у лівій таблиці, а назви стовпців виділено синім у правій таблиці, щоб показати, як значення зі стовпця 'items owned' стають назвами стовпців у результаті функції pivot_wider. Стовпець 'items owned logical' виділено жовтим у лівій таблиці, а значення стовпців bicycle, television і solar panel виділено жовтим у правій таблиці, щоб показати, як значення стовпця 'items owned logical' стали значеннями цих трьох стовпців."}
 
-Combining the above steps, the chunk looks like this. Note that two new columns
-are created within the same `mutate()` call.
+Об’єднавши наведені кроки, код виглядає так. Зверніть увагу, що два нові стовпці створюються в одному виклику mutate().
 
 ```{r}
 interviews_items_owned <- interviews %>%
@@ -232,17 +183,9 @@ interviews_items_owned <- interviews %>%
               values_fill = list(items_owned_logical = FALSE))
 ```
 
-View the `interviews_items_owned` data frame. It should have `r
-nrow(interviews)` rows (the same number of rows you had originally), but extra
-columns for each item. How many columns were added? Notice that there is no
-longer a column titled `items_owned`. This is because there is a default
-parameter in `pivot_wider()` that drops the original column. The values that
-were in that column have now become columns named `television`, `solar_panel`,
-`table`, etc. You can use `dim(interviews)` and `dim(interviews_wide)` to see
-how the number of columns has changed between the two datasets.
+Перегляньте дата фрейм `interviews_items_owned`. Він має `rnrow(interviews)` рядків (таку ж кількість, як і спочатку), але додаткові стовпці для кожного предмета. Скільки стовпців було додано? Зверніть увагу, що більше немає стовпця `items_owned`. Це тому, що в `pivot_wider()` за замовчуванням встановлено параметр, який видаляє оригінальний стовпець. Значення, які були в цьому стовпці, тепер стали стовпцями з назвами `television`, `solar_panel`, `table` тощо. Ви можете використати `dim(interviews)` та `dim(interviews_wide)`, щоб побачити, як змінилася кількість стовпців між двома наборами даних.
 
-This format of the data allows us to do interesting things, like make a table
-showing the number of respondents in each village who owned a particular item:
+Такий формат даних дозволяє виконувати цікаві операції, наприклад, створювати таблицю, що показує кількість респондентів у кожному селі, які володіли певним предметом:
 
 ```{r, purl=FALSE}
 interviews_items_owned %>%
@@ -251,9 +194,7 @@ interviews_items_owned %>%
   count(bicycle)
 ```
 
-Or below we calculate the average number of items from the list owned by
-respondents in each village using the `number_items` column we created to
-count the items listed by each household.
+Або нижче ми обчислюємо середню кількість предметів зі списку, якими володіли респонденти в кожному селі, використовуючи стовпець `number_items`, який ми створили для підрахунку предметів у кожного домогосподарства.
 
 ```{r, purl=FALSE}
 interviews_items_owned %>%
@@ -263,21 +204,15 @@ interviews_items_owned %>%
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Exercise
+## Завдання
 
-We created `interviews_items_owned` by reshaping the data: first longer and then
-wider. Replicate this process with the `months_lack_food` column in the
-`interviews` dataframe. Create a new dataframe with columns for each of the
-months filled with logical vectors (`TRUE` or `FALSE`) and a summary column
-called `number_months_lack_food` that calculates the number of months each
-household reported a lack of food.
+Ми створили `interviews_items_owned`, переформатувавши дані: спочатку у довгий формат, а потім у широкий. Виконайте цей самий процес для стовпця `months_lack_food у дата фреймі `interviews`. Створіть новий дата фрейм зі стовпцями для кожного місяця, заповненими логічними значеннями (`TRUE`або`FALSE`) та додайте підсумковий стовпець `number_months_lack_food\`, який обчислює кількість місяців, протягом яких домогосподарство повідомляло про нестачу їжі.
 
-Note that if the household did not lack food in the previous 12 months, the
-value input was "none".
+Зверніть увагу: якщо домогосподарство не відчувало нестачі їжі протягом останніх 12 місяців, у стовпці було введено "none".
 
 :::::::::::::::  solution
 
-## Solution
+## Відповідь
 
 ```{r}
 months_lack_food <- interviews %>%
