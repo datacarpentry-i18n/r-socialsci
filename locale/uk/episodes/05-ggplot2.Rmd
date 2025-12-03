@@ -1,5 +1,5 @@
 ---
-title: Data Visualisation with ggplot2
+title: Візуалізація даних за допомогою ggplot2
 teaching: 80
 exercises: 35
 source: Rmd
