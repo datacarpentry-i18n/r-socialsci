@@ -443,56 +443,51 @@ respondent_floor_floor_type
 між номінальною і звичайною змінною. Ви робите свій фактор
 упорядкованим фактором, використовуючи параметр "ordered=TRUE" у вашій кодовій функції.
 Note how the reported levels changed from the unordered factor above to the
-ordered version below. Ordered levels use the less than sign `<` to denote
-level ranking.
+ordered version below. Впорядковані рівні використовують знак менше ніж `<` для позначення рейтингу рівня.
 
 ```{r, results=TRUE, purl=FALSE}
 respondent_floor_type_ordered <- factor(respondent_floor_type, 
                                         ordered = TRUE)
 
-respondent_floor_type_ordered # after setting as ordered factor
+Respondent_floor_type_ordered
 ```
 
-### Converting factors
+### Перетворення факторів
 
-If you need to convert a factor to a character vector, you use
-`as.character(x)`.
+Якщо вам потрібно перетворити фактор на символьний вектор, використовуйте
+as.character(x).
 
 ```{r, purl=FALSE}
 as.character(respondent_floor_type)
 ```
 
-Converting factors where the levels appear as numbers (such as concentration
-levels, or years) to a numeric vector is a little trickier. The `as.numeric()`
-function returns the index values of the factor, not its levels, so it will
-result in an entirely new (and unwanted in this case) set of numbers.
-One method to avoid this is to convert factors to characters, and then to
-numbers. Another method is to use the `levels()` function. Compare:
+Перетворення факторів, рівні яких виглядають як числа (наприклад, значення або роки), у числовий вектор, що є дещо складнішим. Функція `as.numeric () `
+повертає значення індексу значення, а не його рівні, тому
+призведе до абсолютно нового (і небажаного в даному випадку) набору чисел.
+Одним із способів уникнути цього є перетворення значень у символи, а потім у числа. Іншим методом є використання функції `levels () `. Порівняй:
 
 ```{r, purl=TRUE}
 year_fct <- factor(c(1990, 1983, 1977, 1998, 1990))
 
-as.numeric(year_fct)                     # Wrong! And there is no warning...
+as.numeric(year_fct)                     # Неправильно! Попередження відсутнє...
 
-as.numeric(as.character(year_fct))       # Works...
+as.numeric(as.character(year_fct))       # Працює...
 
-as.numeric(levels(year_fct))[year_fct]   # The recommended way.
+as.numeric(levels(year_fct))[year_fct]   # Рекомендований спосіб.
 ```
 
-Notice that in the recommended `levels()` approach, three important steps occur:
+Зверніть увагу, що в рекомендованому підході `levels () `відбуваються три важливі кроки:
 
-- We obtain all the factor levels using `levels(year_fct)`
-- We convert these levels to numeric values using `as.numeric(levels(year_fct))`
-- We then access these numeric values using the underlying integers of the
-  vector `year_fct` inside the square brackets
+- Ми отримуємо всі рівні фактору, використовуючи `levels(year_fct)`
+- Перетворюємо ці рівні в числові значення за допомогою `as.numeric (levels (year_fct)) `
+- Потім ми отримуємо доступ до цих числових значень, використовуючи цілі числа вектора
+  `year_fct` всередині квадратних дужок
 
-### Renaming factors
+### Перейменування факторів
 
-When your data is stored as a factor, you can use the `plot()` function to get a
-quick glance at the number of observations represented by each factor level.
-Let's extract the `memb_assoc` column from our data frame, convert it into a
-factor, and use it to look at the number of interview respondents who were or
-were not members of an irrigation association:
+Коли ваші дані зберігаються як фактор, ви можете використовувати функцію `plot () `, щоб отримати швидкий погляд
+на кількість спостережень, представлених кожним рівнем факторів.
+Давайте витягнемо стовпець `membr_assoc` з нашого датафрейму, перетворимо його на коефіцієнт і використаємо його для перегляду кількості респондентів інтерв'ю, які були або не були членами зрошувальної асоціації:
 
 ```{r factor-plot-default-order, fig.alt="Yes/no bar graph showing number of individuals who are members of irrigation association", purl=TRUE}
 ## create a vector from the data frame column "memb_assoc"
