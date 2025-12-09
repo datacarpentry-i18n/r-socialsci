@@ -14,68 +14,57 @@ source("data/download_data.R")
 
 :::: instructor
 
-- This is an optional lesson intended to introduce learners to R Markdown.
-- While it is listed after the core lessons, some instructors may prefer to teach it early
-  in the workshop, depending on the audience.
+- Це необов'язковий урок, призначений для ознайомлення учнів з R Markdown.
+- Хоча він перерахований після основних уроків, деякі викладачі можуть вважати за краще викладати його початково на семінарському занятті, залежно від аудиторії.
 
 ::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- Create a .Rmd document containing R code, text, and plots
-- Create a YAML header to control output
-- Understand basic syntax of (R)Markdown
-- Customise code chunks to control formatting
-- Use code chunks and in-line code to create dynamic, reproducible documents
+- Створіть документ.Rmd, що містить код R, текст та графіки
+- Створіть заголовок YAML для керування виведенням
+- Зрозумійте основний синтаксис (R) Markdown
+- Налаштувати фрагменти коду для управління форматуванням
+- Використовуйте фрагменти коду та вбудований код для створення динамічних, відтворюваних документів
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- What is R Markdown?
-- How can I integrate my R code with text and plots?
-- How can I convert .Rmd files to .html?
+- Що таке R Markdown?
+- Як я можу інтегрувати свій код R з текстом та графіками?
+- Як конвертувати файли.rmd до.html?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## R Markdown
 
-R Markdown is a flexible type of document that allows you to seamlessly combine
-executable R code, and its output, with text in a single document. These
-documents can be readily converted to multiple static and dynamic output
-formats, including PDF (.pdf), Word (.docx), and HTML (.html).
+R Markdown - це гнучкий тип документа, який дозволяє безперешкодно поєднувати
+виконуваний код R та його виведення з текстом в одному документі. Ці документи можна легко конвертувати у декілька статичних та динамічних вихідних форматів, включаючи PDF (.pdf), Word (.docx) та HTML (.html).
 
-The benefit of a well-prepared R Markdown document is full reproducibility. This
-also means that, if you notice a data transcription error, or you are able to
-add more data to your analysis, you will be able to recompile the report without
-making any changes in the actual document.
+Перевагою добре підготовленого документа R Markdown є повна відтворюваність. Цей також означає, що якщо ви помітили помилку транскрипції даних або ви зможете
+додати більше даних до свого аналізу, ви зможете перекомпілювати звіт без внесення
+будь-яких змін у фактичному документі.
 
-The **rmarkdown** package comes pre-installed with RStudio, so no action is
-necessary.
+Пакет **rmarkdown** поставляється попередньо встановленим разом з RStudio, тому жодних дій не потрібно.
 
 <figure>
-```{r rmarkdown-wizards, echo = FALSE, fig.show = "hold", fig.alt = "R Markdown wizard monsters creating a R Markdown document from a recipe. Art by Allison Horst", out.width="100%"}
+```{r rmarkdown-wizards, echo = FALSE, fig.show = "hold", fig.alt = "Чарівники R Markdown створюють документ R Markdown за рецептом."}. Мистецтво Еллісон Хортс", out.width="100%"}
 knitr::include_graphics("fig/rmarkdown_wizards.png")
-```
-<figcaption>
-Image credit: <a href="https://github.com/allisonhorst/stats-illustrations">Allison Horst</a>
-</figcaption>
 </figure>
 
-## Creating an R Markdown file
+## Створення файлу R Markdown
 
-To create a new R Markdown document in RStudio, click File -> New File ->
+Щоб створити новий документ R Markdown у RStudio, натисніть Файл -> Новий файл ->
 R Markdown:
 
-![](fig/new-rmd.png){alt="Screenshot of the New R Markdown file dialogue box in RStudio"}
+! [] (fig/new-rmd.png) {alt="Скріншот діалогового вікна нового файлу R Markdown у RStudio "}
 
-Then click on 'Create Empty Document'. Normally you could enter the title of
-your document, your name (Author), and select the type of output, but we will be
-learning how to start from a blank document.
+Потім натисніть «Створити порожній документ». Зазвичай ви можете ввести назву вашого документа, своє ім'я (Автор) та вибрати тип виводу, але ми будемо вивчати, як почати з порожнього документа.
 
-## Basic components of R Markdown
+## Основні компоненти R Markdown
 
-To control the output, a YAML (YAML Ain't Markup Language) header is needed:
+Для керування виведенням потрібен заголовок YAML (YAML Ain't Markup Language):
 
 ```
 ---
@@ -86,34 +75,24 @@ output: html_document
 ---
 ```
 
-The header is defined by the three hyphens at the beginning (`---`) and the
-three hyphens at the end (`---`).
+Заголовок визначається трьома дефісами на початку (`---`) і трьома дефісами
+в кінці (`---`).
 
-In the YAML, the only required field is the `output:`, which specifies the type
-of output you want. This can be an `html_document`, a `pdf_document`, or a
-`word_document`. We will start with an HTML doument and discuss the other
-options later.
+У YAML єдиним обов'язковим полем є `output: `, яке вказує тип потрібного виводу. Це може бути `html_document`, `pdf_document` або `word_document`. Ми почнемо з HTML-додавання та обговоримо інші варіанти пізніше.
 
-The rest of the fields can be deleted, if you don't need them. After the header,
-to begin the body of the document, you start typing after the end of the YAML
-header (i.e. after the second `---`).
+Решта поля можна видалити, якщо вони вам не потрібні. Після заголовка, ви починаєте вводити текст після закінчення заголовка YAML
+(тобто після другого `---`).
 
-## Markdown syntax
+## Синтаксис розмітки Markdown
 
-Markdown is a popular markup language that allows you to add formatting elements
-to text, such as **bold**, _italics_, and `code`. The formatting will not be
-immediately visible in a markdown (.md) document, like you would see in a Word
-document. Rather, you add Markdown syntax to the text, which can then be
-converted to various other files that can translate the Markdown syntax.
-Markdown is useful because it is lightweight, flexible, and platform
-independent.
+Markdown — популярна мова розмітки, яка дозволяє додавати елементи форматування
+до тексту, як-от **напівжирний**, _курсив_ та `code`. Форматування
+не буде відразу видно в документі з синтаксисом (.md), як це було б показано в документі Word. Скоріше, ви додаєте синтаксис Markdown до тексту, який потім можна перетворити на різні інші файли, які можуть перекласти синтаксис Markdown.
+Markdown корисний, оскільки він легкий, гнучкий та незалежний від платформи.
 
-Some platforms provide a real time preview of the formatting, like RStudio's
-visual markdown editor (available from version 1.4).
+Деякі платформи надають попередній перегляд форматування в режимі реального часу, як-от візуальний редактор маркування RStudio (доступний з версії 1.4).
 
-First, let's create a heading! A `#` in front of text indicates to Markdown that
-this text is a heading. Adding more `#`s make the heading smaller, i.e. one `#` is
-a first level heading, two `##`s is a second level heading, etc. upto the 6th level heading.
+По-перше, давайте створимо заголовок! Значок `#` перед текстом вказує Markdown, що цей текст є заголовком. Додавши більше `#``, заголовок зменшиться, тобто один `#`- це заголовок першого рівня, два`##\`\` - це заголовок другого рівня тощо до заголовка 6-го рівня.
 
 ```
 # Title
@@ -124,43 +103,36 @@ a first level heading, two `##`s is a second level heading, etc. upto the 6th le
 ###### Sub-sub-sub-sub section
 ```
 
-(only use a level if the one above is also in use)
+(використовуйте рівень лише в тому випадку, якщо також використовується вищезазначений рівень)
 
-Since we have already defined our title in the YAML header, we will use a
-section heading to create an Introduction section.
-
-```
-## Introduction
-```
-
-You can make things **bold** by surrounding the word with double asterisks,
-`**bold**`, or double underscores, `__bold__`; and _italicize_ using single
-asterisks, `*italics*`, or single underscores, `_italics_`.
-
-You can also combine **bold** and _italics_ to write something _**really**_
-important with triple-asterisks, `***really***`, or underscores, `___really___`;
-and, if you're feeling bold (pun intended), you can also use a combination of
-asterisks and underscores, `**_really_**`, `**_really_**`.
-
-To create `code-type` font, surround the word with backticks,
-`` `code-type` ``.
-
-Now that we've learned a couple of things, it might be useful to implement them:
+Оскільки ми вже визначили наш заголовок у заголовку YAML, ми будемо використовувати заголовок розділу для створення розділу Вступ.
 
 ```
-## Introduction
-
-This report uses the **tidyverse** package along with the *SAFI* dataset, 
-which has columns that include:
+## Вступ
 ```
 
-Then we can create a list for the variables using `-`, `+`, or `*` keys.
+Ви можете зробити щось **жирним шрифтом**, оточивши слово подвійними зірочками,
+`**жирним шрифтом**`, або подвійним підкресленням `__bold__`; та \* курсивом, використовуючи одиничні зірочки, `*курсив*` або одинарні підкреслення, `_курсив_`.
+
+Ви також можете поєднувати жирний та курсив для позначення чогось дуже важливого за допомогою потрійних зірочок _**дуже**_ або підкреслень _**дуже**_;
+і, якщо ви почуваєтесь сміливо (гра слів), можна також використовувати комбінацію зірочок і підкреслень: **_дуже_**.
+
+Щоб створити шрифт `code-type`, обведіть слово зворотними галочками, \`\`\`\`\`code-type\`\`\`.
+
+Тепер, коли ми дізналися кілька речей, може бути корисно їх реалізувати:
 
 ```
-## Introduction
+## Вступ
 
-This report uses the **tidyverse** package along with the *SAFI* dataset, 
-which has columns that include:
+У цьому звіті використовується пакет **tidyverse** разом із набором наборів* SAFI*,, який містить стовпці, що включають:
+```
+
+Потім ми можемо створити список змінних за допомогою ключів `-`, `+` або `*`.
+
+```
+## Вступ
+
+У цьому звіті використовується пакет **tidyverse** разом із набором даних *SAFI*, який містить стовпці, що включають:
 
 - village
 - interview_date
@@ -170,7 +142,7 @@ which has columns that include:
 - rooms
 ```
 
-You can also create an ordered list using numbers:
+Ви також можете створити впорядкований список за допомогою номерів:
 
 ```
 1. village
@@ -181,7 +153,7 @@ You can also create an ordered list using numbers:
 6. rooms
 ```
 
-And nested items by tab-indenting:
+І вкладені елементи шляхом відступу табуляції:
 
 ```
 - village
@@ -198,51 +170,39 @@ And nested items by tab-indenting:
   + Number of rooms in house
 ```
 
-For more Markdown syntax see [the following reference guide](https://www.markdownguide.org/basic-syntax).
+Для отримання додаткового синтаксису Markdown див. [наступний довідковий посібник] (https://www.markdownguide.org/basic-syntax).
 
-Now we can render the document into HTML by clicking the **Knit** button in the
-top of the Source pane (top left), or use the keyboard shortcut <kbd>Ctrl</kbd>\+<kbd>Shift</kbd>\+<kbd>K</kbd> on Windows and Linux, and <kbd>Cmd</kbd>\+<kbd>Shift</kbd>\+<kbd>K</kbd> on Mac. If you haven't saved the
-document yet, you will be prompted to do so when you **Knit** for the first
-time.
+Тепер ми можемо відтворити документ у HTML, натиснувши кнопку **Knit** у верхній частині панелі «Джерело» (вгорі зліва), або скористатися комбінацією клавіш <kbd>Ctrl</kbd>\ +<kbd>Shift</kbd>\ +<kbd>K</kbd> на Windows та Linux, і <kbd>
+Cmd</kbd>\ +<kbd>Зсув</kbd>\ +<kbd>K</kbd> на Mac. Якщо ви ще не зберегли документ, вам буде запропоновано зробити це, коли ви вперше будете генерувати фінальний документ.
 
-![](fig/rmd-rmd_to_html.png){alt="The 'knitting' process: First, R Markdown is converted to Markdown, which is then converted (via pandoc) to .html, .pdf, .docx, etc."}
+![](fig/rmd-rmd_to_html.png){alt="Процес 'knitting': спочатку R Markdown конвертується в Markdown, який потім через pandoc перетворюється у .html, .pdf, .docx тощо."}
 
-## Writing an R Markdown report
+## Написання звіту R Markdown
 
-Now we will add some R code from our previous data wrangling and visualisation,
-which means we need to make sure **tidyverse** is loaded. It is not enough to
-load **tidyverse** from the console, we will need to load it within our R Markdown
-document. The same applies to our data. To load these, we will need to create a
-'code chunk' at the top of our document (below the YAML header).
+Тепер ми додамо трохи R-коду з нашого попереднього обговорення та візуалізації даних,, що означає, що нам потрібно переконатися, що **tidyverse** завантажено. Недостатньо завантажити **tidyverse** з консолі, нам потрібно буде завантажити його в нашому документі R Markdown. Те ж саме стосується і наших даних. Щоб завантажити їх, нам потрібно буде створити 'code chunk' у верхній частині нашого документа (під заголовком YAML).
 
-A code chunk can be inserted by clicking Code > Insert Chunk, or by using the
-keyboard shortcuts <kbd>Ctrl</kbd>\+<kbd>Alt</kbd>\+<kbd>I</kbd> on Windows and Linux,
-and <kbd>Cmd</kbd>\+<kbd>Option</kbd>\+<kbd>I</kbd> on Mac.
+Шматок коду можна вставити, натиснувши Код> Вставити шматок, або за допомогою комбінацій клавіш <kbd>Ctrl</kbd>\ +<kbd>Alt</kbd>\ +<kbd>I</kbd> на Windows та Linux,
+та <kbd>Cmd</kbd>\ +<kbd>Варіант</kbd>\ +<kbd>I</kbd> на Mac.
 
-The syntax of a code chunk is:
+Синтаксис фрагмента коду такий:
 
 ````{verbatim, lang = "markdown"}
-```{r chunk-name}
-"Here is where you place the R code that you want to run."
+``{r chunk-name}
+«Тут ви розміщуєте код R, який ви хочете запустити.»
 ```
 ````
 
-An R Markdown document knows that this text is not part of the report from the
-` ``` ` that begins and ends the chunk. It also knows that the code
-inside of the chunk is R code from the `r` inside of the curly braces (`{}`).
-After the `r` you can add a name for the code chunk . Naming a chunk is
-optional, but recommended. Each chunk name must be unique, and only contain
-alphanumeric characters and `-`.
+Документ R Markdown знає, що цей текст не є частиною звіту з \`\`\`\`\`\`\`\`\`\`, який починає і закінчує фрагмент. Він також знає, що код всередині фрагмента є R-кодом з `r` всередині фігурних дужок (`{}`).
+Після `r` ви можете додати ім'я для шматка коду. Назва фрагмента є необов'язковим, але рекомендується. Кожне ім'я фрагмента має бути унікальним і містити лише буквено-цифрові символи та `-`.
 
 ```{r package-data, echo=FALSE, message=FALSE, purl=FALSE}
 library(tidyverse)
 interviews <- read_csv("data/SAFI_clean.csv", na = "NULL")
 ```
 
-To load **tidyverse** and our `SAFI_clean.csv` file, we will insert a chunk and
-call it 'setup'. Since we don't want this code or the output to show in our
-knitted HTML document, we add an `include = FALSE` option after the code chunk
-name (`{r setup, include = FALSE}`).
+Щоб завантажити **tidyverse** і наш файл `Safi_clean.csv`, ми вставимо фрагмент і назвемо його «setup». Оскільки ми не хочемо, щоб цей код або результат відображалися в нашому
+фінальному HTML-документі, ми додаємо параметр `include = FALSE` після назви шматка коду
+(`{r setup, include = FALSE}`).
 
 ````{verbatim, lang = "markdown"}
 ```{r setup, include = FALSE}
@@ -254,13 +214,12 @@ interviews <- read_csv(here("data/SAFI_clean.csv"), na = "NULL")
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
-## Important Note!
+## Важлива примітка!
 
-The file paths you give in a .Rmd document, e.g. to load a .csv file, are
-relative to the .Rmd document, **not** the project root.
+Шляхи до файлів, які ви вказуєте в документі.Rmd, наприклад, для завантаження файлу.csv, є
+відносно документу.Rmd, **не** кореня проекту.
 
-As suggested in the Starting with Data episode, we highly recommend the use of
-the `here()` function to keep the file paths consistent within your project.
+Як було запропоновано в епізоді «Початок роботи з даними», ми настійно рекомендуємо використовувати, функцію `here () `, щоб зберегти послідовність шляхів до файлів у вашому проекті.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
