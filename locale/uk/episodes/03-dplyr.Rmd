@@ -111,11 +111,11 @@ interviews
 - `arrange()`: сортувати результати
 - `count()`: підрахувати окремі значення
 
-## Selecting columns and filtering rows
+## Вибір стовпців та фільтрування рядків
 
-To select columns of a dataframe, use `select()`. The first argument to this
-function is the dataframe (`interviews`), and the subsequent arguments are the
-columns to keep, separated by commas. Alternatively, if you are selecting
+Щоб обрати стовпці датафрейму, використовуйте функцію select(). Першим аргументом цієї функції є датафрейм (наприклад, interviews), а наступні аргументи — це стовпці, які потрібно залишити, розділені комами.Якщо ви обираєте суміжні стовпці, можна використати: для вказання діапазону стовпців, тобто «вибрати стовпці від ___ до ___».
+Раніше ви могли робити щось подібне за допомогою підстановки (subsetting). Функція select() по суті виконує те саме, що і підстановка, але з використанням пакета dplyr замість базових функцій R. Першим аргументом цієї функції
+є датафрейм (`interview`), а наступні аргументи - це стовпці, які слід зберегти, розділені комами. Alternatively, if you are selecting
 columns adjacent to each other, you can use a `:` to select a range of columns,
 read as "select columns from \_\_\_ to \_\_\_." You may have done something similar in
 the past using subsetting. `select()` is essentially doing the same thing as
