@@ -1,10 +1,10 @@
 ---
-title: Getting started with R Markdown (Optional)
+title: Початок роботи з R Markdown (необов'язково)
 teaching: 30
 exercises: 15
 output:
   html_document:
-    df_print: paged
+    df_print: переглянутий
 source: Rmd
 ---
 
@@ -378,7 +378,7 @@ uses one backtick (`` `r` ``), whereas code chunks use three backticks
 (` ```r``` `).
 
 For example, today's date is ` ``r "r Sys.Date()"`` `, will be rendered as:
-today's date is `r Sys.Date()`.\
+today's date is `r Sys.Date()`.  
 The code will display today's date in the output document (well, technically the
 date the document was last knitted).
 
