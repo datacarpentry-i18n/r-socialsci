@@ -39,35 +39,32 @@ source("data/download_data.R")
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-We start by loading the required package. **`ggplot2`** is also included in the
-**`tidyverse`** package.
+Почнемо із завантаження необхідного пакета. **`ggplot2`** також входить до складу пакету **`tidyverse`**.
 
 ```{r load-package, message=FALSE, purl=FALSE}
 library(tidyverse)
 ```
 
-If not still in the workspace, load the data we saved in the previous lesson.
+Якщо дані ще не знаходяться в робочій області, завантажте ті, які ми зберегли в попередньому уроці.
 
 ```{r load-data, purl=FALSE}
 interviews_plotting <- read_csv("data_output/interviews_plotting.csv")
 ```
 
-If you were unable to complete the previous lesson or did not save the data,
-then you can create it now. Either download it using `read_csv()` (Option 1)
-or create it with the **dplyr** and **tidyr** code (Option 2).
+Якщо ви не змогли завершити попередній урок або не зберегли дані, ви можете створити їх зараз. Або завантажте за допомогою `read_csv()` (варіант 1), або створіть за допомогою **dplyr** та **tidyr** (варіант 2).
 
 ::: tab
 
-### Option 1: Download the data
+### Варіант 1: Завантажте дані
 
 ```{r, purl=FALSE, eval=FALSE}
 interviews_plotting <- read_csv("https://raw.githubusercontent.com/datacarpentry/r-socialsci/main/episodes/data/interviews_plotting.csv")
 ```
 
-### Option 2: Create the data
+### Варіант 2: Створіть дані
 
 ```{r, purl=FALSE, eval=FALSE}
-## Can be used to load in data from previous lesson!
+## Може бути використано для завантаження даних з попереднього уроку!
 interviews_plotting <- interviews %>%
   ## pivot wider by items_owned
   separate_longer_delim(items_owned, delim = ";") %>%
@@ -90,9 +87,9 @@ interviews_plotting <- interviews %>%
 
 :::
 
-## Visualization Options in R
+## Параметри візуалізації в R
 
-Before we start with **`ggplot2`**, it's helpful to know that there are several ways to create visualizations in R. While **`ggplot2`** is great for building complex and highly customizable plots, there are simpler and quicker alternatives that you might encounter or use depending on the context. Let's briefly explore a few of them:
+Перед тим як почати з **`ggplot2`**, корисно знати, що в R існує кілька способів створювати візуалізації. Let's briefly explore a few of them:
 
 ### R Base Plots
 
