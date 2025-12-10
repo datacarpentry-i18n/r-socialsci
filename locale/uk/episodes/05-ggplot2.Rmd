@@ -14,29 +14,28 @@ source("data/download_data.R")
 - Цей епізод є загальним оглядом ggplot2 і зосереджується на: (1) ознайомленні з системою шарів у ggplot2, (2) використанні аргументу group у функції aes(), (3) базовому налаштуванні графіків.
 - Епізод залежить від даних, створених в епізоді "Маніпулювання даними за допомогою tidyr". Якщо ви не дійшли або не пройшли увесь епізод про tidyr, ви можете надати учасникам доступ до даних, завантаживши їх або швидко створивши за допомогою наведеного нижче коду tidyr. Ймовірно, ви захочете скопіювати код
   в Etherpad.
-- If you did skip the tidyr episode, you might want to go over the exporting
-  data section in that episode.
+- Якщо ви пропустили епізод про tidyr, ви можете перейти до розділу експорт даних у тому епізоді.
 
 ::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- Produce scatter plots, boxplots, and barplots using ggplot.
-- Set universal plot settings.
+- Створити точкові, коробкові та стовпчикові діаграми за допомогою ggplot.
+- Задати універсальні параметри графіка.
 - Describe what faceting is and apply faceting in ggplot.
-- Modify the aesthetics of an existing ggplot plot (including axis labels and colour).
-- Build complex and customized plots from data in a data frame.
+- Змінити естетику наявного графіка ggplot (включно з підписами осей та кольором).
+- Побудувати складні та персоналізовані графіки на основі даних у датафреймі.
 - Recognize the differences between base R, lattice, and ggplot visualizations.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- What are the components of a ggplot?
+- Які компоненти ggplot?
 - What are the main differences between R base plots, lattice, and ggplot?
-- How do I create scatterplots, boxplots, and barplots?
-- How can I change the aesthetics (ex. colour, transparency) of my plot?
-- How can I create multiple plots at once?
+- Як створити діаграми розсіювання, коробкові та стовпчикові?
+- Як змінити естетику (наприклад, колір, прозорість) графіка?
+- Як створити кілька графіків одночасно?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
