@@ -11,14 +11,9 @@ source("data/download_data.R")
 
 :::: instructor
 
-- This episode is a broad overview of ggplot2 and focuses on (1) getting
-  familiar with the layering system of ggplot2, (2) using the argument `group`
-  in the `aes()` function, (3) basic customization of the plots.
-- The episode depends on data created in the Data Wrangling with tidyr
-  episode. If you did not get to or through all of the tidyr episode,
-  you can have the learners access the data by either downloading it or
-  quickly creating it using the tidyr code below. You will probably want to
-  copy the code into the Etherpad.
+- Цей епізод є загальним оглядом ggplot2 і зосереджується на: (1) ознайомленні з системою шарів у ggplot2, (2) використанні аргументу group у функції aes(), (3) базовому налаштуванні графіків.
+- Епізод залежить від даних, створених в епізоді "Маніпулювання даними за допомогою tidyr". Якщо ви не дійшли або не пройшли увесь епізод про tidyr, ви можете надати учасникам доступ до даних, завантаживши їх або швидко створивши за допомогою наведеного нижче коду tidyr. Ймовірно, ви захочете скопіювати код
+  в Etherpad.
 - If you did skip the tidyr episode, you might want to go over the exporting
   data section in that episode.
 
