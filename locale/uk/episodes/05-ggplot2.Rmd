@@ -89,13 +89,13 @@ interviews_plotting <- interviews %>%
 
 ## Параметри візуалізації в R
 
-Перед тим як почати з **`ggplot2`**, корисно знати, що в R існує кілька способів створювати візуалізації. Let's briefly explore a few of them:
+Перед тим як почати з **`ggplot2`**, корисно знати, що в R існує кілька способів створювати візуалізації. Хоча **`ggplot2`** чудово підходить для створення складних та висококастомізованих графіків, існують простіші та швидші альтернативи, з якими ви можете зіткнутися або використовувати залежно від контексту. Давайте коротко розглянемо декілька з них:
 
-### R Base Plots
+### Базові графіки R
 
-Base R plots are the simplest form of visualization and are great for quick, exploratory analysis. You can create plots with very little code, but customizing them can be cumbersome compared to **`ggplot2`**.
+Базові графіки R є найпростішою формою візуалізації й чудово підходять для швидкого, дослідницького аналізу. Можна створювати графіки за допомогою невеликої кількості коду, але їхнє налаштування може бути громіздким у порівнянні з **`ggplot2`**.
 
-Example of a simple scatterplot in base R using the `no_membrs` and `liv_count` variables:
+Приклад простого точкового графіка у базовому R з використанням змінних `no_membrs` та `liv_count`:
 
 ```{r, purl=FALSE}
 plot(interviews_plotting$no_membrs, interviews_plotting$liv_count,
@@ -106,9 +106,9 @@ plot(interviews_plotting$no_membrs, interviews_plotting$liv_count,
 
 ### **`Lattice`**
 
-Lattice is another plotting system in R, which allows for creating multi-panel plots easily. It’s different from ggplot2 because you define the entire plot in a single function call, and modifications after plotting are limited.
+Lattice — це ще одна система побудови графіків в R, яка дозволяє легко створювати багато панельні графіки. Воно відрізняється від ggplot2 тим, що весь графік визначається одним викликом функції та можливості для змін після побудови графіка обмежені.
 
-Example of a lattice plot using `no_membrs` and `liv_count` split by `village`:
+Приклад графіка **lattice** з використанням змінних `no_membrs` та `liv_count`, розбитих за `village`:
 
 ```{r lattice, message=FALSE, purl=FALSE}
 library(lattice)
