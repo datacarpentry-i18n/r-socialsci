@@ -180,8 +180,7 @@ interviews_plotting %>%
     geom_point()
 ```
 
-The `+` in the **`ggplot2`** package is particularly useful because it allows
-you to modify existing `ggplot` objects. This means you can easily set up plot
+Символ `+` у пакеті **`ggplot2`** особливо корисний, тому що він дозволяє змінювати вже створені об’єкти ggplot. This means you can easily set up plot
 templates and conveniently explore different types of plots, so the above plot
 can also be generated with code like this, similar to the "intermediate steps"
 approach in the previous lesson:
