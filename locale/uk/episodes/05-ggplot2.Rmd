@@ -32,7 +32,7 @@ source("data/download_data.R")
 :::::::::::::::::::::::::::::::::::::::: questions
 
 - Які компоненти ggplot?
-- What are the main differences between R base plots, lattice, and ggplot?
+- Які основні відмінності між базовими графіками R, lattice та ggplot?
 - Як створити діаграми розсіювання, коробкові та стовпчикові?
 - Як змінити естетику (наприклад, колір, прозорість) графіка?
 - Як створити кілька графіків одночасно?
@@ -106,7 +106,7 @@ plot(interviews_plotting$no_membrs, interviews_plotting$liv_count,
 
 ### **`Lattice`**
 
-Lattice — це ще одна система побудови графіків в R, яка дозволяє легко створювати багато панельні графіки. Воно відрізняється від ggplot2 тим, що весь графік визначається одним викликом функції та можливості для змін після побудови графіка обмежені.
+Lattice — це ще одна система побудови графіків в R, яка дозволяє легко створювати багато панельні графіки у вигляді решітки. Воно відрізняється від ggplot2 тим, що весь графік визначається одним викликом функції та можливості для змін після побудови графіка обмежені.
 
 Приклад графіка **lattice** з використанням змінних `no_membrs` та `liv_count`, розбитих за `village`:
 
@@ -121,37 +121,28 @@ xyplot(liv_count ~ no_membrs | village, data = interviews_plotting,
        ylab = "Number of Livestock Owned")
 ```
 
-## Plotting with **`ggplot2`**
+## Побудова графіків за допомогою **`ggplot2`**
 
-**`ggplot2`** is a plotting package that makes it simple to create complex plots
-from data stored in a data frame. It provides a programmatic interface for
-specifying what variables to plot, how they are displayed, and general visual
-properties. Therefore, we only need minimal changes if the underlying data
-change or if we decide to change from a bar plot to a scatterplot. This helps in
-creating publication quality plots with minimal amounts of adjustments and
-tweaking.
+**`ggplot2`** — це пакет для побудови графіків у R, який дозволяє легко створювати складні візуалізації з даних датафрейму. Він забезпечує програмний інтерфейс, який дозволяє задавати, які змінні зображати, як їх показувати та загальні візуальні властивості. Тому нам потрібно внести лише мінімальні зміни, якщо вихідні дані зміняться або якщо ми вирішимо перейти, наприклад, від стовпчикової діаграми до точкової (діаграма розсіювання). Це допомагає створювати графіки публікаційної якості з мінімальною кількістю коригувань і налаштувань.
 
-**`ggplot2`** functions work best with data in the 'long' format, i.e., a column for every
-dimension, and a row for every observation. Well-structured data will save you
-lots of time when making figures with **`ggplot2`**
+Функції **`ggplot2`** найкраще працюють із даними у 'long' форматі, тобто коли кожен вимір представлений окремим стовпцем, а кожне спостереження — окремим рядком. Добре структуровані дані заощадять вам багато часу під час побудови графіків у **`ggplot2`**
 
-ggplot graphics are built step by step by adding new elements. Adding layers in
-this fashion allows for extensive flexibility and customization of plots.
+ggplot графіки будуються крок за кроком шляхом додавання нових елементів. Такий спосіб додавання шарів забезпечує велику гнучкість і дозволяє налаштовувати побудовані графіки.
 
-Each chart built with ggplot2 must include the following
+Кожен графік, побудований за допомогою ggplot2, повинен включати такі елементи
 
-- Data
+- Дані
 
-- Aesthetic mapping (aes)
+- Естетичне відображення (aes)
 
-  - Describes how variables are mapped onto graphical attributes
-  - Visual attribute of data including x-y axes, color, fill, shape, and alpha
+  - Описує як змінні накладаються на графічні атрибути
+  - До таких атрибутів належать осі x і y, колір, заливка, форма точок, прозорість (alpha)
 
-- Geometric objects (geom)
+- Геометричні об'єкти (geom)
 
-  - Determines how values are rendered graphically, as bars (`geom_bar`), scatterplot (`geom_point`), line (`geom_line`), etc.
+  - Визначає, як дані будуть зображені графічно — у вигляді стовпчиків (`geom_bar`), діаграми розсіювання (`geom_point`), лінії (`geom_line`) тощо.
 
-Thus, the template for graphic in ggplot2 is:
+Таким чином, шаблон побудови графіка в ggplot2:
 
 ```
 <DATA> %>%
@@ -159,9 +150,9 @@ Thus, the template for graphic in ggplot2 is:
     <GEOM_FUNCTION>()
 ```
 
-Remember from the last lesson that the pipe operator `%>%` places the result of the previous line(s) into the first argument of the function. **`ggplot`** is a function that expects a data frame to be the first argument. This allows for us to change from specifying the `data =` argument within the `ggplot` function and instead pipe the data into the function.
+Нагадаємо з попереднього уроку, що оператор `%>%` (pipe) передає результат попереднього кроку як вхідні дані для наступної функції. **`ggplot`** — це функція, яка очікує датафрейм як перший аргумент. Це дозволяє не вказувати аргумент `data =` всередині функції `ggplot`, а просто передавати дані через pipe (`%>%`).
 
-- use the `ggplot()` function and bind the plot to a specific data frame.
+- використайте функцію `ggplot()` та прив'яжіть графік до певного датафрейму.
 
 ```{r ggplot-steps-1, eval=FALSE, purl=FALSE}
 interviews_plotting %>%
