@@ -159,22 +159,20 @@ interviews_plotting %>%
     ggplot()
 ```
 
-- define a mapping (using the aesthetic (`aes`) function), by selecting the variables to be plotted and specifying how to present them in the graph, e.g. as x/y positions or characteristics such as size, shape, color, etc.
+- визначити відображення (mapping) за допомогою функції `aes()`, обравши змінні для побудови графіка та вказавши, як їх показувати на графіку, наприклад, через позиції по осях x/y або через характеристики, такі як розмір, форма, колір тощо.
 
 ```{r ggplot-steps-2, eval=FALSE, purl=FALSE}
 interviews_plotting %>%
     ggplot(aes(x = no_membrs, y = number_items))
 ```
 
-- add 'geoms' – graphical representations of the data in the plot (points,
-  lines, bars). **`ggplot2`** offers many different geoms; we will use some
-  common ones today, including:
+- додати 'geoms' — графічні представлення даних на графіку (точки, лінії, стовпчики). **`ggplot2`** пропонує багато різних geoms; сьогодні ми використаємо деякі з поширених, зокрема:
 
-  - `geom_point()` for scatter plots, dot plots, etc.
-  - `geom_boxplot()` for, well, boxplots!
-  - `geom_line()` for trend lines, time series, etc.
+  - `geom_point()` для діаграм розсіювання, точкових графіків тощо.
+  - `geom_boxplot()` для коробкових діаграм (boxplots)!
+  - `geom_line()` для ліній тренду, часових рядів тощо.
 
-To add a geom to the plot use the `+` operator. Because we have two continuous variables, let's use `geom_point()` first:
+Щоб додати geom до графіка, використовуйте оператор `+`. Оскільки у нас дві безперервні змінні, спочатку використаємо `geom_point()`:
 
 ```{r first-ggplot, purl=FALSE}
 interviews_plotting %>%
