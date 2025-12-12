@@ -224,12 +224,12 @@ interviews_plotting %>%
 
 Потім ми починаємо модифікувати цей графік, щоб витягти з нього більше інформації. Наприклад, при перегляді графіка ми помічаємо, що точки з’являються лише на перетині цілих чисел змінних `no_membrs` та `number_items`. Також, за приблизною оцінкою, здається, що на графіку значно менше точок, ніж рядків у нашому датафреймі. Це повинно нас привести до думки, що може бути кілька спостережень, накладених одне на одне (наприклад, три спостереження, де `no_membrs` = 3 і `number_items` = 1).
 
-There are two main ways to alleviate overplotting issues:
+Існує два основні способи розв'язання проблеми накладення точок (overplotting):
 
-1. changing the transparency of the points
-2. jittering the location of the points
+1. зміна прозорості точок
+2. злегка зсунути розташування точок
 
-Let's first explore option 1, changing the transparency of the points. What we
+Спочатку розглянемо варіант 1 — зміну прозорості точок. What we
 mean when we say "transparency" we mean the opacity of point, or your ability to
 see through the point. We can control the transparency of the points with the
 `alpha` argument to `geom_point`. Values of `alpha` range from 0 to 1, with
