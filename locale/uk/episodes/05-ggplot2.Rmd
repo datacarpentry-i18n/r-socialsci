@@ -183,11 +183,11 @@ interviews_plotting %>%
 Символ `+` у пакеті **`ggplot2`** особливо корисний, тому що він дозволяє змінювати вже створені об’єкти ggplot. Це означає, що ви можете легко налаштовувати шаблони графіків і зручно досліджувати різні типи візуалізацій, тому наведений вище графік також можна створити за допомогою такого коду, подібного до підходу "проміжних кроків" у попередньому уроці:
 
 ```{r first-ggplot-with-plus, fig.alt="Scatter plot of number of items owned versus number of household members.", eval=FALSE, purl=FALSE}
-# Assign plot to a variable
+# Присвоїти графік змінній
 interviews_plot <- interviews_plotting %>%
     ggplot(aes(x = no_membrs, y = number_items))
 
-# Draw the plot as a dot plot
+# Побудувати точковий графік
 interviews_plot +
     geom_point()
 ```
