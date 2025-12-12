@@ -229,19 +229,10 @@ interviews_plotting %>%
 1. зміна прозорості точок
 2. злегка зсунути розташування точок
 
-Спочатку розглянемо варіант 1 — зміну прозорості точок. What we
-mean when we say "transparency" we mean the opacity of point, or your ability to
-see through the point. We can control the transparency of the points with the
-`alpha` argument to `geom_point`. Values of `alpha` range from 0 to 1, with
-lower values corresponding to more transparent colors (an `alpha` of 1 is the
-default value). Specifically, an alpha of 0.1, would make a point one-tenth as
-opaque as a normal point. Stated differently ten points stacked on top of
-each other would correspond to a normal point.
+Спочатку розглянемо варіант 1 — зміну прозорості точок. Під "прозорістю" ми маємо на увазі непрозорість точки, тобто вашу здатність бачити крізь точку. Ми можемо керувати прозорістю точок за допомогою аргументу `alpha` у `geom_point`. Значення `alpha` варіюються від 0 до 1, причому менші значення роблять колір більш прозорим (`alpha = 1` — значення за замовчуванням). Зокрема, alpha = 0.1 робить точку у десять разів прозорішою, ніж звичайна точка. Інакше кажучи, десять точок, накладених одна на одну, виглядатимуть як звичайна точка.
 
-Here, we change the `alpha` to 0.5, in an attempt to help fix the overplotting.
-While the overplotting isn't solved, adding transparency begins to address this
-problem, as the points where there are overlapping observations are darker (as
-opposed to lighter gray):
+Тут ми змінюємо alpha на `alpha`, намагаючись зменшити ефект накладення точок.
+Хоча проблему накладення точок повністю не вирішено, додавання прозорості починає її зменшувати, оскільки точки, де спостереження накладаються, виглядають темнішими (на відміну від світло-сірих):
 
 ```{r adding-transparency, fig.alt="Scatter plot of number of items owned versus number of household members, with transparency added to points.", purl=FALSE}
 interviews_plotting %>%
@@ -249,18 +240,9 @@ interviews_plotting %>%
     geom_point(alpha = 0.5)
 ```
 
-That only helped a little bit with the overplotting problem, so let's try option
-two. We can jitter the points on the plot, so that we can see each point in the
-locations where there are overlapping points. Jittering introduces a little bit
-of randomness into the position of our points. You can think of this process as
-taking the overplotted graph and giving it a tiny shake. The points will move a
-little bit side-to-side and up-and-down, but their position from the original
-plot won't dramatically change. Note that this solution is suitable for plotting
-integer figures, while for numeric figures with decimals, geom_jitter() becomes
-inappropriate because it obscures the true value of the observation.
+Це лише трохи допомогло з проблемою накладення точок, тому спробуємо другий варіант. Ми можемо злегка змістити точки на графіку, щоб бачити кожну точку навіть у місцях, де вони накладаються. Це зміщення додає трохи випадковості у розташування наших точок. Можна уявити цей процес як легке струшування графіка з накладеними точками. Точки трохи зсуватимуться вліво-вправо та вгору-вниз, але їхнє положення на графіку значно не зміниться. Зверніть увагу, що цей спосіб підходить для цілих чисел, а для чисел з десятковими знаками geom_jitter() не підходить, оскільки спотворює справжнє значення спостереження.
 
-We can jitter our points using the `geom_jitter()` function instead of the
-`geom_point()`  function, as seen below:
+Ми можемо зсунути точки за допомогою функції `geom_jitter()` замість `geom_point()`, як показано нижче:
 
 ```{r adding-jitter, fig.alt="Scatter plot of number of items owned versus number of household members, showing jitter.", purl=FALSE}
 interviews_plotting %>%
@@ -268,12 +250,7 @@ interviews_plotting %>%
     geom_jitter()
 ```
 
-The `geom_jitter()` function allows for us to specify the amount of random
-motion in the jitter, using the `width` and `height` arguments. When we don't
-specify values for `width` and `height`, `geom_jitter()` defaults to 40% of the
-resolution of the data (the smallest change that can be measured). Hence, if we
-would like _less_ spread in our jitter than was default, we should pick values
-between 0.1 and 0.4. Experiment with the values to see how your plot changes.
+Функція `geom_jitter()` дозволяє задати величину випадкового зсуву за допомогою аргументів `width` і `height`. Якщо не вказувати значення для `width` і `height`, `geom_jitter()` за замовчуванням використовує 40% від роздільної здатності даних (найменша зміна, яку можна виміряти). Тому, якщо ми хочемо _менший_ зсув (jitter), ніж за замовчуванням, слід обрати значення між 0.1 та 0.4. Експериментуйте зі значеннями, щоб побачити, як змінюється ваш графік.
 
 ```{r adding-width-height, fig.alt="Scatter plot of number of items owned versus number of household members, with jitter and transparency.", purl=FALSE}
 interviews_plotting %>%
@@ -283,8 +260,7 @@ interviews_plotting %>%
                 height = 0.2)
 ```
 
-For our final change, we can also add colours for all the points by specifying
-a `color` argument inside the `geom_jitter()` function:
+Для останньої зміни ми можемо також додати кольори всім точкам, вказавши аргумент `color` всередині функції `geom_jitter()`:
 
 ```{r adding-colors, fig.alt="Scatter plot of number of items owned versus number of household members, showing points as blue.", purl=FALSE}
 interviews_plotting %>%
@@ -295,18 +271,7 @@ interviews_plotting %>%
                 height = 0.2)
 ```
 
-To colour each village in the plot differently, you could use a vector as an input
-to the argument **`color`**.  However, because we are now mapping features of the
-data to a colour, instead of setting one colour for all points, the colour of the
-points now needs to be set inside a call to the **`aes`** function. When we map
-a variable in our data to the colour of the points, **`ggplot2`** will provide a
-different colour corresponding to the different values of the variable. We will
-continue to specify the value of **`alpha`**, **`width`**, and **`height`**
-outside of the **`aes`** function because we are using the same value for
-every point. ggplot2 understands both the Commonwealth English and
-American English spellings for colour, i.e., you can use either `color`
-or `colour`. Here is an example where we color points by the **`village`**
-of the observation:
+Щоб по-різному зафарбувати кожне село на графіку, можна передати в аргумент **`color`** вектор.  Однак, оскільки ми тепер відображаємо ознаки даних через колір, замість того, щоб встановлювати один колір для всіх точок, колір точок слід вказувати всередині функції **`aes`**. Коли ми відображаємо змінну через колір точок, **`ggplot2`** автоматично надає різні кольори для різних значень цієї змінної. Ми продовжимо задання значень **`alpha`**, **`width`** та **`height`** поза функцією **`aes`**, оскільки використовуємо одне й те саме значення для всіх точок. ggplot2 розуміє як британське, так і американське написання слова колір, тобто можна використовувати або `color`, або `colour`. Ось приклад, де ми фарбуємо точки залежно від **`village`** (села) спостереження:
 
 ```{r color-by-species, purl=FALSE}
 interviews_plotting %>%
@@ -314,20 +279,13 @@ interviews_plotting %>%
     geom_jitter(aes(color = village), alpha = 0.5, width = 0.2, height = 0.2)
 ```
 
-There appears to be a positive trend between number of household
-members and number of items owned (from the list provided). Additionally,
-this trend does not appear to be different by village.
+Схоже, що існує позитивна залежність між кількістю членів домогосподарства та кількістю придбаних предметів (з наведеного списку). Крім того, ця залежність, здається, не відрізняється між селами.
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
-## Notes
+## Примітки
 
-As you will learn, there are multiple ways to plot the a relationship
-between variables. Another way to plot data with overlapping points is
-to use the `geom_count` plotting function. The `geom_count()`  function
-makes the size of each point representative of the number of data items
-of that type and the legend gives point sizes associated to particular
-numbers of items.
+Як ви дізнаєтеся, існує кілька способів зобразити залежність між змінними. Ще один спосіб побудови графіка з накладенням точок — використовувати функцію `geom_count`. Функція `geom_count()` робить розмір кожної точки пропорційним кількості елементів даних цього типу, а легенда показує, які розміри точок відповідають певній кількості елементів.
 
 ```{r color-by-species-notes, fig.alt="Previous plot with dots colored by village.", purl=FALSE}
 interviews_plotting %>%
@@ -339,16 +297,14 @@ interviews_plotting %>%
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Exercise
+## Завдання
 
-Use what you just learned to create a scatter plot of `rooms` by `village`
-with the `respondent_wall_type` showing in different colours. Does this
-seem like a good way to display the relationship between these variables?
-What other kinds of plots might you use to show this type of data?
+Використайте щойно вивчене, щоб створити діаграму розсіювання (scatter plot) для `rooms` за `village`, де `respondent_wall_type` буде зображатися різними кольорами. Чи здається вам, що це гарний спосіб показати залежність між цими змінними?
+Які ще типи графіків можна використати для зображення такого типу даних?
 
 :::::::::::::::  solution
 
-## Solution
+## Відповідь
 
 ```{r scatter-challenge, fig.alt="Scatter plot showing positive trend between number of household members and number of items owned.", answer=TRUE, purl=FALSE}
 interviews_plotting %>%
@@ -359,15 +315,13 @@ interviews_plotting %>%
 		    height = 0.2)
 ```
 
-This is not a great way to show this type of data because it is difficult to
-distinguish between villages. What other plot types could help you visualize
-this relationship better?
+Це не дуже зручний спосіб показати такі дані, оскільки важко розрізнити села. Які ще типи графіків могли б краще допомогти вам візуалізувати цю залежність?
 
 :::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Boxplot
+## Коробковий графік (boxplot)
 
 We can use boxplots to visualize the distribution of rooms for each
 wall type:
