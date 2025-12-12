@@ -194,34 +194,27 @@ interviews_plot +
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
-## Notes
+## Примітки
 
-- Anything you put in the `ggplot()` function can be seen by any geom layers
-  that you add (i.e., these are universal plot settings). This includes the x-
-  and y-axis mapping you set up in `aes()`.
-- You can also specify mappings for a given geom independently of the mapping
-  defined globally in the `ggplot()` function.
-- The `+` sign used to add new layers must be placed at the end of the line
-  containing the _previous_ layer. If, instead, the `+` sign is added at the
-  beginning of the line containing the new layer, **`ggplot2`** will not add
-  the new layer and will return an error message.
+- Усе, що ви вказуєте у функції `ggplot()`, буде доступним для будь-яких шарів geom, які ви додаєте (тобто це універсальні налаштування графіка). Це включає відображення осей x та y, яке ви задали в `aes()`.
+- Ви також можете задавати відображення (mappings) окремо для конкретного geom, незалежно від того, що визначено глобально у функції `ggplot()`.
+- Знак `+`, який використовується для додавання нових шарів, має бути розміщений наприкінці рядка, що містить _попередній_ шар. Якщо ж знак `+` поставити на початку рядка, де додається новий шар, то **`ggplot2`** не додасть цей новий шар і поверне повідомлення про помилку.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ```{r ggplot-with-plus-position, eval=FALSE, purl=FALSE}
-## This is the correct syntax for adding layers
+## Це правильний синтаксис для додавання шарів
 interviews_plot +
     geom_point()
 
-## This will not add the new layer and will return an error message
+## Це не додасть новий шар і поверне повідомлення про помилку
 interviews_plot
 + geom_point()
 ```
 
-## Building your plots iteratively
+## Побудова графіків крок за кроком
 
-Building plots with **`ggplot2`** is typically an iterative process. We start by
-defining the dataset we'll use, lay out the axes, and choose a geom:
+Побудова графіків у **`ggplot2`** зазвичай відбувається ітеративно. Спочатку ми визначаємо набір даних, який будемо використовувати, розмічаємо осі та обираємо geom:
 
 ```{r create-ggplot-object, fig.alt="Scatter plot of number of items owned versus number of household members.", purl=FALSE}
 interviews_plotting %>%
@@ -229,13 +222,7 @@ interviews_plotting %>%
     geom_point()
 ```
 
-Then, we start modifying this plot to extract more information from it. For
-instance, when inspecting the plot we notice that points only appear at the
-intersection of whole numbers of `no_membrs` and `number_items`. Also, from a
-rough estimate, it looks like there are far fewer dots on the plot than there
-rows in our dataframe. This should lead us to believe that there may be multiple
-observations plotted on top of each other (e.g. three observations where
-`no_membrs` is 3 and `number_items` is 1).
+Потім ми починаємо модифікувати цей графік, щоб витягти з нього більше інформації. Наприклад, при перегляді графіка ми помічаємо, що точки з’являються лише на перетині цілих чисел змінних `no_membrs` та `number_items`. Також, за приблизною оцінкою, здається, що на графіку значно менше точок, ніж рядків у нашому датафреймі. Це повинно нас привести до думки, що може бути кілька спостережень, накладених одне на одне (наприклад, три спостереження, де `no_membrs` = 3 і `number_items` = 1).
 
 There are two main ways to alleviate overplotting issues:
 
