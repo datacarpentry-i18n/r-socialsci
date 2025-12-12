@@ -323,8 +323,7 @@ interviews_plotting %>%
 
 ## Коробковий графік (boxplot)
 
-We can use boxplots to visualize the distribution of rooms for each
-wall type:
+Ми можемо використовувати коробкові графіки (boxplots), щоб візуалізувати розподіл кімнат для кожного типу стін:
 
 ```{r boxplot, fig.alt="Box plot of number of rooms by wall type.", purl=FALSE}
 interviews_plotting %>%
@@ -332,8 +331,7 @@ interviews_plotting %>%
     geom_boxplot()
 ```
 
-By adding points to a boxplot, we can have a better idea of the number of
-measurements and of their distribution:
+Додавши точки на boxplot, ми можемо краще уявити кількість вимірювань та їх розподіл:
 
 ```{r boxplot-with-jitter, fig.alt="Previous plot with dot plot added as additional layer to show individual values. Boxplot layer is transparent.", purl=FALSE}
 interviews_plotting %>%
@@ -345,26 +343,21 @@ interviews_plotting %>%
     		height = 0.2)
 ```
 
-We can see that muddaub houses and sunbrick houses tend to be smaller than
-burntbrick houses.
+Ми бачимо, що будинки з глини (muddaub) та сонячної цегли (sunbrick) зазвичай менші за будинки з обпаленої цегли (burntbrick).
 
-Notice how the  boxplot layer is behind the jitter layer? What do you need to
-change in the code to put the boxplot layer in front of the jitter layer?
+Зверніть увагу, як шар boxplot знаходиться позаду шару jitter? Що потрібно змінити в коді, щоб шар boxplot був попереду шару jitter?
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Exercise
+## Завдання
 
-Boxplots are useful summaries, but hide the _shape_ of the distribution. For
-example, if the distribution is bimodal, we would not see it in a
-boxplot. An alternative to the boxplot is the violin plot, where the shape
-(of the density of points) is drawn.
+Boxplot корисні для підсумкової інформації, але вони приховують форму розподілу. Наприклад, якщо розподіл бімодальний, ми цього не побачимо у boxplot. Альтернатива boxplot — це violin plot (скрипковий графік), де зображається форма розподілу точок (щільність даних).
 
-- Replace the box plot with a violin plot; see `geom_violin()`.
+- Замініть коробковий графік (boxplot) на скрипковий (violin plot); використайте `geom_violin()`.
 
 :::::::::::::::  solution
 
-## Solution
+## Відповідь
 
 ```{r violin-plot}
 interviews_plotting %>%
@@ -375,16 +368,13 @@ interviews_plotting %>%
 
 :::::::::::::::::::::::::
 
-So far, we've looked at the distribution of room number within wall type. Try
-making a new plot to explore the distribution of another variable within wall
-type.
+До цього моменту ми розглядали розподіл кількості кімнат у залежності від типу стін. Спробуйте створити новий графік, щоб дослідити розподіл іншої змінної залежно від типу стін.
 
-- Create a boxplot for `liv_count` for each wall type. Overlay the boxplot
-  layer on a jitter layer to show actual measurements.
+- Створіть boxplot для `liv_count` для кожного типу стін. Накладіть шар boxplot на шар jitter, щоб показати фактичні вимірювання.
 
 :::::::::::::::  solution
 
-## Solution
+## Відповідь
 
 ```{r boxplot-exercise, fig.alt="Box plot of number of livestock owned by wall type, with dot plot added as additional layer to show individual values."}
 interviews_plotting %>%
@@ -395,12 +385,11 @@ interviews_plotting %>%
 
 :::::::::::::::::::::::::
 
-- Add colour to the data points on your boxplot according to whether the
-  respondent is a member of an irrigation association (`memb_assoc`).
+- Додайте колір до точок на boxplot залежно від того, чи є респондент членом іригаційної асоціації (`memb_assoc`).
 
 :::::::::::::::  solution
 
-## Solution
+## Відповідь
 
 ```{r boxplot-exercise-factor, fig.alt="Previous plot with dots colored based on whether respondent was a member of an irrigation association."}
 interviews_plotting %>%
