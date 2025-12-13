@@ -655,11 +655,11 @@ percent_items %>%
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-Після створення графіка його можна зберегти у файл у потрібному форматі. The Export tab in the **Plot** pane in RStudio will save your plots at low resolution, which will not be accepted by many journals and will not scale well for posters.
+Після створення графіка його можна зберегти у файл у потрібному форматі. Вкладка Export у вікні **Plot** в RStudio зберігає графіки у низькій роздільній здатності, що не підійде для більшості журналів і погано масштабується для постерів.
 
-Instead, use the `ggsave()` function, which allows you to easily change the dimension and resolution of your plot by adjusting the appropriate arguments (`width`, `height` and `dpi`).
+Замість цього використовуйте функцію `ggsave()`, яка дозволяє легко змінювати розмір і роздільну здатність графіка, налаштовуючи відповідні аргументи (`width`, `height` і `dpi`).
 
-Make sure you have the `fig_output/` folder in your working directory.
+Переконайтеся, що у вашій робочій директорії є тека `fig_output/`.
 
 ```{r ggsave-example, eval=FALSE, purl=FALSE}
 my_plot <- percent_items %>%
@@ -679,16 +679,16 @@ my_plot <- percent_items %>%
 ggsave("fig_output/name_of_file.png", my_plot, width = 15, height = 10)
 ```
 
-Note: The parameters `width` and `height` also determine the font size in the saved plot.
+Примітка: параметри `width` і `hight` також визначають розмір шрифту на збереженому графіку.
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
-- `ggplot2` is a flexible and useful tool for creating plots in R.
-- The data set and coordinate system can be defined using the `ggplot` function.
-- Additional layers, including geoms, are added using the `+` operator.
-- Boxplots are useful for visualizing the distribution of a continuous variable.
-- Barplots are useful for visualizing categorical data.
-- Faceting allows you to generate multiple plots based on a categorical variable.
+- `ggplot2` є гнучким та корисним інструментом для створення графіків у R.
+- Набір даних і систему координат можна визначити за допомогою функції `ggplot`.
+- Додаткові шари, включно з geoms, додаються за допомогою оператора `+`.
+- Boxplot (коробковий графік) корисний для візуалізації розподілу числової змінної.
+- Barplot (стовпчастий графік) зручний для візуалізації категоріальних даних.
+- Faceting (фасетування) дозволяє створювати кілька графіків на основі категоріальної змінної.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
