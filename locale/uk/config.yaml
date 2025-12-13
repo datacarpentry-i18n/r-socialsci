@@ -20,7 +20,7 @@ life_cycle: 'stable'
 # License of the lesson
 license: 'CC-BY 4.0'
 # Link to the source repository for this lesson
-source: 'https://github.com/datacarpentry/r-socialsci/'
+source: 'https://github.com/ukrainian-carpentries/r-socialsci/'
 # Default branch of your lesson
 branch: 'main'
 # Who to contact if there are any issues
@@ -61,4 +61,4 @@ profiles:
 # Customisation ---------------------------------------------
 # This space below is where custom yaml items (e.g. pinning
 # sandpaper and varnish versions) should live
-url: 'https://datacarpentry.org/r-socialsci'
+url: 'https://ukrainian-carpentries.github.io/r-socialsci'
