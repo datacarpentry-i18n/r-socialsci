@@ -404,9 +404,7 @@ interviews_plotting %>%
 
 ## Стовпчасті діаграми (barplots)
 
-Barplots are also useful for visualizing categorical data. By default,
-`geom_bar` accepts a variable for x, and plots the number of instances each
-value of x (in this case, wall type) appears in the dataset.
+Стовпчасті діаграми (barplots) також корисні для візуалізації категоріальних даних. За замовчуванням `geom_bar` приймає змінну для осі x і показує кількість випадків, з якими кожне значення x (у цьому випадку — тип стін) зустрічається в наборі даних.
 
 ```{r barplot-1, fig.alt="Bar plot showing counts of respondent wall types."}
 interviews_plotting %>%
