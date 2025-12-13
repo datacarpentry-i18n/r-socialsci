@@ -412,8 +412,7 @@ interviews_plotting %>%
     geom_bar()
 ```
 
-We can use the `fill` aesthetic for the `geom_bar()` geom to colour bars by
-the portion of each count that is from each village.
+Ми можемо використати естетику `fill` у `geom_bar()`, щоб зафарбувати стовпчики відповідно до частки кожного підрахунку з кожного села.
 
 ```{r barplot-stack, fig.alt="Stacked bar plot of wall types showing each village as a different color."}
 interviews_plotting %>%
