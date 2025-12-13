@@ -402,7 +402,7 @@ interviews_plotting %>%
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Barplots
+## Стовпчасті діаграми (barplots)
 
 Barplots are also useful for visualizing categorical data. By default,
 `geom_bar` accepts a variable for x, and plots the number of instances each
