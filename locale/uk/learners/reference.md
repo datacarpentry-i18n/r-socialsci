@@ -2,11 +2,11 @@
 {}
 ---
 
-## Glossary
+## Словник термінів
 
-Cheat sheet of functions used in the lessons
+Шпаргалка функцій, які використовуються у цих уроках
 
-### Lesson 1 -- Introduction to R
+### Урок 1 -- Введення у R
 
 - `sqrt()`    # calculate the square root
 - `round()`   # round a number
