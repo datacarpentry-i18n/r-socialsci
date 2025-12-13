@@ -79,17 +79,16 @@
 
 - `read_csv()` # завантажує csv-файл у пам’ять R
 - `ggplot2(data= , aes(x= , y= )) + geom_point( ) + facet_wrap () + theme_bw() + theme()` # шаблон для графіка з шарами
-- `aes()` # by selecting the variables to be plotted and the variables to
-  define the presentation such as plotting size, shape color, etc.
-- `geom_` # graphical representation of the data in the plot (points, lines, bars). To add a geom to the plot use + operator
-- `facet_wrap()` # allows to split one plot into multiple plots based on a factor included in the dataset
-- `labs()` # set labels to plot
-- `theme_bw()`   # set the background to white
-- `theme()`      # used to locally modify one or more theme elements in a specific ggplot object
-- `+`  # arrange ggplots horizontally
-- `/`   # arrange ggplots vertically
-- `plot_layout()`  # set width and height of individual plots in a patchwork of plots
-- `ggsave()` # save a ggplot
+- `aes()` # вибір змінних, які будуть відображатися на графіку та змінних, що визначатимуть спосіб їх подання розмір, форма, колір тощо.
+- `geom_` # геометричне представлення даних на графіку (точки, лінії, стовпчики). Щоб додати geom до графіка, використовуйте оператор +
+- `facet_wrap()` # дозволяє розбити один графік на кілька підграфіків за факторною змінною з набору даних
+- `labs()` # задає підписи до графіка
+- `theme_bw()`   # встановлює білий фон графіка
+- `theme()`      # використовується для локальної зміни одного або кількох елементів теми в конкретному ggplot об’єкті
+- `+`  # розміщує ggplot графіки горизонтально
+- `/`   # розміщує ggplot графіки вертикально
+- `plot_layout()`  # задає ширину та висоту окремих графіків у композиції (patchwork)
+- `ggsave()` # зберігає ggplot графік
 
 ### Урок 5 -- Обробка даних JSON
 
