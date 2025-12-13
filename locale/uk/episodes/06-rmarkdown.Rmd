@@ -271,104 +271,88 @@ interviews %>%
 Ми згадували про використання `include = FALSE` у фрагменті коду, щоб запобігти друку коду та виводу у фінальному документі. Доступні додаткові параметри для налаштування відображення фрагментів коду у вихідному документі.
 Параметри вводяться в фрагмент коду після `chunk-name` і розділяються комами, наприклад `{r chunk-name, eval = FALSE, echo = TRUE}`.
 
-| Параметр    | Options                              | Output                                                                                                                                                                                |
-| ----------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `eval`      | `TRUE` or `FALSE`                    | Whether or not the code within the code chunk should be run.                                                                                                          |
-| `echo`      | `TRUE` or `FALSE`                    | Choose if you want to show your code chunk in the output document. `echo = TRUE` will show the code chunk.                                            |
-| `include`   | `TRUE` or `FALSE`                    | Choose if the output of a code chunk should be included in the document. `FALSE` means that your code will run, but will not show up in the document. |
-| `warning`   | `TRUE` or `FALSE`                    | Whether or not you want your output document to display potential warning messages produced by your code.                                                             |
-| `message`   | `TRUE` or `FALSE`                    | Whether or not you want your output document to display potential messages produced by your code.                                                                     |
-| `fig.align` | `default`, `left`, `right`, `center` | Where the figure from your R code chunk should be output on the page                                                                                                                  |
+| Параметр    | Options                              | Виведення                                                                                                                                                                       |
+| ----------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `eval`      | «ПРАВДА» або «НЕПРАВДА»              | Чи слід запускати код у фрагменті коду чи ні.                                                                                                                   |
+| `echo`      | «ПРАВДА» або «НЕПРАВДА»              | Виберіть, якщо ви хочете показувати фрагмент коду на виході документ. `echo = TRUE` покаже шматок коду.                                         |
+| `include`   | «ПРАВДА» або «НЕПРАВДА»              | Виберіть, чи слід включати вихід фрагмента коду до документа. `FALSE` означає, що ваш код буде запущений, але не відображатиметься в документі. |
+| `warning`   | «ПРАВДА» або «НЕПРАВДА»              | Чи потрібно, щоб у вихідному документі відображалися можливі попереджувальні повідомлення, які генерує ваш код.                                                 |
+| `message`   | «ПРАВДА» або «НЕПРАВДА»              | Незалежно від того, чи хочете ви, щоб у вихідному документі відображалися потенційні повідомлення, створені вашим кодом.                                        |
+| `fig.align` | `default`, `left`, `right`, `center` | Де на сторінці має бути розміщена фігура (графік), згенерована вашим кодом                                                                                   |
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
-## Tip
+## Порада (Automatic Translation)
 
-- The default settings for the above chunk options are all `TRUE`.
-- The default settings can be modified per chunk, or with
-  `knitr::opts_chunk$set()`,
-- Entering `knitr::opts_chunk$set(echo = FALSE)` will change the default of
-  value of `echo` to `FALSE` for **every** code chunk in the document.
+- Налаштування за замовчуванням для вищевказаних параметрів фрагмента є `TRUE`.
+- Параметри за замовчуванням можуть бути змінені для кожного фрагмента коду або за допомогою `knitr::opts_chunk$set () `,
+- Введення `knitr::opts_chunk$set(echo = FALSE) `змінить типове значення
+  `echo` на `FALSE` для **кожного** фрагмента коду в документі.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Exercise
+## Завдання
 
-Play around with the different options in the chunk with the code for the
-table, and re-**Knit** to see what each option does to the output.
+Поекспериментуйте з різними параметрами в блоці коду для таблиці та повторно натисніть Knit, щоб побачити, як кожен параметр впливає на результат.
 
-What happens if you use `eval = FALSE` and `echo = FALSE`? What is the
-difference between this and `include = FALSE`?
+Що станеться, якщо ви використовуєте `eval = FALSE` та `echo = FALSE`? Яка різниця
+між цим і `include = FALSE`?
 
 :::::::::::::::  solution
 
-## Solution to Exercise
+## Рішення вправи
 
-Create a chunk with `{r eval = FALSE, echo = FALSE}`, then create another
-chunk with `{r include = FALSE}` to compare.
-`eval = FALSE` and `echo = FALSE` will neither run the code in the chunk,
-nor show the code in the knitted document. The code chunk essentially
-doesn't exist in the knitted document as it was never run. Whereas
-`include = FALSE` will run the code and store the output for later use.
+Створіть фрагмент з `{r eval = FALSE, echo = FALSE}`, а потім створіть ще один фрагмент
+з `{r include = FALSE}` для порівняння.
+eval = FALSE та echo = FALSE означають, що код у цьому блоці не буде виконуватися і не відображатиметься у згенерованому (knitted) документі. Фрагмент коду, по суті, не існує у згенерованому документі, оскільки його ніколи не запустили. Тоді як
+`include = FALSE` запустить код і збереже вихід для подальшого використання.
 
 :::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## In-line R code
+## Вбудований код R
 
-Now we will use some in-line R code to present some descriptive statistics.
-To use in-line R-code, we use the same backticks that we used in the Markdown
-section, with an `r` to specify that we are generating R-code. The difference
-between in-line code and a code chunk is the number of backticks. In-line R code
-uses one backtick (`` `r` ``), whereas code chunks use three backticks
-(` ```r``` `).
+Тепер ми будемо використовувати деякий вбудований R-код, щоб представити деяку описову статистику.
+Щоб використовувати вбудований R-код, ми використовуємо ті самі зворотні дії, які ми використовували в розділі Markdown, з `r`, щоб вказати, що ми генеруємо R-код. Різниця між вбудованим кодом і фрагментом коду полягає в кількості зворотних дій. Вбудований (in-line) R-код використовує один зворотний апостроф (`r`), тоді як блоки коду (code chunks) використовують три зворотні апострофи (`r`).
 
-For example, today's date is ` ``r "r Sys.Date()"`` `, will be rendered as:
-today's date is `r Sys.Date()`.  
-The code will display today's date in the output document (well, technically the
-date the document was last knitted).
+Наприклад, сьогоднішня дата є `r «r Sys.Date ()" `, буде відображатися як: сьогоднішня дата - `r Sys.Date () `.  
+Код відображатиме сьогоднішню дату у вихідному документі (ну, технічно, дата, коли документ був востаннє згенерований).
 
-The best way to use in-line R code, is to minimise the amount of code you need
-to produce the in-line output by preparing the output in code chunks. Let's say
-we're interested in presenting the average household size in a village.
+Найкращий спосіб використовувати вбудований код R - це мінімізувати кількість коду, який вам потрібен для отримання рядного виводу, готуючи вихід у фрагментах коду. Скажімо, нам цікаво представити середній розмір домогосподарства в селі.
 
 ```{r in-line-code, purl=FALSE}
-# create a summary data frame with the mean household size by village
-mean_household <- interviews %>%
-    group_by(village) %>%
-    summarize(mean_no_membrs = mean(no_membrs))
+<- mean_household %># створіть зведений датафрейм із середнім розміром домогосподарства за селом
+mean_household% <- interviews %>
+    group_by (village) %>%
+    підсумовувати (mean_no_membrs = mean(no_membrs))
 
-# and select the village we want to use
-mean_chirodzo <- mean_household %>%
-  filter(village == "Chirodzo")
+# та виберіть село, яке ми хочемо використовувати
+mean_chirodzo%
+  filter (village == «Chirodzo»)
 ```
 
-Now we can make an informative statement on the means of each village, and include
-the mean values as in-line R-code. For example:
+Тепер ми можемо зробити інформативне твердження про засоби кожного селища та включити
+середні значення як вбудований R-код. Наприклад:
 
-The average household size in the village of Chirodzo is
-` ``r "r round(mean_chirodzo$mean_no_membrs, 2)"`` `
+Середній розмір домогосподарства в селі Чиродцо становить
+`r «r round (mean_chirodzo$mean_no_membrs, 2)" `
 
-becomes...
+стає...
 
-The average household size in the village of Chirodzo is
-`r round(mean_chirodzo$mean_no_membrs, 2)`.
+Середній розмір домогосподарства в селі Чиродцо становить
+`r round (mean_chirodzo$mean_no_membrs, 2) `.
 
-Because we are using in-line R code instead of the actual values, we have created
-a dynamic document that will automatically update if we make changes to the dataset
-and/or code chunks.
+Оскільки ми використовуємо вбудований код R замість фактичних значень, ми створили
+динамічний документ, який автоматично оновлюватиметься, якщо ми внесемо зміни до набору даних та/або фрагментів коду.
 
-## Plots
+## Графіки
 
-Finally, we will also include a plot, so our document is a little more colourful
-and a little less boring. We will use the `interview_plotting` data from the
-previous episode.
+На завершення ми також додамо графік, щоб наш документ був трохи яскравішим і менш нудним. Ми будемо використовувати дані `interview_plotting` з попереднього епізоду.
 
-If you were unable to complete the previous lesson or did not save the data,
-then you can create it in a new code chunk.
+Якщо ви не змогли завершити попередній урок або не зберегли дані, ви можете створити їх зараз.
 
 ```{r interview-plotting-data, purl=FALSE, eval=TRUE}
 ## Not run, but can be used to load in data from previous lesson!
