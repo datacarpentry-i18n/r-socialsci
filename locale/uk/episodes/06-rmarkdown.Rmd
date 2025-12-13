@@ -355,137 +355,117 @@ mean_chirodzo%
 Якщо ви не змогли завершити попередній урок або не зберегли дані, ви можете створити їх зараз.
 
 ```{r interview-plotting-data, purl=FALSE, eval=TRUE}
-## Not run, but can be used to load in data from previous lesson!
+## Не виконується, але може бути використаний для завантаження даних з попереднього заняття
 interviews_plotting <- interviews %>%
-  ## pivot wider by items_owned
+  ## розгортаємо дані (pivot wider) за змінною items_owned
   separate_rows(items_owned, sep = ";") %>%
-  ## if there were no items listed, changing NA to no_listed_items
+  ## якщо елементи не вказані, замінюємо NA на "no_listed_items"
   replace_na(list(items_owned = "no_listed_items")) %>%
   mutate(items_owned_logical = TRUE) %>%
   pivot_wider(names_from = items_owned, 
               values_from = items_owned_logical, 
               values_fill = list(items_owned_logical = FALSE)) %>%
-  ## pivot wider by months_lack_food
+  ## розгортаємо дані (pivot wider) за змінною months_lack_food
   separate_rows(months_lack_food, sep = ";") %>%
   mutate(months_lack_food_logical = TRUE) %>%
   pivot_wider(names_from = months_lack_food, 
               values_from = months_lack_food_logical, 
               values_fill = list(months_lack_food_logical = FALSE)) %>%
-  ## add some summary columns
+  ## додаємо підсумкові змінні
   mutate(number_months_lack_food = rowSums(select(., Jan:May))) %>%
   mutate(number_items = rowSums(select(., bicycle:car)))
 ```
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Exercise
+## Завдання
 
-Create a new code chunk for the plot, and copy the code from any of the plots
-we created in the previous episode to produce a plot in the chunk. I recommend
-one of the colourful plots.
+Створіть новий блок коду для побудови графіка та скопіюйте код будь-якого з графіків, які ми створювали в попередньому занятті, щоб отримати графік у цьому блоці. Я рекомендую
+один з кольорових сюжетів.
 
-If you are feeling adventurous, you can also create a new plot with the
-`interviews_plotting` data frame.
+Якщо ви відчуваєте себе сміливо, ви також можете створити новий графік, використовуючи датафрейм interviews_plotting.
 
 :::::::::::::::  solution
 
-## Solution to Exercise
+## Рішення вправи
 
 ```{r my-fancy-plot, answer=TRUE, purl=FALSE}
 interviews_plotting %>%
-  ggplot(aes(x = respondent_wall_type)) +
-  geom_bar(aes(fill = village))
+    ggplot(aes(x = respondent_wall_type)) +
+    geom_bar(aes(fill = village))
 ```
 
 :::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-We can also create a caption with the chunk option `fig.cap`.
+Ми також можемо створити підпис за допомогою параметра `fig.cap`.
 
 ````{verbatim, lang = "markdown"}
-```{r chunk-name, fig.cap = "I made this plot while attending an
-awesome Data Carpentries workshop where I learned a ton of cool stuff!"}
-Code for plot
+``{r chunk-name, fig.cap = «Я створив цей сюжет під час відвідування чудового семінару
+Data Carpentries, де я дізнався багато цікавих речей!"}
+Код для ділянки
 ```
 ````
 
-...or, ideally, something more informative.
+...або, в ідеалі, щось більш інформативне.
 
 ```{r caption-plot, eval=TRUE, fig.cap="I made this plot while attending an awesome Data Carpentries workshop where I learned a ton of cool stuff!"}
 interviews_plotting %>%
   ggplot(aes(x = respondent_wall_type)) +
   geom_bar(aes(fill = village), position = "dodge") + 
-  labs(x = "Type of Wall in Home", y = "Count", fill = "Village Name") +
-  scale_fill_viridis_d() # add colour deficient friendly palette
+  labs(x = "Тип стін у домі", y = "Кількість", fill = "Назва села") +
+  scale_fill_viridis_d() # додаємо палітру, доступну для людей з порушенням сприйняття кольору
 ```
 
-## Other output options
+## Інші варіанти виведення
 
-You can convert R Markdown to a PDF or a Word document (among others).
-Click the little triangle next to the **Knit** button to get a drop-down menu.
-Or you could put `pdf_document` or `word_document` in the initial header of the file.
+Ви можете перетворити R Markdown у документ PDF або Word (серед інших).
+Натисніть маленький трикутник поруч із кнопкою**Knit**, щоб отримати спадне меню.
+Або ви можете помістити `pdf_document` або `word_document` у початковий заголовок файлу.
 
 ```
 ---
 title: "My Awesome Report"
 author: "Emmet Brickowski"
 date: ""
-output: word_document
+output: html_document
 ---
 ```
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
-## Note: Creating PDF documents
+## Примітка: створення PDF-документів
 
-Creating .pdf documents may require installation of some extra software. The R
-package `tinytex` provides some tools to help make this process easier for R users.
-With `tinytex` installed, run `tinytex::install_tinytex()` to install the required
-software (you'll only need to do this once) and then when you **Knit** to pdf `tinytex`
-will automatically detect and install any additional LaTeX packages that are needed to
-produce the pdf document. Visit the [tinytex website](https://yihui.org/tinytex/)
-for more information.
+Для створення документів.pdf може знадобитися інсталяція додаткового програмного забезпечення. Пакет R `tinytex` надає деякі інструменти, які допоможуть полегшити цей процес для користувачів R.
+Якщо tinytex встановлено, виконайте tinytex::install_tinytex(), щоб встановити потрібне програмне забезпечення (це потрібно зробити лише один раз). Після цього, коли ви будете Knit у Pdf, tinytex автоматично виявить та встановить будь-які додаткові пакети LaTeX, необхідні для створення Pdf-документа. Відвідайте веб-сайт [tinytex] (https://yihui.org/tinytex/) для отримання додаткової інформації.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
-## Note: Inserting citations into an R Markdown file
+## Примітка: вставка цитат у файл R Markdown
 
-It is possible to insert citations into an R Markdown file using the
-editor toolbar. The editor toolbar includes commonly seen formatting
-buttons generally seen in text editors (e.g., bold and italic
-buttons). The toolbar is accessible by using the settings dropdown
-menu (next to the 'Knit' dropdown menu) to select 'Use Visual Editor',
-also accessible through the shortcut 'Crtl+Shift+F4'. From here,
-clicking 'Insert' allows 'Citation' to be selected (shortcut:
-'Crtl+Shift+F8'). For example, searching '10.1007/978-3-319-24277-4'
-in 'From DOI' and inserting will provide the citation for `ggplot2`
-[@wickham2016]. This will also save the citation(s) in
-'references.bib' in the current working directory. Visit the R Studio
-website for more
-information. Tip: obtaining citation information from relevant
-packages can be done by using `citation("package")`.
+Можна вставити цитати у файл R Markdown за допомогою панелі інструментів редактора. Панель інструментів редактора містить загальновживані кнопки форматування, які зазвичай зустрічаються в текстових редакторах (наприклад, кнопки для жирного та курсивного тексту). До панелі інструментів можна отримати доступ через спадне меню налаштувань (поруч із меню 'Knit'), обравши 'Use Visual Editor'. Також доступно через комбінацію клавіш Ctrl+Shift+F4. Звідси, натиснувши 'Insert', можна обрати 'Citation' (швидкий доступ через комбінацію клавіш Ctrl+Shift+F8). Наприклад, пошук '10.1007/978-3-319-24277-4' у розділі «З DOI» та вставка забезпечить цитування для `ggplot2` [@wickham2016]. Це також збереже цитати в 'references.bib' у поточному робочому каталозі. Відвідайте веб-сайт [tinytex] (https://rstudio.github.io/visual-markdown-editing/) для отримання додаткової інформації. Порада: отримати інформацію для цитування відповідних пакетів можна за допомогою citation("package").
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Resources
+## Ресурси
 
-- [Knitr in a knutshell tutorial](https://kbroman.org/knitr_knutshell)
-- [Dynamic Documents with R and knitr](https://www.amazon.com/exec/obidos/ASIN/1482203537/7210-20) (book)
-- [R Markdown documentation](https://rmarkdown.rstudio.com)
-- [R Markdown cheat sheet](https://github.com/rstudio/cheatsheets/blob/master/rmarkdown-2.0.pdf)
-- [Getting started with R Markdown](https://www.rstudio.com/resources/webinars/getting-started-with-r-markdown/)
-- [Markdown tutorial](https://commonmark.org/help/tutorial/)
-- [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/) (book by Rstudio team)
-- [Reproducible Reporting](https://www.rstudio.com/resources/webinars/reproducible-reporting/)
-- [Introducing Bookdown](https://www.rstudio.com/resources/webinars/introducing-bookdown/)
+- [Knitr в підручнику knutshell](https://kbroman.org/knitr_knutshell)
+- [Динамічні документи з R і knitr] (https://www.amazon.com/exec/obidos/ASIN/1482203537/7210-20) (книга)
+- [Документація R Markdown] (https://rmarkdown.rstudio.com)
+- [Шпаргалка R Markdown] (https://github.com/rstudio/cheatsheets/blob/master/rmarkdown-2.0.pdf)
+- [Початок роботи з R Markdown] (https://www.rstudio.com/resources/webinars/getting-started-with-r-markdown/)
+- [Підручник Markdown](https://commonmark.org/help/tutorial/)
+- [R Markdown: посібник] (https://bookdown.org/yihui/rmarkdown/) (книга команди Rstudio)
+- [Відтворювана звітність] (https://www.rstudio.com/resources/webinars/reproducible-reporting/)
+- [Представляємо книгу] (https://www.rstudio.com/resources/webinars/introducing-bookdown/)
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
-- R Markdown is a useful language for creating reproducible documents combining text and executable R-code.
-- Specify chunk options to control formatting of the output document
+- R Markdown - корисна мова для створення відтворюваних документів, що поєднують текст і виконуваний R-код.
+- Вкажіть параметри фрагмента для керування форматуванням вихідного документа
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
