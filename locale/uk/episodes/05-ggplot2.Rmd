@@ -476,21 +476,16 @@ percent_memb_assoc %>%
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Adding Labels and Titles
+## Додавання підписів і заголовків
 
-By default, the axes labels on a plot are determined by the name of the variable
-being plotted. However, **`ggplot2`** offers lots of customization options,
-like specifying the axes labels, and adding a title to the plot with
-relatively few lines of code. We will add more informative x-and y-axis
-labels to our plot, a more explanatory label to the legend, and a plot title.
+За замовчуванням підписи осей на графіку беруться з назв змінних, які ми зображаємо. Проте, **`ggplot2`** пропонує багато можливостей для налаштування: можна задавати власні підписи осей, додавати заголовок до графіка за допомогою відносно невеликої кількості коду. Ми додамо більш інформативні підписи для осей x та y, пояснювальний підпис для легенди та заголовок до графіка.
 
-The `labs` function takes the following arguments:
+Функція `labs` приймає такі аргументи:
 
-- `title` -- to produce a plot title
-- `subtitle` -- to produce a plot subtitle (smaller text placed beneath the title)
-- `caption` -- a caption for the plot
-- `...` -- any pair of name and value for aesthetics used in the plot (e.g.,
-  `x`, `y`, `fill`, `color`, `size`)
+- `title` -- заголовок графіку
+- `subtitle` -- підзаголовок (текст меншим шрифтом під заголовком)
+- `caption` -- підпис до графіка
+- `...` -- будь-які пари імені та значення для естетики, які використовуються у графіку (наприклад, `x`, `y`, `fill`, `color`, `size`)
 
 ```{r barplot-wall-types-labeled, fig.alt="Previous plot with plot title and labells added."}
 percent_wall_type %>%
@@ -502,19 +497,11 @@ percent_wall_type %>%
          y = "Percent")
 ```
 
-## Faceting
+## Фасетування
 
-Rather than creating a single plot with side-by-side bars for each
-village, we may want to create multiple plot, where each plot shows the
-data for a single village. This would be especially useful if we had
-a large number of villages that we had sampled, as a large number of
-side-by-side bars will become more difficult to read.
+Замість того, щоб створювати один графік зі стовпчиками поруч для кожної громади, ми можемо створити кілька графіків, де кожен показує дані для однієї громади. Це особливо корисно, якщо у нас велика кількість громад у вибірці, адже багато стовпчиків поруч важко читати.
 
-**`ggplot2`** has a special technique called _faceting_ that allows the
-user to split one plot into multiple plots based on a factor included
-in the dataset. We will use it to split our barplot of housing type
-proportion by village so that each village has its own panel in a
-multi-panel plot:
+У **`ggplot2`** є спеціальна техніка, яка називається _faceting_ (фасетування), яка дозволяє розбити один графік на кілька графіків на основі факторної змінної у наборі даних. Ми використаємо її, щоб розбити наш стовпчастий графік пропорцій типів будинків за громадами так, щоб для кожної громади був власна панель у багатопанельному графіку:
 
 ```{r barplot-faceting, fig.alt="Bar plot showing percent of each wall type in each village."}
 percent_wall_type %>%
@@ -526,12 +513,9 @@ percent_wall_type %>%
     facet_wrap(~ village)
 ```
 
-Click the "Zoom" button in your RStudio plots pane to view a larger
-version of this plot.
+Натисніть кнопку "Zoom" у панелі графіків RStudio, щоб переглянути більшу версію цього графіка.
 
-Usually plots with white background look more readable when printed.  We can set
-the background to white using the function `theme_bw()`. Additionally, you can remove
-the grid:
+Зазвичай графіки на білому фоні легше читати при друку.  Ми можемо встановити білий фон за допомогою функції `theme_bw()`. Крім того, можна прибрати сітку:
 
 ```{r barplot-theme-bw, fig.alt="Bar plot showing percent of each wall type in each village, with black and white theme applied.", purl=FALSE}
 percent_wall_type %>%
@@ -545,11 +529,7 @@ percent_wall_type %>%
     theme(panel.grid = element_blank())
 ```
 
-What if we wanted to see the proportion of respondents in each village
-who owned a particular item? We can calculate the percent of people
-in each village who own each item and then create a faceted series of
-bar plots where each plot is a particular item. First we need to
-calculate the percentage of people in each village who own each item:
+А що як ми хочемо побачити частку респондентів у кожному селі, які володіють певним предметом? Ми можемо порахувати відсоток людей у кожному селі, які мають кожен предмет, а потім створити серію фасетованих стовпчикових діаграм, де кожна діаграма відповідає окремому предмету. Спершу потрібно обчислити відсоток людей у кожному селі, які володіють кожним предметом:
 
 ```{r percent-items-data}
 percent_items <- interviews_plotting %>%
@@ -558,27 +538,15 @@ percent_items <- interviews_plotting %>%
     pivot_longer(bicycle:no_listed_items, names_to = "items", values_to = "percent")
 ```
 
-To calculate this percentage data frame, we needed to use the `across()`
-function within a `summarize()` operation. Unlike the previous example with a
-single wall type variable, where each response was exactly one of the types
-specified, people can (and do) own more than one item. So there are multiple
-columns of data (one for each item), and the percentage calculation needs to be
-repeated for each column.
+Щоб обчислити цей датафрейм із відсотками, нам потрібно було використати функцію `across()` всередині операції `summarize()`. На відміну від попереднього прикладу з однією змінною типу стіни, де кожна відповідь належала лише до одного з типів, люди можуть (і часто мають) більше ніж один предмет. Тому у нас є кілька стовпців даних (по одному на кожен предмет) і обчислення відсотка потрібно повторити для кожної колонки.
 
-Combining `summarize()` with `across()` allows us to specify first, the columns
-to be summarized (`bicycle:no_listed_items`) and then the calculation. Because
-our calculation is a bit more complex than is available in a built-in function,
-we define a new formula:
+Поєднання `summarize()` з `across()` дозволяє спочатку вказати стовпці, які потрібно підсумувати (`bicycle:no_listed_items`), а потім — обчислення. Оскільки наше обчислення трохи складніше, ніж доступні вбудовані функції, ми визначаємо нову формулу:
 
-- `~` indicates that we are defining a formula,
-- `sum(.x)` gives the number of people owning that item by counting the number of `TRUE`
-  values (`.x` is shorthand for the column being operated on),
-- and `n()` gives the current group size.
+- `~` вказує, що ми визначаємо формулу,
+- `sum(.x)` рахує кількість людей, які мають цей предмет, враховуючи значення `TRUE`(`.x` — це скорочення для стовпця, над яким виконується операція),
+- і `n()` повертає розмір поточної групи.
 
-After the `summarize()` operation, we have a table of percentages with each item
-in its own column, so a `pivot_longer()` is required to transform the table into
-an easier format for plotting. Using this data frame, we can now create a
-multi-paneled bar plot.
+Після операції `summarize()` ми отримуємо таблицю відсотків, де кожен предмет у власному стовпці, тому потрібне застосування `pivot_longer()`, щоб перетворити таблицю у зручніший формат для побудови графіка. Використовуючи цей датафрейм, ми можемо створити багатопанельну стовпчасту діаграму.
 
 ```{r percent-items-barplot, fig.alt="Multi-panel bar chart showing percent  of respondents in each village and who owned each item, with no grids behid bars."}
 percent_items %>%
@@ -589,38 +557,26 @@ percent_items %>%
     theme(panel.grid = element_blank())
 ```
 
-## **`ggplot2`** themes
+## Теми в **`ggplot2`**
 
-In addition to `theme_bw()`, which changes the plot background to white,
-**`ggplot2`** comes with several other themes which can be useful to quickly
-change the look of your visualization. The complete list of themes is available
-at [https://ggplot2.tidyverse.org/reference/ggtheme.html](https://ggplot2.tidyverse.org/reference/ggtheme.html). `theme_minimal()` and
-`theme_light()` are popular, and `theme_void()` can be useful as a starting
-point to create a new hand-crafted theme.
+Окрім `theme_bw()`, яка змінює фон графіка на білий, **`ggplot2`** має кілька інших тем, що дозволяють швидко змінювати вигляд візуалізації. Повний список тем доступний за посиланням: [https://ggplot2.tidyverse.org/reference/ggtheme.html](https://ggplot2.tidyverse.org/reference/ggtheme.html). `theme_minimal()` і `theme_light()` є популярними, а `theme_void()` може стати корисною відправною точкою для створення власної, ручної теми.
 
-The
-[ggthemes](https://jrnold.github.io/ggthemes/reference/index.html)
-package provides a wide variety of options (including an Excel 2003 theme). The
-[**`ggplot2`** extensions website](https://exts.ggplot2.tidyverse.org/) provides a list
-of packages that extend the capabilities of **`ggplot2`**, including additional
-themes.
+Пакет [ggthemes](https://jrnold.github.io/ggthemes/reference/index.html)
+пропонує великий вибір тем (включно з темою Excel 2003). [Сайт розширень **`ggplot2`**](https://exts.ggplot2.tidyverse.org/) пропонує список пакетів, які розширюють можливості **`ggplot2`**, включно з додатковими темами.
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
 ## Завдання
 
-Experiment with at least two different themes. Build the previous plot
-using each of those themes. Which do you like best?
+Спробуйте використати щонайменше дві різні теми. Побудуйте попередній графік з кожною з цих тем. Яка вам подобається більше?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Customization
+## Налаштування
 
-Take a look at the ,
-and think of ways you could improve the plot.
+Подивіться на [**`ggplot2`** шпаргалку](https://github.com/rstudio/cheatsheets/blob/main/data-visualization-2.1.pdf) та подумайте, як можна покращити графік.
 
-Now, let's change names of axes to something more informative than 'village' and
-'percent' and add a title to the figure:
+Тепер нумо змінимо назви осей на більш інформативні замість 'village' та 'percent' і додамо заголовок до графіка:
 
 ```{r ggplot-customization, purl=FALSE}
 percent_items %>%
@@ -633,8 +589,7 @@ percent_items %>%
     theme_bw()
 ```
 
-The axes have more informative names, but their readability can be improved by
-increasing the font size:
+Назви осей стали більш інформативними, але їхню читабельність можна покращити, збільшивши розмір шрифту:
 
 ```{r ggplot-customization-font-size, purl=FALSE}
 percent_items %>%
@@ -648,16 +603,9 @@ percent_items %>%
     theme(text = element_text(size = 16))
 ```
 
-Note that it is also possible to change the fonts of your plots. If you are on
-Windows, you may have to install the , and follow the instructions included
-in the README for this package.
+Зверніть увагу, що також можна змінювати шрифти на графіках. Якщо ви користуєтеся Windows, можливо, доведеться встановити [пакет **`extrafont`**](https://github.com/wch/extrafont) та дотримуватися інструкцій у README цього пакета.
 
-After our manipulations, you may notice that the values on the x-axis are still
-not properly readable. Let's change the orientation of the labels and adjust
-them vertically and horizontally so they don't overlap. You can use a 90-degree
-angle, or experiment to find the appropriate angle for diagonally oriented
-labels. With a larger font, the title also runs off. We can add "\\n" in the string
-for the title to insert a new line:
+Після наших змін можна помітити, що значення на осі x все ще не зовсім зручні для читання. Змінімо орієнтацію підписів і відрегулюємо їх вертикально та горизонтально, щоб вони не перекривалися. Можна використати кут 90 градусів або підібрати відповідний кут для діагонального розташування підписів. З більшим шрифтом заголовок теж може виходити за межі графіка. Ми можемо додати "\\n" у рядок заголовка, щоб вставити новий рядок:
 
 ```{r ggplot-customization-label-orientation, fig.alt="Multi-panel bar charts showing percent of respondents in each village and who owned each item, with grids behind the bars.", purl=FALSE}
 percent_items %>%
@@ -674,9 +622,8 @@ percent_items %>%
           text = element_text(size = 16))
 ```
 
-If you like the changes you created better than the default theme, you can save
-them as an object to be able to easily apply them to other plots you may create.
-We can also add `plot.title = element_text(hjust = 0.5)` to centre the title:
+Якщо вам більше подобаються створені зміни у порівнянні з темою за замовчуванням, їх можна зберегти як об’єкт, щоб легко застосовувати до інших графіків, які ви створюватимете.
+Також можна додати `plot.title = element_text(hjust = 0.5)`, щоб вирівняти заголовок по центру:
 
 ```{r ggplot-custom-themes, purl=FALSE}
 grey_theme <- theme(axis.text.x = element_text(colour = "grey20", size = 12,
@@ -701,18 +648,14 @@ percent_items %>%
 
 ## Завдання
 
-With all of this information in hand, please take another five minutes to
-either improve one of the plots generated in this exercise or create a
-beautiful graph of your own. Use the RStudio [**`ggplot2`** cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/data-visualization-2.1.pdf)
-for inspiration. Here are some ideas:
+Маючи всю цю інформацію, виділіть ще п’ять хвилин, щоб покращити один із графіків, створених у цьому завданні або створити власний гарний графік. Використайте RStudio [шпаргалку **`ggplot2`**](https://github.com/rstudio/cheatsheets/blob/main/data-visualization-2.1.pdf) для натхнення. Ось кілька ідей:
 
-- See if you can make the bars white with black outline.
-- Try using a different colour palette (see
-  [http://www.cookbook-r.com/Graphs/Colors\_(ggplot2)/](https://www.cookbook-r.com/Graphs/Colors_\\(ggplot2\\)/)).
+- Спробуйте зробити стовпці білими з чорним контуром.
+- Спробуйте використати іншу кольорову палітру (див. [http://www.cookbook-r.com/Graphs/Colors\_(ggplot2)/](https://www.cookbook-r.com/Graphs/Colors_\\(ggplot2\\)/)).
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-After creating your plot, you can save it to a file in your favourite format. The Export tab in the **Plot** pane in RStudio will save your plots at low resolution, which will not be accepted by many journals and will not scale well for posters.
+Після створення графіка його можна зберегти у файл у потрібному форматі. The Export tab in the **Plot** pane in RStudio will save your plots at low resolution, which will not be accepted by many journals and will not scale well for posters.
 
 Instead, use the `ggsave()` function, which allows you to easily change the dimension and resolution of your plot by adjusting the appropriate arguments (`width`, `height` and `dpi`).
 
