@@ -420,10 +420,7 @@ interviews_plotting %>%
     geom_bar(aes(fill = village))
 ```
 
-This creates a stacked bar chart. These are generally more difficult to read
-than side-by-side bars. We can separate the portions of the stacked bar that
-correspond to each village and put them side-by-side by using the `position`
-argument for `geom_bar()` and setting it to "dodge".
+Це створює стовпчасту діаграму. Як правило, їх складніше читати, ніж стовпчики розташовані поруч. Ми можемо розділити частини складеної стовпчастої діаграми, що відповідають кожному селу і розмістити їх поруч, використавши аргумент position у `geom_bar()` та встановивши його значення "dodge".
 
 ```{r barplot-dodge, fig.alt="Bar plot of respondent wall types with each village as a separate bar."}
 interviews_plotting %>%
@@ -431,13 +428,7 @@ interviews_plotting %>%
     geom_bar(aes(fill = village), position = "dodge")
 ```
 
-This is a nicer graphic, but we're more likely to be interested in the
-proportion of each housing type in each village than in the actual count of
-number of houses of each type (because we might have sampled different numbers
-of households in each village). To compare proportions, we will first create a
-new data frame (`percent_wall_type`) with a new column named "percent"
-representing the percent of each house type in each village. We will remove
-houses with cement walls, as there was only one in the dataset.
+Це більш наочний графік, але нас, ймовірно, більше цікавить частка кожного типу житла в кожному селі, ніж фактична кількість будинків кожного типу (оскільки в різних селах могла бути опитана різна кількість домогосподарств). Щоб порівняти частки, ми спочатку створимо новий датафрейм (`percent_wall_type`) з новим стовпцем "percent", який представляє відсоток кожного типу будинку в кожному селі. Також ми виключимо будинки з цементними стінами, оскільки в наборі даних був лише один такий будинок.
 
 ```{r wall-type-data}
 percent_wall_type <- interviews_plotting %>%
@@ -448,8 +439,7 @@ percent_wall_type <- interviews_plotting %>%
     ungroup()
 ```
 
-Now we can use this new data frame to create our plot showing the
-percentage of each house type in each village.
+Тепер ми можемо використати цей новий датафрейм, щоб побудувати графік, який показує відсоток кожного типу будинку в кожному селі.
 
 ```{r barplot-wall-type, fig.alt="Side by side bar plot showing percent of respondents in each village with each wall type."}
 percent_wall_type %>%
@@ -459,17 +449,13 @@ percent_wall_type %>%
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Exercise
+## Завдання
 
-Create a bar plot showing the proportion of respondents in each
-village who are or are not part of an irrigation association
-(`memb_assoc`). Include only respondents who answered that question
-in the calculations and plot. Which village had the lowest proportion of
-respondents in an irrigation association?
+Створіть стовпчасту діаграму, яка показує частку респондентів у кожному селі, які є або не є членами іригаційної асоціації (`memb_assoc`). У розрахунках і на графіку враховуйте лише тих респондентів, які відповіли на це запитання. Яке село має найменшу частку респондентів, що є членами іригаційної асоціації?
 
 :::::::::::::::  solution
 
-## Solution
+## Відповідь
 
 ```{r barplot-memb-assoc, fig.alt="Bar plot showing percent of respondents in each village who were part of association."}
 percent_memb_assoc <- interviews_plotting %>%
@@ -484,7 +470,7 @@ percent_memb_assoc %>%
     geom_bar(stat = "identity", position = "dodge")
 ```
 
-Ruaca had the lowest proportion of members in an irrigation association.
+Село Ruaca мало найменшу частку респондентів, які є членами іригаційної асоціації.
 
 :::::::::::::::::::::::::
 
@@ -621,7 +607,7 @@ themes.
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Exercise
+## Завдання
 
 Experiment with at least two different themes. Build the previous plot
 using each of those themes. Which do you like best?
@@ -713,7 +699,7 @@ percent_items %>%
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Exercise
+## Завдання
 
 With all of this information in hand, please take another five minutes to
 either improve one of the plots generated in this exercise or create a
