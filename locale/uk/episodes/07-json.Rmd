@@ -19,84 +19,78 @@ library(tidyverse)
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- Describe the JSON data format
-- Understand where JSON is typically used
-- Appreciate some advantages of using JSON over tabular data
-- Appreciate some disadvantages of processing JSON documents
-- Use the jsonLite package to read a JSON file
-- Display formatted JSON as dataframe
-- Select and display nested dataframe fields from a JSON document
-- Write tabular data from selected elements from a JSON document to a csv file
+- Опис формату даних JSON
+- Розуміння, де JSON зазвичай використовується
+- Оцініть деякі переваги використання JSON перед табличними даними
+- Оцініть деякі недоліки обробки документів JSON
+- Використовуйте пакет JSONLite для читання файлу JSON
+- Відображення форматованого JSON як датафрейм
+- Вибір та відображення вкладених полів датафрейму з документа JSON
+- Запис табличних даних з вибраних елементів з документа JSON у файл csv
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- What is JSON format?
-- How can I convert JSON to an R dataframe?
-- How can I convert an array of JSON record into a table?
+- Що таке формат JSON?
+- Як я можу перетворити JSON в датафрейм в R?
+- Як я можу перетворити масив записів JSON у таблицю?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## The JSON data format
+## Формат даних JSON
 
-The JSON data format was designed as a way of allowing different machines or processes within machines to communicate with each other by sending messages constructed in a well defined format. JSON is now the preferred data format used by APIs (Application Programming Interfaces).
+The JSON data format was designed as a way of allowing different machines or processes within machines to communicate with each other by sending messages constructed in a well defined format. JSON тепер є кращим форматом даних, який використовується API (Application Programming Interfaces).
 
-The JSON format although somewhat verbose is not only Human readable but it can also be mapped very easily to an R dataframe.
+Формат JSON, хоча і дещо детальний, не тільки читається людиною, але його також можна дуже легко зіставити на датафрейм R.
 
-We are going to read a file of data formatted as JSON, convert it into a dataframe in R then selectively create a csv file from the extracted data.
+Ми збираємось прочитати файл даних, відформатований як JSON, перетворити його в датафрейм у R, а потім вибірково створити файл csv з витягнутих даних.
 
-The JSON file we are going to use is the [SAFI.json](data/SAFI.json) file. This is the output file from an electronic survey system called ODK. The JSON represents the answers to a series of survey questions. The questions themselves have been replaced with unique Keys, the values are the answers.
+Файл JSON, який ми збираємось використовувати, - це файл [Safi.json] (data/SAFI.json). Це вихідний файл з електронної системи обстеження під назвою ODK. JSON представляє відповіді на серію запитань опитування. Самі питання замінені унікальними ключами, значення - відповіді.
 
-Because detailed surveys are by nature nested structures making it possible to record different levels of detail or selectively ask a set of specific questions based on the answer given to a previous question, the structure of the answers for the survey can not only be complex and convoluted, it could easily be different from one survey respondent's set of answers to another.
+Оскільки детальні опитування за своєю природою є вкладеними структурами, що дає змогу фіксувати різні рівні деталізації або вибірково ставити певні запитання залежно від відповіді на попереднє, структура відповідей в опитуванні може бути не лише складною й заплутаною, а й легко відрізнятися між різними респондентами.
 
-### Advantages of JSON
+### Переваги JSON
 
-- Very popular data format for APIs (e.g. results from an Internet search)
-- Human readable
-- Each record (or document as they are called) is self contained. The equivalent of the column name and column values are in every record.
-- Documents do not all have to have the same structure within the same file
-- Document structures can be complex and nested
+- Дуже популярний формат даних для API (наприклад, результати пошуку в Інтернеті)
+- Читабельний
+- Кожен запис (або документ, як їх називають) є самостійним. Еквівалент назви стовпця та значень стовпців є у кожному записі.
+- Не всі документи повинні мати однакову структуру в одному файлі
+- Структури документів можуть бути складними і вкладеними
 
-### Disadvantages of JSON
+### Недоліки JSON
 
-- It is more verbose than the equivalent data in csv format
-- Can be more difficult to process and display than csv formatted data
+- Це більш детальні дані, ніж еквівалентні дані у форматі csv
+- Може бути складніше для обробки і відображення даних, форматованих в csv
 
-## Use the JSON package to read a JSON file
+## Використовуйте пакет JSONLite для читання файлу JSON
 
 ```{r, message=FALSE}
 library(jsonlite)
 ```
 
-As with reading in a CSV, you have a couple of options for how to access the JSON file.
+Як і при читанні в CSV, у вас є кілька варіантів доступу до файлу JSON.
 
-You can read the JSON file directly into R with `read_json()` or the comparable `fromJSON()`
-function, though this does not download the file.
+Ви можете прочитати файл JSON безпосередньо в R за допомогою `read_json () `або порівнянної функції `fromJSON ()`, хоча це не завантажує файл.
 
 ```{r eval=FALSE}
-json_data <- read_json(
-  "https://raw.githubusercontent.com/datacarpentry/r-socialsci/main/episodes/data/SAFI.json"
-  )
+json_data <- read_json( "https://raw.githubusercontent.com/datacarpentry/r-socialsci/main/episodes/data/SAFI.json")
 ```
 
-To download the file you can copy and paste the contents of the file on
-[GitHub](https://github.com/datacarpentry/r-socialsci/blob/main/episodes/data/SAFI.json),
-creating a `SAFI.json` file in your `data` directory, or you can download the file with R.
+Щоб завантажити файл, ви можете скопіювати та вставити вміст файлу на
+[GitHub] (https://github.com/datacarpentry/r-socialsci/blob/main/episodes/data/SAFI.json),, створивши файл `safi.json` у вашому каталозі `data`, або ви можете завантажити файл за допомогою R.
 
 ```{r download-data, eval=FALSE}
-download.file(
-  "https://raw.githubusercontent.com/datacarpentry/r-socialsci/main/episodes/data/SAFI.json",
-   "data/SAFI.json", mode = "wb")
+download.file(  "https://raw.githubusercontent.com/datacarpentry/r-socialsci/main/episodes/data/SAFI.json", "data/SAFI_clean.csv", mode = "wb"")
 ```
 
-Once you have the data downloaded, you can read it into R with `read_json()`:
+Після завантаження даних ви можете прочитати їх у R за допомогою `read_json () `:
 
 ```{r eval=FALSE}
 json_data <- read_json("data/SAFI.json")
 ```
 
-We can see that a new object called json\_data has appeared in our Environment. It is described as a Large list (131 elements). In this current form, our data is messy. You can have a glimpse of it with the `head()` or `view()` functions. It will look not much more structured than if you were to open the JSON file with a text editor.
+Ми бачимо, що в нашому середовищі з'явився новий об'єкт під назвою json\ _data. It is described as a Large list (131 elements). In this current form, our data is messy. You can have a glimpse of it with the `head()` or `view()` functions. It will look not much more structured than if you were to open the JSON file with a text editor.
 
 This is because, by default, the `read_json()` function's parameter `simplifyVector`, which specifies whether or not to simplify vectors is set to FALSE. This means that the default setting does not simplify nested lists into vectors and data frames. However, we can set this to TRUE, and our data will be read directly as a dataframe:
 
