@@ -1,19 +1,21 @@
 ---
-title: Using a relational database with R
+title: "Використання реляційної бази даних з R"
 teaching: 0
 exercises: 0
 questions:
-  - How can I import data held in an SQLite database into an R data frame?
-  - How can I write data from a data frame to an SQLite table?
-  - How can I create an SQLite database from csv files
+  - "Як імпортувати дані, що зберігаються в базі даних SQLite, у датафрейм в R?"
+  - "Як записати дані з датафрейму у таблицю SQLite?"
+  - "Як створити базу даних SQLite з csv файлів"
+
 objectives:
-  - Install RSQLite package
-  - Create a connection to an SQLite database
-  - Query the database
-  - Create a new databaseand populate it
-  - Use dplyr functions to access and query an SQLite database
+  - "Встановити пакет RSQLite"
+  - "Створити з’єднання з базою даних SQLite"
+  - "Виконати запити до бази даних"
+  - "Створити нову базу даних і наповнити її даними"
+  - "Використовувати функції dplyr для доступу та запитів до бази даних SQLite"
+
 keypoints:
-  - First key point.
+  - "Перший ключовий момент."
 ---
 
 ```{r, include=FALSE}
@@ -22,17 +24,9 @@ knitr_fig_path("06-")
 source("../bin/download_data.R")
 ```
 
-## Introduction
+## Вступ
 
-A common problem with R in that all operations are conducted in-memory. Here, "memory" means a computer
-drive called Random Access Memory (RAM for short) which is phsically installed on your computer. RAM
-allows for data to be read in nearly the same amount of time regardless of its physical location
-inside the memory. This is in stark contrast to the speed data could be read from CDs, DVDs, or other
-storage media, where the speed of transfer depended on how quickly the drive could rotate or the
-arm could move. Unfortunately, your computer has a limited amount of RAM, so the amount of data you
-can work with is limited by the available memory. So far, we have used small datasets that can
-easily fit into your computer's memory. But what about datasets that are too large for your
-computer to handle as a whole?
+Поширеною проблемою при роботі з R є те, що всі операції виконуються в оперативній пам’яті. Тут "пам’ять" означає комп’ютерний пристрій під назвою Random Access Memory (RAM), фізично встановлений у вашому комп’ютері. RAM дозволяє читати дані майже за однаковий час, незалежно від того, де вони фізично розташовані в пам’яті. Це різко контрастує зі швидкістю читання даних з CD, DVD або інших носіїв, де швидкість передачі залежала від того, як швидко обертається диск або рухомий механізм зчитування. На жаль, ваш комп’ютер має обмежену кількість RAM, тому обсяг даних, з якими ви можете працювати, обмежений доступною пам’яттю. До цього моменту ми використовували невеликі набори даних, які легко вміщуються в пам’ять комп’ютера. Але що робити, якщо дані занадто великі, щоб комп’ютер міг обробити їх одразу?
 
 In this case, it is helpful to organze the data into a database stored outside of R before creating
 a connection to the database itself. This connection will essentially remove the limitation of memory
@@ -43,7 +37,7 @@ Once we have made the connection to the database, much of what we do will look f
 
 In this lesson, we will be connecting to an SQLite database, which allows us to send strings containing SQL statements directly from R to the database and recieve the results. In addition, we will be connecting to the database in such a way that we can use 'dplyr' functions to operate directly on the database tables.
 
-## Prelminaries
+## Передумови
 
 First, install and load the neccessary packages. You can install the `RSQLite` package with
 
@@ -64,7 +58,7 @@ Next, create a variable that contains the location of the SQLite database we are
 dbfile <- "data/SN7577.sqlite"
 ```
 
-## Connecting to an SQLite Database
+## Підключення до SQLite бази даних
 
 Connect to the SQLite database specified by `dbfile`, above, using the `dbConnect` function.
 
@@ -137,13 +131,13 @@ dbClearResult(results)
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
-## Exercise
+## Завдання
 
 What happens if you send invalid SQL syntax?
 
 :::::::::::::::  solution
 
-## Solution
+## Відповідь
 
 An error message is returned from SQLite.
 Notice that R is just the conduit; it cannot check the SQL syntax.
@@ -173,8 +167,6 @@ dbWriteTable(conn = mydb_new , name = "SN7577", value = "data/SN7577.csv",
 
 dbWriteTable(conn = mydb_new , name = "Q1", value = Q1,
              row.names = FALSE)
-
-dbListTables(mydb_new)
 ```
 
 ## Connecting to a Database for `dplyr` Use
