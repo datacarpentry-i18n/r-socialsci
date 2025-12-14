@@ -28,31 +28,28 @@ source("../bin/download_data.R")
 
 Поширеною проблемою при роботі з R є те, що всі операції виконуються в оперативній пам’яті. Тут "пам’ять" означає комп’ютерний пристрій під назвою Random Access Memory (RAM), фізично встановлений у вашому комп’ютері. RAM дозволяє читати дані майже за однаковий час, незалежно від того, де вони фізично розташовані в пам’яті. Це різко контрастує зі швидкістю читання даних з CD, DVD або інших носіїв, де швидкість передачі залежала від того, як швидко обертається диск або рухомий механізм зчитування. На жаль, ваш комп’ютер має обмежену кількість RAM, тому обсяг даних, з якими ви можете працювати, обмежений доступною пам’яттю. До цього моменту ми використовували невеликі набори даних, які легко вміщуються в пам’ять комп’ютера. Але що робити, якщо дані занадто великі, щоб комп’ютер міг обробити їх одразу?
 
-In this case, it is helpful to organze the data into a database stored outside of R before creating
-a connection to the database itself. This connection will essentially remove the limitation of memory
-because SQL queries can be sent directly from R to the database and return to R only the results that you
-have identified as being neccessary for your analysis.
+У цьому випадку корисно організувати дані у базу даних, яка зберігається поза межами R, перед тим як створювати підключення до самої бази. Це підключення фактично усуває обмеження пам’яті, оскільки SQL-запити можна відправляти безпосередньо з R до бази даних і повертати в R лише ті результати, які потрібні для аналізу.
 
-Once we have made the connection to the database, much of what we do will look familiar because the code we will be using is very similar to what we saw in the SQL lesson and earlier episodes of this R lesson.
+Після встановлення підключення до бази даних багато дій виглядатимуть знайомо, бо код буде дуже схожий на те, що ми бачили в уроці SQL та попередніх епізодах цього курсу R.
 
-In this lesson, we will be connecting to an SQLite database, which allows us to send strings containing SQL statements directly from R to the database and recieve the results. In addition, we will be connecting to the database in such a way that we can use 'dplyr' functions to operate directly on the database tables.
+У цьому уроці ми будемо підключатися до бази даних SQLite, що дозволяє надсилати SQL-запити безпосередньо з R до бази та отримувати результати. Крім того, ми під'єднаємось так, щоб можна було використовувати функції dplyr для роботи безпосередньо з таблицями бази даних.
 
 ## Передумови
 
-First, install and load the neccessary packages. You can install the `RSQLite` package with
+Спочатку встановіть і завантажте необхідні пакети. Ви можете встановити пакет `RSQLite` за допомогою
 
 ```{r, eval=FALSE}
 install.packages("RSQLite")
 ```
 
-Load the packages with
+Завантажте пакети за допомогою
 
 ```{r}
 library(RSQLite)
 library(dplyr)
 ```
 
-Next, create a variable that contains the location of the SQLite database we are going to use. Here, we are assuming that it is in the current working directory.
+Далі створіть змінну, яка містить розташування бази даних SQLite, яку ми будемо використовувати. Тут ми припускаємо, що він знаходиться в поточному робочому каталозі.
 
 ```{r}
 dbfile <- "data/SN7577.sqlite"
@@ -60,57 +57,57 @@ dbfile <- "data/SN7577.sqlite"
 
 ## Підключення до SQLite бази даних
 
-Connect to the SQLite database specified by `dbfile`, above, using the `dbConnect` function.
+Під'єднайтеся до бази даних SQLite, вказаної у змінній `dbfile` вище, використовуючи функцію `dbConnect`.
 
 ```{r}
 mydb <- dbConnect(dbDriver("SQLite"), dbfile)
 ```
 
-Here, `mydb` represents the connection to the database. It will be specified every time we need to access the database.
+Тут `mydb` представляє підключення до бази даних. Його потрібно буде вказувати щоразу, коли ми хочемо звернутися до бази.
 
-Now that we have a connection, we can get a list of the tables in the database.
+Тепер, коли підключення встановлено, ми можемо отримати список таблиць у базі даних.
 
 ```{r}
 dbListTables(mydb)
 ```
 
-Our objective here is to bring data from the database into R by sending a query to the database and then asking for the results of that query.
+Наша мета тут — перенести дані з бази даних у R, відправивши запит до бази та отримавши результати цього запиту.
 
 ```{r}
-# Assign the results of a SQL query to an SQLiteResult object
+# Присвоїти результати SQL-запиту об'єкту SQLiteResult
 results <- dbSendQuery(mydb, "SELECT * FROM Question1")
 
-# Return results from a custom object to a dataframe
+# Повернути результати з об'єкта у стандартний датафрейм R
 data <- fetch(results)
 ```
 
-`data` is a standard R dataframe that can be explored and manipulated.
+`data` тепер є звичайним датафреймом у R, з яким можна працювати та аналізувати його.
 
 ```{r}
-# Return column names
+# Повернути назви стовпців
 names(data)
 
-# Return description of dataframe structure
+# Повернути опис структури датафрейму
 str(data)
 
-# Return the second column
+# Повернути другий стовпець
 data[,2]
 
-# Return the value of the second column, fourth row
+# Повернути значення другого стовпця, четвертого рядка
 data[4,2]
 
-# Return the second column where the value of the column 'key' is greater than 7
+# Повернути значення другого стовпця, де значення стовпця 'key' більше 7
 data[data$key > 7,2]
 ```
 
-Once you have retrieved the data you should close the connection.
+Після того, як ви отримали дані, ви повинні закрити з'єднання.
 
 ```{r}
 dbClearResult(results)
 ```
 
-In addition to sending simple queries we can send complex one like a join.
-You may want to set this up in a concateneted string first for readability.
+Окрім простих запитів, ми можемо надсилати складніші, наприклад об'єднання (join).
+Для зручності читання коду можна спочатку створити такий запит у вигляді об’єднаного рядка.
 
 ```{r}
 SQL_query <- paste("SELECT q.value,",
@@ -214,7 +211,7 @@ SN7577_d %>%
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
-## Exercise
+## Завдання
 
 Store the SN7577 table as an object for `dplyr` use.
 
@@ -223,7 +220,7 @@ the response for Q2 is missing (missing values are indicated by a value of -1).
 
 :::::::::::::::  solution
 
-## Solution
+## Відповідь
 
 ```{r}
 SN7577_d <- tbl(mydb_dplyr, sql("SELECT * FROM SN7577"))
