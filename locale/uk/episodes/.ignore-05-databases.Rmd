@@ -130,30 +130,30 @@ dbClearResult(results)
 
 ## Завдання
 
-What happens if you send invalid SQL syntax?
+Що станеться, якщо надіслати некоректний синтаксис SQL?
 
 :::::::::::::::  solution
 
 ## Відповідь
 
-An error message is returned from SQLite.
-Notice that R is just the conduit; it cannot check the SQL syntax.
+SQLite поверне повідомлення про помилку.
+Зверніть увагу, що R тут виступає лише посередником і не може перевіряти синтаксис SQL.
 
 :::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-We can also create a new database and add tables to it. Let's base this new dataframe on the Question1 table that can be found in our existing database.
+Також ми можемо створити нову базу даних і додати до неї таблиці. Для цього візьмемо за основу таблицю Question1, що знаходиться у нашій наявній базі даних.
 
 ```{r}
-# First, use a SQL query to extract the Question1 table from the existing database
-results = dbSendQuery(mydb, "SELECT * from Question1")
+# Спочатку використовуйте запит SQL, щоб витягти таблицю Question1 з наявної бази даних
+results = dbSendQuery (mydb, «SELECT * from Question1")
 
-# Then, store it as a dataframe
-Q1 <- fetch(results)
+# Потім збережіть її як датафрейм
+Q1 <- fetch (результати)
 ```
 
-Now, we can create the new database and add data to it, either from an external file or a local dataframe.
+Тепер ми можемо створити нову базу даних і додати до неї дані або з зовнішнього файлу, або з локального датафрейму.
 
 ```{r}
 dbfile_new = "data/a_newdb.sqlite"
@@ -166,33 +166,31 @@ dbWriteTable(conn = mydb_new , name = "Q1", value = Q1,
              row.names = FALSE)
 ```
 
-## Connecting to a Database for `dplyr` Use
+## Підключення до бази даних для використання `dplyr`
 
-When we want to use `dplyr` functions to operate directly on the database tables,
-a different connection method is used.
+Коли ми хочемо використовувати функції `dplyr` для роботи безпосередньо з таблицями бази даних, застосовується інший спосіб підключення.
 
 ```{r}
 mydb_dplyr <- src_sqlite(path="data/SN7577.sqlite")
 ```
 
-as is the method for running queries. However using the 'tbl' function we still need to provide avalid SQL string. (?)
+як і метод виконання запитів. Однак, використовуючи функцію 'tbl', нам все одно потрібно надати дійсний SQL-запит. (?)
 
 ```{r}
 tbl(mydb_dplyr, sql("SELECT count(*) from SN7577"))
 ```
 
-The real advantage of using `dplyr` is that once we have stored the table as an object
-(here, `SN7577_d`), we can use `dplyr` functions instead of SQL statements.
+Справжня перевага використання `dplyr` полягає в тому, що після того, як ми зберегли таблицю як об’єкт (тут — `SN7577_d`), ми можемо застосовувати функції `dplyr` замість SQL-запитів.
 
 ```{r}
-# Store the table as an object
+# Зберігаємо таблицю як об’єкт
 SN7577_d <- tbl(mydb_dplyr, sql("SELECT * FROM SN7577"))
 
-# Explore the object
+# Оглядаємо об’єкт
 head(SN7577_d, n = 10)
 nrow(SN7577_d)
 
-# Apply dplyr functions to the object
+# Застосовуємо функції dplyr до об’єкта
 SN7577_d %>%
   filter(numage > 60) %>%
   select(sex, age, numage) %>%
@@ -200,9 +198,9 @@ SN7577_d %>%
   summarize(avg_age = mean(numage))
 ```
 
-Notice that on the `nrow` command we get NA rather than a count of rows. Thisis because `dplyr` doesn't hold the full table even after the 'Select \* ...'
+Зверніть увагу, що команда `nrow` повертає NA замість кількості рядків. Це тому, що `dplyr` не завантажує всю таблицю в пам’ять навіть після 'Select \* ...'
 
-If you need the row count you can use
+Якщо вам потрібна кількість рядків, можна використати
 
 ```{r}
 SN7577_d %>%
@@ -213,10 +211,10 @@ SN7577_d %>%
 
 ## Завдання
 
-Store the SN7577 table as an object for `dplyr` use.
+Зберігайте таблицю SN7577 як об'єкт для використання `dplyr`.
 
-Write a query using `dplyr` functions that will return the average age (`numage`) by sex for all records where
-the response for Q2 is missing (missing values are indicated by a value of -1).
+Напишіть запит за допомогою функцій `dplyr`, які повернуть середній вік (`numage`) за статтю для всіх записів, де
+відповідь для Q2 відсутня (відсутні значення позначаються значенням -1).
 
 :::::::::::::::  solution
 
