@@ -1,5 +1,5 @@
 ---
-title: Обробка даних JSON (необов'язково)
+title: Processing JSON data (Optional)
 teaching: 30
 exercises: 15
 source: Rmd
@@ -12,102 +12,112 @@ library(tidyverse)
 
 :::: instructor
 
-- Цей урок необов’язковий і призначений для ознайомлення з даними у форматі JSON, зокрема з тим, як зчитувати JSON у R та конвертувати ці дані у датафрейм або масив.
-- Зауважте, що урок був створений спільнотою і досі знаходиться у процесі доопрацювання. Тому він може покращитися завдяки відгукам викладачів та/або учасників семінару.
+- This is an optional lessons intended to introduce learners to JSON data, as well as how to
+  read JSON data into R and how to convert the data into a data frame or array.
+- Note that his lesson was community-contributed and remains a work in progress. As such, it could
+  benefit from feedback from instructors and/or workshop participants.
 
 ::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- Опис формату даних JSON
-- Розуміння, де JSON зазвичай використовується
-- Оцініть деякі переваги використання JSON перед табличними даними
-- Оцініть деякі недоліки обробки документів JSON
-- Використовуйте пакет JSONLite для читання файлу JSON
-- Відображення форматованого JSON як датафрейм
-- Вибір та відображення вкладених полів датафрейму з документа JSON
-- Запис табличних даних з вибраних елементів з документа JSON у файл csv
+- Describe the JSON data format
+- Understand where JSON is typically used
+- Appreciate some advantages of using JSON over tabular data
+- Appreciate some disadvantages of processing JSON documents
+- Use the jsonLite package to read a JSON file
+- Display formatted JSON as dataframe
+- Select and display nested dataframe fields from a JSON document
+- Write tabular data from selected elements from a JSON document to a csv file
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- Що таке формат JSON?
-- Як я можу перетворити JSON в датафрейм в R?
-- Як я можу перетворити масив записів JSON у таблицю?
+- What is JSON format?
+- How can I convert JSON to an R dataframe?
+- How can I convert an array of JSON record into a table?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Формат даних JSON
+## The JSON data format
 
-Формат даних JSON був розроблений як спосіб забезпечити обмін інформацією між різними машинами або процесами всередині однієї машини шляхом передавання повідомлень, побудованих у чітко визначеному форматі. JSON тепер є кращим форматом даних, який використовується API (Application Programming Interfaces).
+The JSON data format was designed as a way of allowing different machines or processes within machines to communicate with each other by sending messages constructed in a well defined format. JSON is now the preferred data format used by APIs (Application Programming Interfaces).
 
-Формат JSON, хоча і дещо детальний, не тільки читається людиною, але його також можна дуже легко зіставити на датафрейм R.
+The JSON format although somewhat verbose is not only Human readable but it can also be mapped very easily to an R dataframe.
 
-Ми збираємось прочитати файл даних, відформатований як JSON, перетворити його в датафрейм у R, а потім вибірково створити файл csv з витягнутих даних.
+We are going to read a file of data formatted as JSON, convert it into a dataframe in R then selectively create a csv file from the extracted data.
 
-Файл JSON, який ми збираємось використовувати, - це файл [Safi.json] (data/SAFI.json). Це вихідний файл з електронної системи обстеження під назвою ODK. JSON представляє відповіді на серію запитань опитування. Самі питання замінені унікальними ключами, значення - відповіді.
+The JSON file we are going to use is the [SAFI.json](data/SAFI.json) file. This is the output file from an electronic survey system called ODK. The JSON represents the answers to a series of survey questions. The questions themselves have been replaced with unique Keys, the values are the answers.
 
-Оскільки детальні опитування за своєю природою є вкладеними структурами, що дає змогу фіксувати різні рівні деталізації або вибірково ставити певні запитання залежно від відповіді на попереднє, структура відповідей в опитуванні може бути не лише складною й заплутаною, а й легко відрізнятися між різними респондентами.
+Because detailed surveys are by nature nested structures making it possible to record different levels of detail or selectively ask a set of specific questions based on the answer given to a previous question, the structure of the answers for the survey can not only be complex and convoluted, it could easily be different from one survey respondent's set of answers to another.
 
-### Переваги JSON
+### Advantages of JSON
 
-- Дуже популярний формат даних для API (наприклад, результати пошуку в Інтернеті)
-- Читабельний
-- Кожен запис (або документ, як їх називають) є самостійним. Еквівалент назви стовпця та значень стовпців є у кожному записі.
-- Не всі документи повинні мати однакову структуру в одному файлі
-- Структури документів можуть бути складними і вкладеними
+- Very popular data format for APIs (e.g. results from an Internet search)
+- Human readable
+- Each record (or document as they are called) is self contained. The equivalent of the column name and column values are in every record.
+- Documents do not all have to have the same structure within the same file
+- Document structures can be complex and nested
 
-### Недоліки JSON
+### Disadvantages of JSON
 
-- Це більш детальні дані, ніж еквівалентні дані у форматі csv
-- Може бути складніше для обробки і відображення даних, форматованих в csv
+- It is more verbose than the equivalent data in csv format
+- Can be more difficult to process and display than csv formatted data
 
-## Використовуйте пакет JSONLite для читання файлу JSON
+## Use the JSON package to read a JSON file
 
 ```{r, message=FALSE}
 library(jsonlite)
 ```
 
-Як і при читанні в CSV, у вас є кілька варіантів доступу до файлу JSON.
+As with reading in a CSV, you have a couple of options for how to access the JSON file.
 
-Ви можете прочитати файл JSON безпосередньо в R за допомогою `read_json () `або порівнянної функції `fromJSON ()`, хоча це не завантажує файл.
+You can read the JSON file directly into R with `read_json()` or the comparable `fromJSON()`
+function, though this does not download the file.
 
 ```{r eval=FALSE}
-json_data <- read_json( "https://raw.githubusercontent.com/datacarpentry/r-socialsci/main/episodes/data/SAFI.json")
+json_data <- read_json(
+  "https://raw.githubusercontent.com/datacarpentry/r-socialsci/main/episodes/data/SAFI.json"
+  )
 ```
 
-Щоб завантажити файл, ви можете скопіювати та вставити вміст файлу на
-[GitHub] (https://github.com/datacarpentry/r-socialsci/blob/main/episodes/data/SAFI.json),, створивши файл `safi.json` у вашому каталозі `data`, або ви можете завантажити файл за допомогою R.
+To download the file you can copy and paste the contents of the file on
+[GitHub](https://github.com/datacarpentry/r-socialsci/blob/main/episodes/data/SAFI.json),
+creating a `SAFI.json` file in your `data` directory, or you can download the file with R.
 
 ```{r download-data, eval=FALSE}
-download.file(  "https://raw.githubusercontent.com/datacarpentry/r-socialsci/main/episodes/data/SAFI.json", "data/SAFI_clean.csv", mode = "wb"")
+download.file(
+  "https://raw.githubusercontent.com/datacarpentry/r-socialsci/main/episodes/data/SAFI.json",
+   "data/SAFI.json", mode = "wb")
 ```
 
-Після завантаження даних ви можете прочитати їх у R за допомогою `read_json () `:
+Once you have the data downloaded, you can read it into R with `read_json()`:
 
 ```{r eval=FALSE}
 json_data <- read_json("data/SAFI.json")
 ```
 
-Ми бачимо, що в нашому середовищі з'явився новий об'єкт під назвою json\ _data. Він описується як великий список (131 елементи). У своєму поточному вигляді наші дані є неструктурованими (безладними). Ви можете швидко переглянути ці дані за допомогою функцій head() або view(). Це буде виглядати набагато структурованіше, ніж якби ви відкривали файл JSON за допомогою текстового редактора.
+We can see that a new object called json\_data has appeared in our Environment. It is described as a Large list (131 elements). In this current form, our data is messy. You can have a glimpse of it with the `head()` or `view()` functions. It will look not much more structured than if you were to open the JSON file with a text editor.
 
-Це пов'язано з тим, що за замовчуванням параметр функції `read_json () ``SimplifyVector`, який визначає, чи потрібно спрощувати вектори, встановлено значення FALSE. Це означає, що налаштування за замовчуванням не спрощує вкладені списки у вектори та датафрейми. Однак ми можемо встановити це значення TRUE, і наші дані будуть читатися безпосередньо як датафрейм:
+This is because, by default, the `read_json()` function's parameter `simplifyVector`, which specifies whether or not to simplify vectors is set to FALSE. This means that the default setting does not simplify nested lists into vectors and data frames. However, we can set this to TRUE, and our data will be read directly as a dataframe:
 
 ```{r}
 json_data <- read_json("data/SAFI.json", simplifyVector = TRUE)
 ```
 
-Тепер ми бачимо, що ці Json-дані представлені у форматі датафрейму. Для узгодженості з рештою заняття перетворімо його на tibble та скористаймося функцією glimpse, щоб зазирнути всередину (ці функції були завантажені разом із library(tidyverse)):
+Now we can see we have this json data in a dataframe format. For consistency with the rest of
+the lesson, let's coerce it to be a tibble and use `glimpse` to take a peek
+inside (these functions were loaded by `library(tidyverse)`):
 
 ```{r}
 json_data <- json_data %>% as_tibble()
 glimpse(json_data)
 ```
 
-Виглядає добре, але ви можете помітити, що насправді у нас є змінна, _F\ _liv_, що є списком датафрейму! Дуже важливо розуміти, чого саме ви очікуєте від своїх даних, щоб уміти помічати подібні речі. Наприклад, якщо ви отримуєте JSON з API, перегляньте документацію API, щоб ви знали, що шукати.
+Looking good, but you might notice that actually we have a variable, _F\_liv_ that is a list of dataframes! It is very important to know what you are expecting from your data to be able to look for things like this. For example, if you are getting your JSON from an API, have a look at the API documentation, so you know what to look for.
 
-Часто, коли у нас дуже велика кількість стовпців, може стати важко визначити всі змінні, які можуть вимагати особливої уваги, наприклад списки. На щастя, ми можемо використати спеціальні дієслова, такі як where, щоб швидко вибрати всі стовпці типу list.
+Often when we have a very large number of columns, it can become difficult to determine all the variables which may require some special attention, like lists. Fortunately, we can use special verbs like `where` to quickly select all the list columns.
 
 ```{r}
 json_data %>%
@@ -115,28 +125,28 @@ json_data %>%
     glimpse()
 ```
 
-Отже, що ми можемо зробити з _F\ _liv_, стовпцем датафрейму? Ну, по-перше, ми можемо отримати доступ до кожного з них. Наприклад, для доступу до кадру даних у першому рядку ми можемо використовувати підмножину дужки (`[`). Тут ми використовуємо одну квадратну дужку, але також можна використати подвійну ([[). Форма `[[` дозволяє вибрати лише один елемент за допомогою цілочисельних або символьних індексів, тоді як `[` дозволяє індексувати за векторами.
+So what can we do about _F\_liv_, the column of dataframes? Well first things first, we can access each one. For  example to access the dataframe in the first row, we can use the  bracket (`[`) subsetting. Here we use single bracket, but you could also use double bracket (`[[`). The `[[` form allows only a single element to be selected using integer or character indices, whereas `[` allows indexing by vectors.
 
 ```{r}
 json_data$F_liv[1]
 ```
 
-Ми також можемо обрати перегляд вкладених датафреймів у всіх рядках нашого головного датафрейму, де виконується певна умова (наприклад, коли значення змінної C06_rooms дорівнює 4):
+We can also choose to view the nested dataframes at all the rows of our main dataframe where a particular condition is met (for example where the value for the variable _C06\_rooms_ is equal to 4):
 
 ```{r}
 json_data$F_liv[which(json_data$C06_rooms == 4)]
 ```
 
-## Запис файлу JSON в csv
+## Write the JSON file to csv
 
-Якщо ми спробуємо записати наш json\ _data датафрейм у csv, як це зазвичай робилося у звичайному датафреймі, ми не отримаємо бажаного результату. Використання функції `write_csv` з пакета `{readr}` не призведе до помилки для стовпців списку, але ви побачите лише відсутні значення (тобто `NA`) у цих стовпцях. Давайте спробуємо це підтвердити:
+If we try to write our json\_data dataframe to a csv as we would usually in a regular dataframe, we won't get the desired result. Using the `write_csv` function from the `{readr}` package won't give you an error for list columns, but you'll only see missing (i.e. `NA`) values in these columns. Let's try it out to confirm:
 
 ```{r, eval=FALSE}
 write_csv(json_data, "json_data_with_list_columns.csv")
 read_csv("json_data_with_list_columns.csv")
 ```
 
-Щоб записати як csv, зберігаючи дані в стовпцях списку, нам потрібно буде «згладити» ці стовпці. Один із способів зробити це - перетворити ці стовпці списку в типи символів. (Однак ми не хочемо змінювати типи даних для будь-якого з інших стовпців). Ось один із способів зробити це за допомогою tidyverse. Ця команда застосовує команду `as.character` лише до тих стовпців ',' де '`is.list` дорівнює `TRUE`.
+To write out as a csv while maintaining the data within the list columns, we will need to "flatten" these columns. One way to do this is to convert these list columns into character types. (However, we don't want to change the data types for any of the other columns). Here's one way to do this using tidyverse. This command only applies the `as.character` command to those columns 'where' `is.list` is `TRUE`.
 
 ```{r}
 flattened_json_data <- json_data %>% 
@@ -144,15 +154,15 @@ flattened_json_data <- json_data %>%
 flattened_json_data
 ```
 
-Тепер ви можете записати це у файл csv:
+Now you can write this to a csv file:
 
 ```{r, eval=FALSE}
 write_csv(flattened_json_data, "data_output/json_data_with_flattened_list_columns.csv")
 ```
 
-Примітка: це означає, що коли ви знову зчитаєте цей Csv у R, стовпець з вкладеними датафреймами буде прочитано як вектор символів (character vector). Перетворення його назад у list для витягання елементів може бути складним, тому, ймовірно, краще зберігати ці дані у форматі JSON, якщо вам доведеться це робити.
+Note: this means that when you read this csv back into R, the column of the nested dataframes will now be read in as a character vector. Converting it back to list to extract elements might be complicated, so it is probably better to keep storing these data in a JSON format if you will have to do this.
 
-Ви також можете записати окремі вкладені датафрейми у csv. Наприклад:
+You can also write out the individual nested dataframes to a csv. For example:
 
 ```{r, eval=FALSE}
 write_csv(json_data$F_liv[[1]], "data_output/F_liv_row1.csv")
@@ -160,9 +170,9 @@ write_csv(json_data$F_liv[[1]], "data_output/F_liv_row1.csv")
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
-- JSON - популярний формат даних для передачі даних, який використовується багатьма веб-інтерфейсами API
-- Складна структура документа JSON означає, що його неможливо легко «сплюстити» у табличні дані
-- Ми можемо використовувати код R для вилучення значень, що цікавлять, та розміщення їх у файлі csv
+- JSON is a popular data format for transferring data used by a great many Web based APIs
+- The complex structure of a JSON document means that it cannot easily be 'flattened' into tabular data
+- We can use R code to extract values of interest and place them in a csv file
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
