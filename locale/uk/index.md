@@ -7,8 +7,7 @@ and tools for working with data so that they can get more done in
 less time, and with less pain. The lessons below were designed for
 those interested in working with social sciences data in R.
 
-This is an introduction to R designed for participants with no
-programming experience. These lessons can be taught in a half-day,
+Це вступ до R, розроблений для учасників без попереднього досвіду програмування. These lessons can be taught in a half-day,
 full-day, or over a two-day workshop (see
 [Instructor Notes](https://datacarpentry.org/r-socialsci/instructor/instructor-notes.html)
 for suggested lesson plans).
@@ -28,23 +27,20 @@ workflow.
 
 **These lessons assume no prior knowledge of the skills or tools.**
 
-To get started, follow the directions in the "[Setup](setup.html)" tab to
-download data to your computer and follow any installation instructions.
+Щоб розпочати, дотримуйтесь інструкцій у вкладці "[Setup](setup.html)", щоб завантажити дані на свій комп’ютер і виконати всі інструкції з встановлення.
 
-#### Prerequisites
+#### Передумови
 
-This lesson requires a working copy of **R** and **RStudio**. <br>To most effectively use these materials, please make sure to install
-everything _before_ working through this lesson.
+Для цього уроку потрібна робоча копія **R** та **RStudio**. <br>Щоб максимально ефективно використовувати ці матеріали, будь ласка, переконайтеся, що все необхідне встановлено _до_ початку проходження цього уроку.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::  instructor
 
-## For Instructors
+## Для інструкторів
 
-If you are teaching this lesson in a workshop, please see the
-[Instructor notes](https://datacarpentry.org/r-socialsci/instructor/instructor-notes.html)
-for helpful tips.
+Якщо ви викладаєте цей урок на семінарі, будь ласка, перегляньте
+[Примітки для інструктора](https://datacarpentry.org/r-socialsci/instructor/instructor-notes.html), щоб отримати корисні поради.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
