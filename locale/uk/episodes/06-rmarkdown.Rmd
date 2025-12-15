@@ -330,8 +330,8 @@ mean_household% <- interviews %>
     підсумовувати (mean_no_membrs = mean(no_membrs))
 
 # та виберіть село, яке ми хочемо використовувати
-mean_chirodzo%
-  filter (village == "Chirodzo")
+mean_chirodzo <- mean_household %>%
+  filter(village == "Chirodzo")
 ```
 
 Тепер ми можемо зробити інформативне твердження про засоби кожного селища та включити
