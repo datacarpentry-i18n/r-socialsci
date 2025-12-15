@@ -1,5 +1,5 @@
 ---
-title: Місце для редагування
+title: FIXME
 ---
 
-Це файл-заповнювач. Будь ласка, додайте вміст тут.
+This is a placeholder file. Please add content here.
