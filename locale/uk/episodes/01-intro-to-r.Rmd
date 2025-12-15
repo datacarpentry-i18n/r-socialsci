@@ -172,8 +172,8 @@ areaHectares <- 50
 або включати їх після будь-якого коду в рядку.
 
 ```{r}
-areaHectares  <-1,0 # площа земельної ділянки в гектарах
-area_acres <- areaHectares * 2,47 # перетворити на акри
+areaHectares  <-1.0 # площа земельної ділянки в гектарах
+area_acres <- areaHectares * 2.47 # перетворити на акри
 area_acres		 # площа друкованої землі в акрах.
 ```
 
@@ -311,8 +311,8 @@ hhMembers
 (`respondent_wall_type`):
 
 ```{r, purl=FALSE}
-respondentWallType <- c("muddaub", "burntbricks", "sunbricks")
-respondentWallType
+respondent_wall_type <- c("muddaub", "burntbricks", "sunbricks")
+respondent_wall_type
 ```
 
 Лапки навколо "muddaub" і т.п. мають важливе значення. Без лапок R
