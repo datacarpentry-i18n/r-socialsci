@@ -164,7 +164,7 @@ We can do both of these transformations with two `tidyr` functions,
 1. the data
 2. the _names\_from_ column variable whose values will become new column names.
 3. the _values\_from_ column variable whose values will fill the new column
-  variables.
+   variables.
 
 Further arguments include `values_fill` which, if set, fills in missing values
 with the value provided.
@@ -358,10 +358,10 @@ column names. We will do this in two steps to make this process a bit clearer.
 
 1. the data
 2. _cols_ are the names of the columns we use to fill the a new values variable
-  (or to drop).
+   (or to drop).
 3. the _names\_to_ column variable we wish to create from the _cols_ provided.
 4. the _values\_to_ column variable we wish to create and fill with values
-  associated with the _cols_ provided.
+   associated with the _cols_ provided.
 
 ```{r, purl=FALSE}
 interviews_long <- interviews_items_owned %>%
