@@ -1,59 +1,70 @@
 ---
-title: Примітки для інструктора
+title: Instructor Notes
 ---
 
-## Набір даних
+## Dataset
 
-Дані, використані в цьому уроці, — це трохи очищена версія результатів опитування SAFI, доступна на GitHub. Оригінальні дані знаходяться на [figshare](https://figshare.com/articles/dataset/SAFI_Survey_Results/6262019).
+The data used for this lesson are a slightly cleaned up version of the
+SAFI Survey Results available on GitHub. The original data is on
+[figshare](https://figshare.com/articles/dataset/SAFI_Survey_Results/6262019).
 
-У цьому уроці використовується `SAFI_clean.csv`. Пряме посилання для завантаження файлу даних: [https://raw.githubusercontent.com/datacarpentry/r-socialsci/main/episodes/data/SAFI_clean.csv](https://raw.githubusercontent.com/datacarpentry/r-socialsci/main/episodes/data/SAFI_clean.csv).
+This lesson uses `SAFI_clean.csv`. The direct download link for the data file is:
+[https://raw.githubusercontent.com/datacarpentry/r-socialsci/main/episodes/data/SAFI_clean.csv](https://raw.githubusercontent.com/datacarpentry/r-socialsci/main/episodes/data/SAFI_clean.csv).
 
-## Плани уроків
+## Lesson Plans
 
-Урок містить значно більше матеріалу, ніж можна охопити за один день. Інструкторам потрібно обрати відповідну підмножину епізодів для стандартного одноденного курсу.
+The lesson contains much more material than can be taught in a day. Instructors will
+need to pick an appropriate subset of episodes to use in a standard one day course.
 
-Рекомендований план для курсу на пів дня:
+Suggested path for half-day course:
 
-- Перед тим як почати
-- Введення до R
-- Починаємо з даних
+- Before we Start
+- Introduction to R
+- Starting with Data
 
-Пропонований шлях для повноцінного курсу:
+Suggested path for full-day course:
 
-- Перед тим як почати
-- Введення до R
-- Починаємо з даних
-- Маніпулювання даними за допомогою пакету dplyr
-- (ДОДАТКОВО) Маніпулювання даними за допомогою пакету tidyr
-- Візуалізація даних за допомогою ggplot2
+- Before we Start
+- Introduction to R
+- Starting with Data
+- Data Wranging with dplyr
+- (OPTIONAL) Data Wrangling with tidyr
+- Data Visualisation with ggplot2
 
-Для дводенного семінару можливо охопити всі епізоди. Зворотний зв’язок від спільноти щодо успішних планів уроків завжди цінний!
+For a two-day workshop, it may be possible to cover all of the episodes. Feedback from
+the community on successful lesson plans is always appreciated!
 
-## Технічні поради та рекомендації
+## Technical Tips and Tricks
 
-Покажіть, як використовувати кнопку «Zoom», щоб збільшувати графіки без постійної зміни розміру вікон.
+Show how to use the 'zoom' button to blow up graphs without constantly resizing
+windows.
 
-Іноді пакет не встановлюється. Ви можете спробувати інше дзеркало CRAN:
+Sometimes a package will not install. You can try a different CRAN mirror:
 
 - Tools > Global Options > Packages > CRAN Mirror
 
-Або можна завантажити пакет з CRAN і встановити його з ZIP-файлу:
+Alternatively you can go to CRAN and download the package and install from ZIP
+file:
 
-- Tools > Install Packages > встановити 'from Zip/TAR'
+- Tools > Install Packages > set to 'from Zip/TAR'
 
-Часто легше переконатися, що всі потрібні пакети встановлені одразу, ніж постійно розв'язувати ці проблеми. Дивіться розділ "Setup instructions (Інструкції з налаштування)" на головній сторінці курсу для інструкцій зі встановлення пакетів.
+It's often easier to make sure they have all the needed packages installed at one
+time, rather than deal with these issues over and over. See the "Setup instructions"
+section on the homepage of the course website for package installation instructions.
 
-**`|` символ на іспанських клавіатурах:** на іспанській клавіатурі Mac немає клавіші `|`.
-Цей символ можна створити за допомогою:
+**`|` character on Spanish keyboards:** The Spanish Mac keyboard does not have a `|` key.
+This character can be created using:
 
 ```
 `alt` + `1`
 ```
 
-## Інші ресурси
+## Other Resources
 
-Якщо під час семінару у вас виникнуть проблеми, не соромтеся звертатися до підтримки електронною поштою або [відкривати issue](https://github.com/datacarpentry/r-socialsci/issues/new).
+If you encounter a problem during a workshop, feel free to contact the
+maintainers by email or open an
+issue.
 
-Для глибшого вивчення тем семінару можна прочитати книгу "[R for Data Science](http://r4ds.had.co.nz/)" авторів Хедлі Вікем (Hadley Wickham) та Гаррета Гролемунда (Garrett Grolemund).
+For a more in-depth coverage of topics of the workshops, you may want to read "[R for Data Science](http://r4ds.had.co.nz/)" by Hadley Wickham and Garrett Grolemund.
 
 
