@@ -349,7 +349,7 @@ names of the columns.
 ## Exercise
 
 1. Create a tibble (`interviews_100`) containing only the data in
-  row 100 of the `interviews` dataset.
+   row 100 of the `interviews` dataset.
 
 Now, continue using `interviews` for each of the following activities:
 
@@ -362,15 +362,15 @@ Now, continue using `interviews` for each of the following activities:
 - Create a new tibble (`interviews_last`) from that last row.
 
 3. Using the number of rows in the interviews dataset that you found in
-  question 2, extract the row that is in the middle of the dataset. Store
-  the content of this middle row in an object named `interviews_middle`.
-  (hint: This dataset has an odd number of rows, so finding the middle is a
-  bit trickier than dividing n\_rows by 2. Use the median( ) function and what
-  you've learned about sequences in R to extract the middle row!
+   question 2, extract the row that is in the middle of the dataset. Store
+   the content of this middle row in an object named `interviews_middle`.
+   (hint: This dataset has an odd number of rows, so finding the middle is a
+   bit trickier than dividing n\_rows by 2. Use the median( ) function and what
+   you've learned about sequences in R to extract the middle row!
 
 4. Combine `nrow()` with the `-` notation above to reproduce the behavior of
-  `head(interviews)`, keeping just the first through 6th rows of the
-  interviews dataset.
+   `head(interviews)`, keeping just the first through 6th rows of the
+   interviews dataset.
 
 :::::::::::::::  solution
 
