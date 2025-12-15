@@ -147,7 +147,7 @@ SQLite поверне повідомлення про помилку.
 
 ```{r}
 # Спочатку використовуйте запит SQL, щоб витягти таблицю Question1 з наявної бази даних
-results = dbSendQuery (mydb, «SELECT * from Question1")
+results = dbSendQuery (mydb, "SELECT * from Question1")
 
 # Потім збережіть її як датафрейм
 Q1 <- fetch (результати)
