@@ -93,7 +93,7 @@ source("data/download_data.R")
 library(tidyverse)
 library(here)
 
-інтерв'ю <- read_csv (тут («data», "SAFI_clean.csv «), na = «NULL»)
+interviews <- read_csv(here("data", "SAFI_clean.csv"), na = "NULL")
 
 ## перевірте дані
 interviews
@@ -132,7 +132,7 @@ select(interviews, village:respondent_wall_type)
 Аргумент після датафрейму — це умова, якій повинен відповідати кінцевий датафрейм (наприклад, назва села дорівнює Chirodzo):
 
 ```{r, purl=FALSE}
-# фільтри спостереження, де назва села «Chirodzo»
+# фільтри спостереження, де назва села "Chirodzo"
 filter(interviews, village == "Chirodzo")
 ```
 
@@ -142,7 +142,7 @@ filter(interviews, village == "Chirodzo")
 
 ```{r, purl=FALSE}
 
-# фільтрує спостереження за допомогою оператора «і» (кома)
+# фільтрує спостереження за допомогою оператора "і" (кома)
 # вихідний датасет задовольняє ВСІМ заданим умовам
 filter(interviews, village == "Chirodzo",
                    rooms > 1,
@@ -152,7 +152,7 @@ filter(interviews, village == "Chirodzo",
 Ми також можемо формувати оператори «and» за допомогою оператора `&` замість ком:
 
 ```{r, purl=FALSE}
-# фільтрує спостереження за допомогою логічного оператора «&»
+# фільтрує спостереження за допомогою логічного оператора "&"
 # вихідний датасет задовольняє ВСІМ заданим умовам
 filter(interviews, village == "Chirodzo" &
                    rooms > 1 &
