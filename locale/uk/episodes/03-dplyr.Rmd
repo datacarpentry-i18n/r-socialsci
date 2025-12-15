@@ -11,214 +11,243 @@ source("data/download_data.R")
 
 :::: instructor
 
-- Цей урок є корисним, якщо у вас є графіка, яка демонструє команди dplyr.
-  Ви можете змінити [цю презентацію Google Slides] (https://docs.google.com/presentation/d/1A9abypFdFp8urAe9z7GCMjFr4aPeIb8mZAtJA2F7H0w/edit#slide=id.g652714585f_0_114) та використовувати її для своєї роботи.
-- Для цього уроку переконайтеся, що учні впевнено користуються оператором pipe (|>).
-- Також іноді виникає деяка плутанина щодо того, якими мають бути аргументи `group_by`
-  , а також коли використовувати `filter ()` та `select ()`.
+- This lesson works better if you have graphics demonstrating dplyr commands.
+  You can modify [this Google Slides deck](https://docs.google.com/presentation/d/1A9abypFdFp8urAe9z7GCMjFr4aPeIb8mZAtJA2F7H0w/edit#slide=id.g652714585f_0_114) and use it for your workshop.
+- For this lesson make sure that learners are comfortable using pipes.
+- There is also sometimes some confusion on what the arguments of `group_by`
+  should be, and when to use `filter()` and `select()`.
 
 ::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- Опишіть призначення пакета R та пакету **`dplyr`**.
-- Виділіть певні стовпці в датасеті за допомогою функції **`dplyr`** `select`.
-- Виберіть певні рядки в датасеті відповідно до умов фільтрації за допомогою функції **`dplyr`** `filter`.
-- З'єднайте результат однієї з **`dplyr`** функції з введенням іншої функції з оператором 'pipe' %>`%`.
-- Додайте нові стовпці дата сету які є функціями наявних стовпців з `mutate`.
-- Використовуйте концепцію розділення-застосування-комбінування для аналізу даних.
-- Використовуйте `summarize`, `group_by` та `count`, щоб розділити набір даних на групи спостережень, застосувати зведену статистику для кожної групи, а потім об'єднати результати.
+- Describe the purpose of an R package and the **`dplyr`** package.
+- Select certain columns in a dataframe with the **`dplyr`** function `select`.
+- Select certain rows in a dataframe according to filtering conditions with the **`dplyr`** function `filter`.
+- Link the output of one **`dplyr`** function to the input of another function with the 'pipe' operator `%>%`.
+- Add new columns to a dataframe that are functions of existing columns with `mutate`.
+- Use the split-apply-combine concept for data analysis.
+- Use `summarize`, `group_by`, and `count` to split a dataframe into groups of observations, apply a summary statistics for each group, and then combine the results.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- Як я можу вибрати певні рядки та/або стовпці з набору даних?
-- Як я можу об'єднати кілька команд в одну команду?
-- Як створити нові стовпці або видалити наявні стовпці з набору даних?
+- How can I select specific rows and/or columns from a dataframe?
+- How can I combine multiple commands into a single command?
+- How can I create new columns or remove existing columns from a dataframe?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-**`dplyr`**  — це пакет, який спрощує роботу з табличними даними, використовуючи обмежений набір функцій, що можна поєднувати для отримання та узагальнення інформації з ваших даних.
+**`dplyr`** is a package for making tabular data wrangling easier by using a
+limited set of functions that can be combined to extract and summarize insights
+from your data.
 
-Як і **`readr`**, **`dplyr`** є частиною набору пакетів tidyverse. Ці пакети були завантажені
-в пам'ять R, коли ми раніше викликали `library (tidyverse)`.
+Like **`readr`**, **`dplyr`** is a part of the tidyverse. These packages were loaded
+in R's memory when we called `library(tidyverse)` earlier.
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
 ## Примітка
 
-Пакети в tidyverse, а саме **`dplyr`**, **`tidyr`** та **`ggplot2`**
-приймають як британські (наприклад, _summarise_), так і американські (наприклад, _summarize_) варіанти написання
-різних назв функцій і опцій. На цьому уроці ми використовуємо
-американські написання різних функцій; Однак, можна використовувати регіональний варіант для навчання.
+The packages in the tidyverse, namely **`dplyr`**, **`tidyr`** and **`ggplot2`**
+accept both the British (e.g. _summarise_) and American (e.g. _summarize_) spelling
+variants of different function and option names. For this lesson, we utilize
+the American spellings of different functions; however, feel free to use
+the regional variant for where you are teaching.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Що таке R-пакет?
+## What is an R package?
 
-Пакет **`dplyr`** надає зручні інструменти для виконання найпоширеніших завдань з обробки даних. Його створено для роботи безпосередньо з датафреймами, а багато поширених операцій оптимізовано завдяки тому, що вони написані компільованою мовою (C++) (адже не всі пакети R написані мовою R!).
+The package **`dplyr`** provides easy tools for the most common data
+wrangling tasks. It is built to work directly with dataframes, with many
+common tasks optimized by being written in a compiled language (C++) (not all R
+packages are written in R!).
 
-Існують також пакети для широкого спектра завдань, зокрема для створення графіків (**`ggplot2`**, який ми розглянемо пізніше), завантаження даних із бази NCBI або виконання статистичного аналізу вашого набору даних. Багато таких пакунків є
-, розміщеними на **C**Omgensive**R** **a**RChive **n**eWork
-(CRAN) за допомогою `install.packages` і завантажуються з нього. Ця функція робить пакет доступним для вашої інсталяції R
-за допомогою команди `library()`, як ви робили з `tidyverse` раніше.
+There are also packages available for a wide range of tasks including building plots
+(**`ggplot2`**, which we'll see later), downloading data from the NCBI database, or
+performing statistical analysis on your data set. Many packages such as these are
+housed on, and downloadable from, the **C**omprehensive **R** **A**rchive **N**etwork
+(CRAN) using `install.packages`. This function makes the package accessible by your R
+installation with the command `library()`, as you did with `tidyverse` earlier.
 
-Щоб легко отримати доступ до документації для пакета в R або RStudio, скористайтеся
+To easily access the documentation for a package within R or RStudio, use
 `help(package = "package_name")`.
 
-Щоб дізнатися більше про **`dplyr`** після практичного завдання ви можете ознайомитися з цим
-[зручне перетворення даних за допомогою cheatsheet **`dplyr`**](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf).
+To learn more about **`dplyr`** after the workshop, you may want to check out this
+[handy data transformation with **`dplyr`** cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf).
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
 ## Примітка
 
-Пакети `tidyverse` є альтернативи, включаючи
-пакет [`data.table`](https://rdatatable.gitlab.io/data.table/). Див.
-[порівняння] (https://mgimond.github.io/rug_2019_12/Index.html)
-, наприклад, щоб зрозуміти відмінності між використанням `base`, `tidyverse` і
+There are alternatives to the `tidyverse` packages for data wrangling, including
+the package [`data.table`](https://rdatatable.gitlab.io/data.table/). See this
+[comparison](https://mgimond.github.io/rug_2019_12/Index.html)
+for example to get a sense of the differences between using `base`, `tidyverse`, and
 `data.table`.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Вивчення **`dplyr`**
+## Learning **`dplyr`**
 
-Щоб переконатися, що всі використовуватимуть один і той же набір даних для цього уроку, ми знову прочитаємо
-набір даних SAFI, який ми завантажили раніше.
+To make sure everyone will use the same dataset for this lesson, we'll read
+again the SAFI dataset that we downloaded earlier.
 
 ```{r, results="hide", purl=FALSE, message=FALSE}
 
-## завантажити бібліотеку tidyverse
+## load the tidyverse
 library(tidyverse)
 library(here)
 
 interviews <- read_csv(here("data", "SAFI_clean.csv"), na = "NULL")
 
-## перевірте дані
+## inspect the data
 interviews
 
-## попередній перегляд даних
-# view (interviews)
+## preview the data
+# view(interviews)
 ```
 
 Ми вивчимо деякі з найпоширеніших функцій **`dplyr`**:
 
-- `select()`: стовпці підмножини
-- `filter()`: вкладені рядки в умовах
-- `mutate()`: створити нові стовпці, використовуючи інформацію з інших стовпців
-- `group_by() ` та `summarize()`: створити зведену статистику щодо згрупованих даних
-- `arrange()`: сортувати результати
-- `count()`: підрахувати окремі значення
+- `select()`: subset columns
+- `filter()`: subset rows on conditions
+- `mutate()`: create new columns by using information from other columns
+- `group_by()` and `summarize()`: create summary statistics on grouped data
+- `arrange()`: sort results
+- `count()`: count discrete values
 
-## Вибір стовпців та фільтрування рядків
+## Selecting columns and filtering rows
 
-Щоб обрати стовпці датафрейму, використовуйте функцію select(). Першим аргументом цієї функції є датафрейм (наприклад, interviews), а наступні аргументи — це стовпці, які потрібно залишити, розділені комами.Якщо ви обираєте суміжні стовпці, можна використати: для вказання діапазону стовпців, тобто «вибрати стовпці від ___ до ___».
-Раніше ви могли робити щось подібне за допомогою підстановки (subsetting). Функція select() по суті виконує те саме, що і підстановка, але з використанням пакета dplyr замість базових функцій R. Першим аргументом цієї функції
-є датафрейм (`interview`), а наступні аргументи - це стовпці, які слід зберегти, розділені комами. Крім того, якщо ви виберете стовпці
-поруч один з одним, ви можете використовувати `:`, щоб вибрати діапазон стовпців,
-читати як «вибрати стовпці з\ _\ _\ _ до\ _\ _\ _». Раніше ви могли робити щось подібне за допомогою підстановки (subsetting). Функція select() по суті виконує те саме, що і підстановка, але з використанням пакета dplyr замість базових функцій R. Функція select() по суті робить те саме, що підстановка (subsetting), але використовує пакет dplyr замість базових функцій R.
+To select columns of a dataframe, use `select()`. The first argument to this
+function is the dataframe (`interviews`), and the subsequent arguments are the
+columns to keep, separated by commas. Alternatively, if you are selecting
+columns adjacent to each other, you can use a `:` to select a range of columns,
+read as "select columns from \_\_\_ to \_\_\_." You may have done something similar in
+the past using subsetting. `select()` is essentially doing the same thing as
+subsetting, using a package (`dplyr`) instead of R's base functions.
 
 ```{r, results="hide", purl=FALSE}
-# дл вибору стовпців у наборі датафреймі
+# to select columns throughout the dataframe
 select(interviews, village, no_membrs, months_lack_food)
-# щоб зробити теж саме з підналаштуванням
+# to do the same thing with subsetting
 interviews[c("village","no_membrs","months_lack_food")]
-# щоб вибрати серію підключених стовпців
+# to select a series of connected columns
 select(interviews, village:respondent_wall_type)
 ```
 
-Щоб обрати рядки за певними критеріями, ми можемо використовувати функцію filter().
-Аргумент після датафрейму — це умова, якій повинен відповідати кінцевий датафрейм (наприклад, назва села дорівнює Chirodzo):
+To choose rows based on specific criteria, we can use the `filter()` function.
+The argument after the dataframe is the condition we want our final
+dataframe to adhere to (e.g. village name is Chirodzo):
 
 ```{r, purl=FALSE}
-# фільтри спостереження, де назва села "Chirodzo"
+# filters observations where village name is "Chirodzo"
 filter(interviews, village == "Chirodzo")
 ```
 
-Ви, можливо, також помітили, що тепер результат виконання цих викликів більше не виходить за межі екрану. Це одна з переваг tbl_df (також званого tibble), головного класу даних у tidyverse, порівняно зі звичайними датафреймами в R.
+You may also have noticed that the output from these call doesn't run off the
+screen anymore. It's one of the advantages of `tbl_df` (also called tibble),
+the central data class in the tidyverse, compared to normal dataframes in R.
 
-Ми також можемо вказати кілька умов всередині функції filter(). Ми можемо поєднувати умови, використовуючи логічні оператори «і» (and) або «або» (or). У логічному виразі «і» (and) спостереження (рядок) повинно задовольняти всі умови, щоб бути включеним у результуючий датафрейм. Щоб створити вираз «і» (and) у dplyr, ми можемо передати потрібні умови як аргументи функції filter(), розділені комами:
+We can also specify multiple conditions within the `filter()` function. We can
+combine conditions using either "and" or "or" statements. In an "and"
+statement, an observation (row) must meet **every** criteria to be included
+in the resulting dataframe. To form "and" statements within dplyr, we can  pass
+our desired conditions as arguments in the `filter()` function, separated by
+commas:
 
 ```{r, purl=FALSE}
 
-# фільтрує спостереження за допомогою оператора "і" (кома)
-# вихідний датасет задовольняє ВСІМ заданим умовам
+# filters observations with "and" operator (comma)
+# output dataframe satisfies ALL specified conditions
 filter(interviews, village == "Chirodzo",
                    rooms > 1,
                    no_meals > 2)
 ```
 
-Ми також можемо формувати оператори «and» за допомогою оператора `&` замість ком:
+We can also form "and" statements with the `&` operator instead of commas:
 
 ```{r, purl=FALSE}
-# фільтрує спостереження за допомогою логічного оператора "&"
-# вихідний датасет задовольняє ВСІМ заданим умовам
+# filters observations with "&" logical operator
+# output dataframe satisfies ALL specified conditions
 filter(interviews, village == "Chirodzo" &
                    rooms > 1 &
                    no_meals > 2)
 ```
 
-У логічному виразі «або» (or) спостереження повинні задовольняти принаймні одну із зазначених умов.
-Щоб створити вираз «або» (or), ми використовуємо логічний оператор «або», який позначається вертикальною рискою (|):
+In an "or" statement, observations must meet _at least one_ of the specified conditions.
+To form "or" statements we use the logical operator for "or," which is the vertical bar (|):
 
 ```{r, purl=FALSE}
-# фільтрує спостереження за допомогою логічного оператора «|»
-# вихідний датафрейм задовольняє ЯК МІНІМУМ ОДНУ із зазначених умов
+# filters observations with "|" logical operator
+# output dataframe satisfies AT LEAST ONE of the specified conditions
 filter(interviews, village == "Chirodzo" | village == "Ruaca")
 ```
 
-## Оператор каналу (pipe operator) або просто pipe
+## Pipes
 
-Що робити, якщо ви хочете одночасно вибирати та фільтрувати? Існує три способи
-для цього: використовуйте проміжні кроки, вкладені функції або оператори каналу.
+What if you want to select and filter at the same time? There are three
+ways to do this: use intermediate steps, nested functions, or pipes.
 
-За допомогою проміжних кроків ви створюєте тимчасовий набір даних і використовуєте це як вхід до наступної функції, наприклад:
+With intermediate steps, you create a temporary dataframe and use
+that as input to the next function, like this:
 
 ```{r, purl=FALSE}
 interviews2 <- filter(interviews, village == "Chirodzo")
 interviews_ch <- select(interviews2, village:respondent_wall_type)
 ```
 
-Зчитування можливо, проте може зачепити робочу область великою кількістю об'єктів, які вам потрібно прибирати індивідуально. За допомогою декількох кроків це може бути важко відстежувати.
+This is readable, but can clutter up your workspace with lots of objects that
+you have to name individually. With multiple steps, that can be hard to keep
+track of.
 
-Ви також можете вбудувати функції (тобто одну функцію всередині іншої), наприклад:
+You can also nest functions (i.e. one function inside of another), like this:
 
 ```{r, purl=FALSE}
 interviews_ch <- select(filter(interviews, village == "Chirodzo"),
                          village:respondent_wall_type)
 ```
 
-Це зручно, але може бути важко прочитати, якщо вкладено занадто багато функцій, оскільки R оцінює вираз зсередини (у цьому випадку фільтрація, потім вибір).
+This is handy, but can be difficult to read if too many functions are nested, as
+R evaluates the expression from the inside out (in this case, filtering, then
+selecting).
 
-Останній варіант, _pipes_, є нещодавнім доповненням до R. Pipes дозволяє взяти вихід однієї функції та надсилати його безпосередньо до наступної, що корисно, коли вам потрібно зробити багато речей з одним набором даних. В R існує два види pipes:
-%>% — званий magrittr pipe; доступний через пакет magrittr, який автоматично встановлюється разом із dplyr.
-|> — званий native R pipe; вбудований у R починаючи з версії 4.1.0 і не потребує додаткових пакетів. Обидва оператори pipe в основному працюють подібним чином, хоча між ними є деякі відмінності (детальніше можна прочитати тут: https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/). Вибір, який pipe використовувати, можна змінити в глобальних налаштуваннях (Global settings) Rstudio, і після цього pipe можна вводити за допомогою:
+The last option, _pipes_, are a recent addition to R. Pipes let you take the
+output of one function and send it directly to the next, which is useful when
+you need to do many things to the same dataset. There are two Pipes in R: 1) `%>%` (called magrittr pipe; made available via the **`magrittr`** package, installed automatically with
+**`dplyr`**) or 2) `|>` (called native R pipe and it comes preinstalled with R v4.1.0 onwards). Both the pipes are, by and large, function similarly with a few differences (For more information, check: https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/). The choice of which pipe to be used can be changed in the Global settings in R studio and once that is done, you can type the pipe with:
 
-- <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd>, якщо у вас є ПК або <kbd>Cmd</kbd> + <kbd>Shift +</kbd> <kbd></kbd>, якщо у вас Mac.
+- <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> if you have a PC or <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> if you have a Mac.
 
 ```{r, purl=FALSE}
-# Наступний приклад виконаний з використанням magrittr pipe,
-# але результат буде той самий і з native pipe
+# the following example is run using magrittr pipe but the output will be same with the native pipe
 interviews %>%
     filter(village == "Chirodzo") %>%
     select(village:respondent_wall_type)
 
-# Варіант з native pipe:
-# interviews |>
-#    filter(village == "Chirodzo") |>
-#    select(village:respondent_wall_type)
+#interviews |>
+#   filter(village == "Chirodzo") |>
+#   select(village:respondent_wall_type)
 ```
 
-У наведеному вище коді ми використовуємо pipe для надсилання набору даних `interview` спочатку
-через `filter () `, щоб зберегти рядки, де `village` є «Chirodzo», потім через
-`select ()`, щоб зберегти лише стовпці з `villege` до `respondent_wall_type`. Оскільки `%>%` бере об'єкт зліва від нього і передає його як перший аргумент функції праворуч, нам більше не потрібно явно включати датафрейм як аргумент до функцій `filter () `і `select ()`.
+In the above code, we use the pipe to send the `interviews` dataset first
+through `filter()` to keep rows where `village` is "Chirodzo", then through
+`select()` to keep only the columns from `village` to `respondent_wall_type`. Since `%>%`
+takes the object on its left and passes it as the first argument to the function
+on its right, we don't need to explicitly include the dataframe as an argument
+to the `filter()` and `select()` functions any more.
 
-Деяким може бути корисно уявляти pipe як слово «тоді» (then). Наприклад, у наведеному вище прикладі ми беремо датафрейм interviews, тоді відфільтровуємо рядки, де village == "Chirodzo", тоді вибираємо стовпці від village до respondent_wall_type.
-Функції **`dplyr`** самі по собі дещо прості,, але об'єднавши їх у лінійні робочі процеси орератором каналу pipe, ми можемо виконати більш складні операції з переборів даних.
+Some may find it helpful to read the pipe like the word "then". For instance,
+in the above example, we take the dataframe `interviews`, _then_ we `filter`
+for rows with `village == "Chirodzo"`, _then_ we `select` columns `village:respondent_wall_type`.
+The **`dplyr`** functions by themselves are somewhat simple,
+but by combining them into linear workflows with the pipe, we can accomplish
+more complex data wrangling operations.
 
-Якщо ми хочемо створити новий об'єкт з цією меншою версією даних, ми
-можемо призначити йому нове ім'я:
+If we want to create a new object with this smaller version of the data, we
+can assign it a new name:
 
 ```{r, purl=FALSE}
 interviews_ch <- interviews %>%
@@ -229,22 +258,21 @@ interviews_ch
 
 ```
 
-Зверніть увагу, що кінцевий датафрейм (наприклад, interviews_ch) знаходиться зліва від цього виразу.
+Note that the final dataframe (`interviews_ch`) is the leftmost part of this
+expression.
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Завдання
+## Exercise
 
-Ось як це можна зробити в R з використанням pipes:# Використання magrittr pipe (%>%)interviews_ch <- interviews %>%
-filter(memb_assoc == "yes") %>% # відбираємо респонденти, які були членами асоціації
-select(affect_conflicts, liv_count, no_meals) # залишаємо лише потрібні стовпціЯкщо використовувати native pipe (|>), код буде такий:
-interviews_ch <- interviews |>
-filter(memb_assoc == "yes") |>
-select(affect_conflicts, liv_count, no_meals).
+Using pipes, subset the `interviews` data to include interviews
+where respondents were members of an irrigation association
+(`memb_assoc`) and retain only the columns `affect_conflicts`,
+`liv_count`, and `no_meals`.
 
 :::::::::::::::  solution
 
-## Відповідь
+## Solution
 
 ```{r}
 interviews %>%
@@ -256,25 +284,28 @@ interviews %>%
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Створювати (або змінювати) змінні
+## Mutate
 
-Часто потрібно створювати нові стовпці на основі значень наявних стовпців, наприклад, для перетворення одиниць або для пошуку співвідношення значень  двох стовпців. Для цього ми використаємо \`mutate()'.
+Frequently you'll want to create new columns based on the values in existing
+columns, for example to do unit conversions, or to find the ratio of values in
+two columns. For this we'll use `mutate()`.
 
-Нас може зацікавити співвідношення кількості членів домогосподарства до кількості кімнат, що використовуються для сну (тобто середня кількість людей на кімнату):
+We might be interested in the ratio of number of household members
+to rooms used for sleeping (i.e. avg number of people per room):
 
 ```{r, purl=FALSE}
 interviews %>%
     mutate(people_per_room = no_membrs / rooms)
 ```
 
-Нам може бути цікаво дослідити, чи вплинуло членство в зрошувальній асоціації
-на співвідношення членів домогосподарства
-до кімнат. Щоб подивитися на цей зв'язок, ми спочатку видалимо дані
-з нашого набору даних, де респондент не відповів на питання
-про те, чи були вони членами зрошувальної асоціації.
-Ці випадки записуються як "NULL" в датасеті.
+We may be interested in investigating whether being a member of an
+irrigation association had any effect on the ratio of household members
+to rooms. To look at this relationship, we will first remove
+data from our dataset where the respondent didn't answer the
+question of whether they were a member of an irrigation association.
+These cases are recorded as "NULL" in the dataset.
 
-Щоб видалити ці випадки, ми можемо вставити "filter()" в стрічку:
+To remove these cases, we could insert a `filter()` in the chain:
 
 ```{r, purl=FALSE}
 interviews %>%
@@ -282,25 +313,28 @@ interviews %>%
     mutate(people_per_room = no_membrs / rooms)
 ```
 
-Символ `!` заперечує результат функції `is.na()”. Таким чином, якщо `is.na () `повертає значення`TRUE`(оскільки`membr_assoc` відсутній), то`! `Символ
-заперечує це і говорить, що ми хочемо лише значення `FALSE`, де `membr_assoc\` \*\*
-не\*\* відсутні.
+The `!` symbol negates the result of the `is.na()` function. Thus, if `is.na()`
+returns a value of `TRUE` (because the `memb_assoc` is missing), the `!` symbol
+negates this and says we only want values of `FALSE`, where `memb_assoc` **is
+not** missing.
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Завдання
+## Exercise
 
-Створіть нову панель даних із даних `interviews`, яка відповідає наступним критеріям: містить лише стовпець `village` та новий стовпець під назвою
-`total_meals`, що містить значення, яке дорівнює загальній кількості обідів, поданих у домогосподарстві в середньому за день (`no_membrs`, \`\`no-meals`).
-У кінцевій рамці датасеті
-повинні відображатися лише рядки, де `total_meals\` більше 20.
+Create a new dataframe from the `interviews` data that meets the following
+criteria: contains only the `village` column and a new column called
+`total_meals` containing a value that is equal to the total number of meals
+served in the household per day on average (`no_membrs` times `no_meals`).
+Only the rows where `total_meals` is greater than 20 should be shown in the
+final dataframe.
 
-**Підказка**: подумайте, як слід впорядкувати команди для створення цих даних
+**Hint**: think about how the commands should be ordered to produce this data
 frame!
 
 :::::::::::::::  solution
 
-## Рішення
+## Solution
 
 ```{r}
 interviews_total_meals <- interviews %>%
@@ -313,14 +347,20 @@ interviews_total_meals <- interviews %>%
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Аналіз даних типу Split-apply-combine та функція summarize()
+## Split-apply-combine data analysis and the summarize() function
 
-До багатьох завдань аналізу даних можна підійти за допомогою парадигми _split-apply-combine_: розділіть дані на групи, застосуйте певний аналіз до кожної групи, а потім об'єднайте результати. **`dplyr`** робить це дуже легко завдяки використанню функції `group_by () `.
+Many data analysis tasks can be approached using the _split-apply-combine_
+paradigm: split the data into groups, apply some analysis to each group, and
+then combine the results. **`dplyr`** makes this very easy through the use of
+the `group_by()` function.
 
-### Функція `summarize()`
+### The `summarize()` function
 
-`group_by () `часто використовується разом з `()`, що згортає кожну групу в однорядковий підсумок цієї групи.  `group_by () `приймає як аргументи
-назви стовпців, що містять змінні**categorical**, для яких ви хочете, обчислити зведену статистику. Отже, щоб обчислити середній розмір домогосподарства за селом:
+`group_by()` is often used together with `summarize()`, which collapses each
+group into a single-row summary of that group.  `group_by()` takes as arguments
+the column names that contain the **categorical** variables for which you want
+to calculate the summary statistics. So to compute the average household size by
+village:
 
 ```{r, purl=FALSE}
 interviews %>%
@@ -328,7 +368,7 @@ interviews %>%
     summarize(mean_no_membrs = mean(no_membrs))
 ```
 
-Ви можете також групувати кілька стовпців:
+You can also group by multiple columns:
 
 ```{r, purl=FALSE}
 interviews %>%
@@ -336,8 +376,10 @@ interviews %>%
     summarize(mean_no_membrs = mean(no_membrs))
 ```
 
-Зверніть увагу, що вихід являє собою згруповану таблицю з дев'яти рядків трьома стовпцями , яка позначається двома першими рядками з `#`.
-Щоб отримати розгруповану таблицю, скористайтеся функцією `ungroup`:
+Note that the output is a grouped tibble of nine rows by three columns
+which is indicated by the by two first lines with the `#`.
+To obtain an ungrouped tibble, use the
+`ungroup` function:
 
 ```{r, purl=FALSE}
 interviews %>%
@@ -346,8 +388,11 @@ interviews %>%
     ungroup()
 ```
 
-Зверніть увагу, що другий рядок з `#`, який раніше вказував на групування, має, і тепер у нас є лише 9x3 таблиця без групування.
-Групуючи як за `village`, так і `membr_assoc`, ми бачимо рядки в нашій таблиці для респондентів, які не вказали, чи були вони членами асоціації зрошення. Ми можемо виключити ці дані з нашої таблиці за допомогою кроку фільтрації.
+Notice that the second line with the `#` that previously indicated the grouping has
+disappeared and we now only have a 9x3-tibble without grouping.
+When grouping both by `village` and `membr_assoc`, we see rows in our table for
+respondents who did not specify whether they were a member of an irrigation
+association. We can exclude those data from our table using a filter step.
 
 ```{r, purl=FALSE}
 interviews %>%
@@ -356,8 +401,10 @@ interviews %>%
     summarize(mean_no_membrs = mean(no_membrs))
 ```
 
-Після того, як дані згруповані, ви також можете узагальнити кілька змінних одночасно
-(і не обов'язково на одній змінній). Наприклад, ми можемо додати стовпець із зазначенням мінімального розміру домогосподарства для кожного села для кожної групи (члени іригаційної асоціації чи ні):
+Once the data are grouped, you can also summarize multiple variables at the same
+time (and not necessarily on the same variable). For instance, we could add a
+column indicating the minimum household size for each village for each group
+(members of an irrigation association vs not):
 
 ```{r, purl=FALSE}
 interviews %>%
@@ -367,8 +414,9 @@ interviews %>%
               min_membrs = min(no_membrs))
 ```
 
-Іноді корисно переставити результат запиту для перевірки значень.
-Наприклад, ми можемо сортувати `min_membrs`, щоб спочатку поставити групу з найменшим домогосподарством:
+It is sometimes useful to rearrange the result of a query to inspect the values.
+For instance, we can sort on `min_membrs` to put the group with the smallest
+household first:
 
 ```{r, purl=FALSE}
 interviews %>%
@@ -379,7 +427,8 @@ interviews %>%
     arrange(min_membrs)
 ```
 
-Для сортування в порядку зменшення нам потрібно додати функцію `desc () `. Якщо ми хочемо сортувати результати за порядком зменшення мінімального розміру домогосподарства:
+To sort in descending order, we need to add the `desc()` function. If we want to
+sort the results by decreasing order of minimum household size:
 
 ```{r, purl=FALSE}
 interviews %>%
@@ -390,18 +439,20 @@ interviews %>%
     arrange(desc(min_membrs))
 ```
 
-### Підрахунок кількості рядків або елементів, що задовольняють певну умову
+### Counting
 
-Працюючи з даними, ми часто хочемо знати кількість спостережень, знайдених
-для кожного фактора або комбінації факторів. Для цього завдання **`dplyr`** надає функцію `count () `. Наприклад, якби ми хотіли підрахувати кількість рядків даних для
-кожного села, ми б зробили наступним чином:
+When working with data, we often want to know the number of observations found
+for each factor or combination of factors. For this task, **`dplyr`** provides
+`count()`. For example, if we wanted to count the number of rows of data for
+each village, we would do:
 
 ```{r, purl=FALSE}
 interviews %>%
     count(village)
 ```
 
-Для зручності, `count () `надає аргумент `sort` для отримання результатів у порядку зменшення:
+For convenience, `count()` provides the `sort` argument to get results in
+decreasing order:
 
 ```{r, purl=FALSE}
 interviews %>%
@@ -410,13 +461,15 @@ interviews %>%
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Завдання
+## Exercise
 
-Скільки домогосподарств в опитуванні мають в середньому дворазове харчування? Трьохразове харчування? Чи є якісь інші номери страв?
+How many households in the survey have an average of
+two meals per day? Three meals per day? Are there any other numbers
+of meals represented?
 
 :::::::::::::::  solution
 
-## Відповідь
+## Solution
 
 ```{r}
 interviews %>%
@@ -425,12 +478,13 @@ interviews %>%
 
 :::::::::::::::::::::::::
 
-Використовуйте `group_by () `та `()`, щоб знайти середню, мінімальну та максимальну кількість членів домогосподарства для кожного села. Також додайте кількість спостережень
-(підказка: див. `? n`).
+Use `group_by()` and `summarize()` to find the mean, min, and max
+number of household members for each village. Also add the number of
+observations (hint: see `?n`).
 
 :::::::::::::::  solution
 
-## Відповідь
+## Solution
 
 ```{r}
 interviews %>%
@@ -445,15 +499,15 @@ interviews %>%
 
 :::::::::::::::::::::::::
 
-Яке було найбільше домогосподарство, опитане в кожному місяці?
+What was the largest household interviewed in each month?
 
 :::::::::::::::  solution
 
-## Відповідь
+## Solution
 
 ```{r}
-# якщо ще не включено, додайте стовпці місяця, року та дня
-бібліотека (lubridate) # завантажте бібілотеку, якщо ще не завантажено
+# if not already included, add month, year, and day columns
+library(lubridate) # load lubridate if not already loaded
 interviews %>%
     mutate(month = month(interview_date),
            day = day(interview_date),
@@ -468,11 +522,11 @@ interviews %>%
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
-- Використовуйте пакет `dplyr` для маніпулювання датафреймами.
-- Використовуйте `select () `, щоб вибрати змінні з датафрейму.
-- Використовуйте `filter () `, щоб вибрати дані на основі значень.
-- Використовуйте `group_by () `і `()` для роботи з підмножинами даних.
-- Використовуйте `mutate () `для створення нових змінних.
+- Use the `dplyr` package to manipulate dataframes.
+- Use `select()` to choose variables from a dataframe.
+- Use `filter()` to choose data based on values.
+- Use `group_by()` and `summarize()` to work with subsets of data.
+- Use `mutate()` to create new variables.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
