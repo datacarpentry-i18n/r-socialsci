@@ -4,10 +4,8 @@ title: Setup
 
 ## Інструкції з налаштування
 
-**R** and **RStudio** are separate downloads and installations. R is the
-underlying statistical computing environment, but using R alone is no
-fun. RStudio — це графічне інтегроване середовище розробки (IDE), яке робить роботу з R значно простішою та більш інтерактивною. Перед встановленням RStudio необхідно встановити R. Once installed, because RStudio is an IDE, RStudio will run R in
-the background.  You do not need to run it separately.
+**R** and **RStudio** are separate downloads and installations. R — це базове середовище для статистичних обчислень, але працювати лише з R не дуже зручно. RStudio — це графічне інтегроване середовище розробки (IDE), яке робить роботу з R значно простішою та більш інтерактивною. Перед встановленням RStudio необхідно встановити R. Once installed, because RStudio is an IDE, RStudio will run R in
+the background.  Окремо запускати R не потрібно.
 
 After installing both programs,
 you will need to install the **`tidyverse`** package from within RStudio. The
