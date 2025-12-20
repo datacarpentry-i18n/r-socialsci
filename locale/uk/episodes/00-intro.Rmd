@@ -13,7 +13,7 @@ source("data/download_data.R")
 
 - The main goal here is to help the learners be comfortable with the RStudio
   interface.
-- Виконуйте етапи дуже повільно під час розділу "Початкове налаштування". Переконайтеся, що всі учасники встигають за ходом заняття (нагадайте їм користуватися наліпками для зворотного зв’язку). Plan with the helpers at this
+- Go very slowly in the "Getting set up" section. Переконайтеся, що всі учасники встигають за ходом заняття (нагадайте їм користуватися наліпками для зворотного зв’язку). Plan with the helpers at this
   point to go around the room, and be available to help. Дуже важливо впевнитися, що всі працюють у правильному робочому каталозі та створили підкаталог `data` (усі літери малі).
 
 ::::::::::::
@@ -30,9 +30,9 @@ source("data/download_data.R")
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- How to find your way around RStudio?
+- Як орієнтуватися в RStudio?
 - Як взаємодіяти з R?
-- How to manage your environment?
+- Як керувати робочим середовищем?
 - Як встановити пакети?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
