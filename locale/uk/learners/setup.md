@@ -1,5 +1,5 @@
 ---
-title: Setup
+title: Налаштування
 ---
 
 ## Інструкції з налаштування
@@ -7,12 +7,10 @@ title: Setup
 **R** and **RStudio** are separate downloads and installations. R — це базове середовище для статистичних обчислень, але працювати лише з R не дуже зручно. RStudio — це графічне інтегроване середовище розробки (IDE), яке робить роботу з R значно простішою та більш інтерактивною. Перед встановленням RStudio необхідно встановити R. Once installed, because RStudio is an IDE, RStudio will run R in
 the background.  Окремо запускати R не потрібно.
 
-After installing both programs,
-you will need to install the **`tidyverse`** package from within RStudio. The
+Після встановлення обох програм вам потрібно встановити пакет **`tidyverse`** безпосередньо з RStudio. The
 **`tidyverse`** package is a powerful collection of data science tools within **R**
 see the [**`tidyverse`** website](https://tidyverse.tidyverse.org) for more details.
-Follow the instructions below for your operating system, and then follow the
-instructions to install **`tidyverse`**.
+Дотримуйтесь інструкцій нижче для вашої операційної системи, а потім виконайте інструкції зі встановлення **`tidyverse`**.
 
 ### Windows
 
