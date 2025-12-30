@@ -3,19 +3,19 @@ title: "Using a relational database with R"
 teaching: 0
 exercises: 0
 questions:
-  - "How can I import data held in an SQLite database into an R data frame?"
-  - "How can I write data from a data frame to an SQLite table?"
-  - "How can I create an SQLite database from csv files"
+  - "Як імпортувати дані, що зберігаються в базі даних SQLite, у датафрейм в R?"
+  - "Як записати дані з датафрейму у таблицю SQLite?"
+  - "Як створити базу даних SQLite з csv файлів"
 
 objectives:
-  - "Install RSQLite package"
-  - "Create a connection to an SQLite database"
-  - "Query the database"
-  - "Create a new databaseand populate it"
-  - "Use dplyr functions to access and query an SQLite database"
+  - "Встановити пакет RSQLite"
+  - "Створити з’єднання з базою даних SQLite"
+  - "Виконати запити до бази даних"
+  - "Створити нову базу даних і наповнити її даними"
+  - "Використовувати функції dplyr для доступу та запитів до бази даних SQLite"
 
 keypoints:
-  - "First key point."
+  - "Перший ключовий момент."
 ---
 
 ```{r, include=FALSE}
@@ -24,75 +24,64 @@ knitr_fig_path("06-")
 source("../bin/download_data.R")
 ```
 
-## Introduction
+## Вступ
 
-A common problem with R in that all operations are conducted in-memory. Here, "memory" means a computer
-drive called Random Access Memory (RAM for short) which is phsically installed on your computer. RAM
-allows for data to be read in nearly the same amount of time regardless of its physical location
-inside the memory. This is in stark contrast to the speed data could be read from CDs, DVDs, or other
-storage media, where the speed of transfer depended on how quickly the drive could rotate or the
-arm could move. Unfortunately, your computer has a limited amount of RAM, so the amount of data you
-can work with is limited by the available memory. So far, we have used small datasets that can
-easily fit into your computer's memory. But what about datasets that are too large for your
-computer to handle as a whole?
+Поширеною проблемою при роботі з R є те, що всі операції виконуються в оперативній пам’яті. Тут "пам’ять" означає комп’ютерний пристрій під назвою Random Access Memory (RAM), фізично встановлений у вашому комп’ютері. RAM дозволяє читати дані майже за однаковий час, незалежно від того, де вони фізично розташовані в пам’яті. Це різко контрастує зі швидкістю читання даних з CD, DVD або інших носіїв, де швидкість передачі залежала від того, як швидко обертається диск або рухомий механізм зчитування. На жаль, ваш комп’ютер має обмежену кількість RAM, тому обсяг даних, з якими ви можете працювати, обмежений доступною пам’яттю. До цього моменту ми використовували невеликі набори даних, які легко вміщуються в пам’ять комп’ютера. Але що робити, якщо дані занадто великі, щоб комп’ютер міг обробити їх одразу?
 
-In this case, it is helpful to organze the data into a database stored outside of R before creating
-a connection to the database itself. This connection will essentially remove the limitation of memory
-because SQL queries can be sent directly from R to the database and return to R only the results that you
-have identified as being neccessary for your analysis.
+У цьому випадку корисно організувати дані у базу даних, яка зберігається поза межами R, перед тим як створювати підключення до самої бази. Це підключення фактично усуває обмеження пам’яті, оскільки SQL-запити можна відправляти безпосередньо з R до бази даних і повертати в R лише ті результати, які потрібні для аналізу.
 
-Once we have made the connection to the database, much of what we do will look familiar because the code we will be using is very similar to what we saw in the SQL lesson and earlier episodes of this R lesson.
+Після встановлення підключення до бази даних багато дій виглядатимуть знайомо, бо код буде дуже схожий на те, що ми бачили в уроці SQL та попередніх епізодах цього курсу R.
 
-In this lesson, we will be connecting to an SQLite database, which allows us to send strings containing SQL statements directly from R to the database and recieve the results. In addition, we will be connecting to the database in such a way that we can use 'dplyr' functions to operate directly on the database tables.
+У цьому уроці ми будемо підключатися до бази даних SQLite, що дозволяє надсилати SQL-запити безпосередньо з R до бази та отримувати результати. Крім того, ми під'єднаємось так, щоб можна було використовувати функції dplyr для роботи безпосередньо з таблицями бази даних.
 
-## Prelminaries
+## Передумови
 
-First, install and load the neccessary packages. You can install the `RSQLite` package with
+Спочатку встановіть і завантажте необхідні пакети. Ви можете встановити пакет `RSQLite` за допомогою
 
 ```{r, eval=FALSE}
 install.packages("RSQLite")
 ```
 
-Load the packages with
+Завантажте пакети за допомогою
 
 ```{r}
 library(RSQLite)
 library(dplyr)
 ```
 
-Next, create a variable that contains the location of the SQLite database we are going to use. Here, we are assuming that it is in the current working directory.
+Далі створіть змінну, яка містить розташування бази даних SQLite, яку ми будемо використовувати. Тут ми припускаємо, що він знаходиться в поточному робочому каталозі.
 
 ```{r}
 dbfile <- "data/SN7577.sqlite"
 ```
 
-## Connecting to an SQLite Database
+## Підключення до SQLite бази даних
 
-Connect to the SQLite database specified by `dbfile`, above, using the `dbConnect` function.
+Під'єднайтеся до бази даних SQLite, вказаної у змінній `dbfile` вище, використовуючи функцію `dbConnect`.
 
 ```{r}
 mydb <- dbConnect(dbDriver("SQLite"), dbfile)
 ```
 
-Here, `mydb` represents the connection to the database. It will be specified every time we need to access the database.
+Тут `mydb` представляє підключення до бази даних. Його потрібно буде вказувати щоразу, коли ми хочемо звернутися до бази.
 
-Now that we have a connection, we can get a list of the tables in the database.
+Тепер, коли підключення встановлено, ми можемо отримати список таблиць у базі даних.
 
 ```{r}
 dbListTables(mydb)
 ```
 
-Our objective here is to bring data from the database into R by sending a query to the database and then asking for the results of that query.
+Наша мета тут — перенести дані з бази даних у R, відправивши запит до бази та отримавши результати цього запиту.
 
 ```{r}
-# Assign the results of a SQL query to an SQLiteResult object
+# Присвоїти результати SQL-запиту об'єкту SQLiteResult
 results <- dbSendQuery(mydb, "SELECT * FROM Question1")
 
-# Return results from a custom object to a dataframe
+# Повернути результати з об'єкта у стандартний датафрейм R
 data <- fetch(results)
 ```
 
-`data` is a standard R dataframe that can be explored and manipulated.
+`data` тепер є звичайним датафреймом у R, з яким можна працювати та аналізувати його.
 
 ```{r}
 # Return column names
@@ -111,13 +100,13 @@ data[4,2]
 data[data$key > 7,2]
 ```
 
-Once you have retrieved the data you should close the connection.
+Після того, як ви отримали дані, ви повинні закрити з'єднання.
 
 ```{r}
 dbClearResult(results)
 ```
 
-In addition to sending simple queries we can send complex one like a join.
+Окрім простих запитів, ми можемо надсилати складніші, наприклад об'єднання (join).
 You may want to set this up in a concateneted string first for readability.
 
 ```{r}
@@ -145,26 +134,26 @@ What happens if you send invalid SQL syntax?
 
 :::::::::::::::  solution
 
-## Solution
+## Відповідь
 
-An error message is returned from SQLite.
-Notice that R is just the conduit; it cannot check the SQL syntax.
+SQLite поверне повідомлення про помилку.
+Зверніть увагу, що R тут виступає лише посередником і не може перевіряти синтаксис SQL.
 
 :::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-We can also create a new database and add tables to it. Let's base this new dataframe on the Question1 table that can be found in our existing database.
+Також ми можемо створити нову базу даних і додати до неї таблиці. Для цього візьмемо за основу таблицю Question1, що знаходиться у нашій наявній базі даних.
 
 ```{r}
-# First, use a SQL query to extract the Question1 table from the existing database
-results = dbSendQuery(mydb, "SELECT * from Question1")
+# Спочатку використовуйте запит SQL, щоб витягти таблицю Question1 з наявної бази даних
+results = dbSendQuery (mydb, "SELECT * from Question1")
 
-# Then, store it as a dataframe
+# Потім збережіть її як датафрейм
 Q1 <- fetch(results)
 ```
 
-Now, we can create the new database and add data to it, either from an external file or a local dataframe.
+Тепер ми можемо створити нову базу даних і додати до неї дані або з зовнішнього файлу, або з локального датафрейму.
 
 ```{r}
 dbfile_new = "data/a_newdb.sqlite"
@@ -175,27 +164,23 @@ dbWriteTable(conn = mydb_new , name = "SN7577", value = "data/SN7577.csv",
 
 dbWriteTable(conn = mydb_new , name = "Q1", value = Q1,
              row.names = FALSE)
-
-dbListTables(mydb_new)
 ```
 
-## Connecting to a Database for `dplyr` Use
+## Підключення до бази даних для використання `dplyr`
 
-When we want to use `dplyr` functions to operate directly on the database tables,
-a different connection method is used.
+Коли ми хочемо використовувати функції `dplyr` для роботи безпосередньо з таблицями бази даних, застосовується інший спосіб підключення.
 
 ```{r}
 mydb_dplyr <- src_sqlite(path="data/SN7577.sqlite")
 ```
 
-as is the method for running queries. However using the 'tbl' function we still need to provide avalid SQL string. (?)
+як і метод виконання запитів. Однак, використовуючи функцію 'tbl', нам все одно потрібно надати дійсний SQL-запит. (?)
 
 ```{r}
 tbl(mydb_dplyr, sql("SELECT count(*) from SN7577"))
 ```
 
-The real advantage of using `dplyr` is that once we have stored the table as an object
-(here, `SN7577_d`), we can use `dplyr` functions instead of SQL statements.
+Справжня перевага використання `dplyr` полягає в тому, що після того, як ми зберегли таблицю як об’єкт (тут — `SN7577_d`), ми можемо застосовувати функції `dplyr` замість SQL-запитів.
 
 ```{r}
 # Store the table as an object
@@ -213,9 +198,9 @@ SN7577_d %>%
   summarize(avg_age = mean(numage))
 ```
 
-Notice that on the `nrow` command we get NA rather than a count of rows. Thisis because `dplyr` doesn't hold the full table even after the 'Select \* ...'
+Зверніть увагу, що команда `nrow` повертає NA замість кількості рядків. Це тому, що `dplyr` не завантажує всю таблицю в пам’ять навіть після 'Select \* ...'
 
-If you need the row count you can use
+Якщо вам потрібна кількість рядків, можна використати
 
 ```{r}
 SN7577_d %>%
@@ -224,9 +209,9 @@ SN7577_d %>%
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
-## Exercise
+## Завдання
 
-Store the SN7577 table as an object for `dplyr` use.
+Зберігайте таблицю SN7577 як об'єкт для використання `dplyr`.
 
 Write a query using `dplyr` functions that will return the average age (`numage`) by sex for all records where
 the response for Q2 is missing (missing values are indicated by a value of -1).
