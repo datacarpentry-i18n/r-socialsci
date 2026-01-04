@@ -11,63 +11,61 @@ source("data/download_data.R")
 
 :::: instructor
 
-- The main goal is to introduce users to the various objects in R, from atomic types
-  to creating your own objects.
-- While this epsiode is foundational, be careful not to get caught in the weeds as the
-  variety of types and operations can be overwhelming for new users, especially before
-  they understand how this fits into their own "workflow."
+- Основна мета - познайомити користувачів з різними об'єктами в R, від елементарних типів
+  до створення власних об'єктів.
+- Хоча цей розділ є базовим, будьте обережні, щоб не "загрузнути в деталях", адже різноманіття типів і операцій може бути надто складним для новачків — особливо до того, як вони зрозуміють, як усе це вписується у їх власний "робочий процес".
 
 ::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- Define the following terms as they relate to R: object, assign, call, function, arguments, options.
-- Assign values to names in R.
-- Learn how to name objects.
-- Use comments to inform script.
-- Solve simple arithmetic operations in R.
-- Call functions and use arguments to change their default options.
-- Inspect the content of vectors and manipulate their content.
-- Subset values from vectors.
-- Analyze vectors with missing data.
+- Визначити такі терміни, як вони стосуються R: об'єкт, призначення, виклик, функція, аргументи, параметри.
+- Призначити значення іменам у R.
+- Дізнатися, як називати об'єкти.
+- Використовувати коментарі для інформування сценарію.
+- Розв'язувати прості арифметичні операції в R.
+- Викликати функції та використовувати аргументи, щоб змінити їх параметри за замовчуванням.
+- Оглядати вміст векторів і маніпулюйте їх змістом.
+- Значення підмножини з векторів.
+- Аналізувати вектори з відсутніми даними.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- What data types are available in R?
-- What is an object?
-- How can objects of different data types be assigned to names?
-- What arithmetic and logical operators can be used?
-- How can subsets be extracted from vectors?
-- How does R treat missing values?
-- How can we deal with missing values in R?
+- Які типи даних доступні в R?
+- Що таке об'єкт?
+- Як можна присвоювати іменам об'єкти різних типів даних?
+- Які арифметичні та логічні оператори можна використовувати?
+- Як можна витягти підмножини з векторів?
+- Як в R трактувати відсутні значення?
+- Як ми можемо впоратися з відсутніми значеннями в R?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Creating objects in R
+## Створення об'єктів в R
 
-You can get output from R simply by typing math in the console:
+Ви можете використовувати R для простих математичних обчислень, друкуючи формули у консолі:
 
 ```{r, purl=FALSE}
 3 + 5
 12 / 7
 ```
 
-Everything that exists in `R` is an objects: from simple numerical values, to strings, to more complex objects like vectors, matrices, and lists. Even expressions and functions are objects in `R`.
+Все, що існує в `R` - це об'єкти: від простих числових значень та рядків до складніших об'єктів, таких як вектори, матриці та списки. Навіть вирази й функції є об'єктами в `R`.
 
-However, to do useful and interesting things, we need to name objects. To do so, we need to give a _name_ followed by the assignment operator `<-`, and the _object_ we want to be named:
+Однак, щоб робити корисні та цікаві речі, нам потрібно звертатися до об'єктів. Для цього нам потрібно вказати _ім'я_, за яким слідує оператор присвоєння `<-`, і _об'єкт_, який ми хочемо назвати:
 
 ```{r, purl=FALSE}
 areaHectares <- 1.0
 ```
 
-`<-` is the assignment operator. It assigns values (objects) on the right to names (also called _symbols_) on
-the left. So, after executing `x <- 3`, the value of `x` is `3`. The arrow can
-be read as 3 **goes into** `x`.  For historical reasons, you can also use `=`
-for assignments, but not in every context. Because of the
-[slight differences](https://blog.revolutionanalytics.com/2008/12/use-equals-or-arrow-for-assignment.html)
-in syntax, it is good practice to always use `<-` for assignments. More
+`<-` - оператор присвоєння. Він призначає значення (об'єкти) праворуч іменам (також званим _символами_) на
+ліворуч. Отже, після виконання `x <- 3` значення `x` дорівнює `3`. Стрілку
+можна прочитати як 3 **переходить в** `x`.  З історичних причин ви також можете використовувати `=`
+для присвоєння, але не в кожному контексті. Через
+[незначні відмінності](https://blog.revolutionanalytics.com/2008/12/use-equals-or-arrow-for-assignment.html)
+у синтаксисі, рекомендується завжди використовувати `<-` для присвоєння. More
 generally we prefer the `<-` syntax over `=` because it makes it clear what
 direction the assignment is operating (left assignment), and it increases the
 read-ability of the code.
