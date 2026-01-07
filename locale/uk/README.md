@@ -1,11 +1,11 @@
-[![Create a Slack Account with us][create_slack_svg]][slack_invite]
+[![Створіть обліковий запис Slack у нас][create_slack_svg]][slack_invite]
 
-# Internationalisation hub repository for Data Carpentry r-socialsci
+# Репозиторій центру інтернаціоналізації для Software Carpentry r-socialsci
 
-Lesson on R for social scientists.
-Please see [https://datacarpentry.github.io/r-socialsci/](https://datacarpentry.github.io/r-socialsci/) for a rendered version of this material in english.
+Урок з R для соціальних наук.
+Будь ласка, перегляньте [https://datacarpentry.github.io/r-socialsci/](https://datacarpentry.github.io/r-socialsci/) для перекладеної версії цього матеріалу англійською мовою.
 
-More info to follow.
+Більше інформації за посиланням.
 
 [create_slack_svg]: https://img.shields.io/badge/Create_Slack_Account-The_Carpentries-071159.svg
 [slack_invite]: https://slack-invite.carpentries.org/
