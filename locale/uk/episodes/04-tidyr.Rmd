@@ -159,28 +159,17 @@ group_by(key_ID) %>%
   mutate(number_items = if_else(items_owned == "no_listed_items", 0, n())) %>% 
 ```
 
-Нарешті ми використовуємо `pivot_wider()`, щоб перейти з довгого формату в широкий. Це створює новий стовпець для кожного унікального значення у стовпці `items_owned` і заповнює ці стовпці значеннями з `items_owned_logical`. We also
-declare that for items that are missing, we want to fill those cells with the
-value of `FALSE` instead of `NA`.
+Нарешті ми використовуємо `pivot_wider()`, щоб перейти з довгого формату в широкий. Це створює новий стовпець для кожного унікального значення у стовпці `items_owned` і заповнює ці стовпці значеннями з `items_owned_logical`. Крім того, ми вказуємо, що для відсутніх предметів клітинки потрібно заповнювати значенням `FALSE` замість `NA`.
 
 ```{r, eval=FALSE}
 pivot_wider(names_from = items_owned,
             values_from = items_owned_logical,
             values_fill = list(items_owned_logical = FALSE))
-
 ```
 
-![](fig/pivot_wider.png){alt="Two tables shown side-by-side. The 'items owned'
-column is highlighted in blue on the left table, and the column names are
-highlighted in blue on the right table to show how the values of the 'items
-owned' become the column names in the output of the pivot wider function. The
-'items owned logical' column is highlighted in yellow on the left table, and the
-values of the bicycle, television, and solar panel columns are highlighted in
-yellow on the right table to show how the values of the 'items owned logical'
-column became the values of all three of the aforementioned columns."}
+![](fig/pivot_wider.png){alt="Дві таблиці, показані поруч. Стовпець 'items owned' виділено синім у лівій таблиці, а назви стовпців виділено синім у правій таблиці, щоб показати, як значення зі стовпця 'items owned' стають назвами стовпців у результаті функції pivot_wider. Стовпець 'items owned logical' виділено жовтим у лівій таблиці, а значення стовпців bicycle, television і solar panel виділено жовтим у правій таблиці, щоб показати, як значення стовпця 'items owned logical' стали значеннями цих трьох стовпців."}
 
-Combining the above steps, the chunk looks like this. Note that two new columns
-are created within the same `mutate()` call.
+Об’єднавши наведені кроки, код виглядає так. Зверніть увагу, що два нові стовпці створюються в одному виклику mutate().
 
 ```{r}
 interviews_items_owned <- interviews %>%
@@ -194,11 +183,7 @@ interviews_items_owned <- interviews %>%
               values_fill = list(items_owned_logical = FALSE))
 ```
 
-View the `interviews_items_owned` data frame. It should have `r
-nrow(interviews)` rows (the same number of rows you had originally), but extra
-columns for each item. How many columns were added? Notice that there is no
-longer a column titled `items_owned`. This is because there is a default
-parameter in `pivot_wider()` that drops the original column. The values that
+Перегляньте дата фрейм `interviews_items_owned`. Він має `rnrow(interviews)` рядків (таку ж кількість, як і спочатку), але додаткові стовпці для кожного предмета. Скільки стовпців було додано? Зверніть увагу, що більше немає стовпця `items_owned`. Це тому, що в `pivot_wider()` за замовчуванням встановлено параметр, який видаляє оригінальний стовпець. The values that
 were in that column have now become columns named `television`, `solar_panel`,
 `table`, etc. You can use `dim(interviews)` and `dim(interviews_wide)` to see
 how the number of columns has changed between the two datasets.
