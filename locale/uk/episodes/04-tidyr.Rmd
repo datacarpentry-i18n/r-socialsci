@@ -1,5 +1,5 @@
 ---
-title: Data Wrangling with tidyr
+title: Маніпулювання даними за допомогою пакету tidyr
 teaching: 25
 exercises: 15
 source: Rmd
@@ -11,16 +11,16 @@ source("data/download_data.R")
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- Describe the concept of a wide and a long table format and for which purpose those formats are useful.
-- Describe the roles of variable names and their associated values when a table is reshaped.
-- Reshape a dataframe from long to wide format and back with the `pivot_wider` and `pivot_longer` commands from the **`tidyr`** package.
-- Export a dataframe to a csv file.
+- Описати концепцію широкого та довгого форматів таблиць, а також цілі, для яких ці формати корисні.
+- Описати ролі назв змінних та пов'язаних із ними значень під час зміни форми таблиці.
+- Переформатувати датафрейм з довгого формату на широкий і назад за допомогою команд `pivot_wider` та `pivot_longer` з пакета **`tidyr`**.
+- Експортувати дата фрейм у файл csv.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- How can I reformat a data frame to meet my needs?
+- Як я можу переформатувати датафрейм відповідно до своїх потреб?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
