@@ -1,5 +1,5 @@
 ---
-title: Data Visualisation with ggplot2
+title: Візуалізація даних за допомогою ggplot2
 teaching: 80
 exercises: 35
 source: Rmd
@@ -11,69 +11,60 @@ source("data/download_data.R")
 
 :::: instructor
 
-- This episode is a broad overview of ggplot2 and focuses on (1) getting
-  familiar with the layering system of ggplot2, (2) using the argument `group`
-  in the `aes()` function, (3) basic customization of the plots.
-- The episode depends on data created in the Data Wrangling with tidyr
-  episode. If you did not get to or through all of the tidyr episode,
-  you can have the learners access the data by either downloading it or
-  quickly creating it using the tidyr code below. You will probably want to
-  copy the code into the Etherpad.
-- If you did skip the tidyr episode, you might want to go over the exporting
-  data section in that episode.
+- Цей епізод є загальним оглядом ggplot2 і зосереджується на: (1) ознайомленні з системою шарів у ggplot2, (2) використанні аргументу group у функції aes(), (3) базовому налаштуванні графіків.
+- Епізод залежить від даних, створених в епізоді "Маніпулювання даними за допомогою tidyr". Якщо ви не дійшли або не пройшли увесь епізод про tidyr, ви можете надати учасникам доступ до даних, завантаживши їх або швидко створивши за допомогою наведеного нижче коду tidyr. Ймовірно, ви захочете скопіювати код
+  в Etherpad.
+- Якщо ви пропустили епізод про tidyr, ви можете перейти до розділу експорт даних у тому епізоді.
 
 ::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- Produce scatter plots, boxplots, and barplots using ggplot.
-- Set universal plot settings.
-- Describe what faceting is and apply faceting in ggplot.
-- Modify the aesthetics of an existing ggplot plot (including axis labels and colour).
-- Build complex and customized plots from data in a data frame.
-- Recognize the differences between base R, lattice, and ggplot visualizations.
+- Створити точкові, коробкові та стовпчикові діаграми за допомогою ggplot.
+- Задати універсальні параметри графіка.
+- Пояснити, що таке фасетування та застосувати його в ggplot.
+- Змінити естетику наявного графіка ggplot (включно з підписами осей та кольором).
+- Побудувати складні та персоналізовані графіки на основі даних у датафреймі.
+- Визначити відмінності між візуалізаціями базового R, lattice та ggplot.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- What are the components of a ggplot?
-- What are the main differences between R base plots, lattice, and ggplot?
-- How do I create scatterplots, boxplots, and barplots?
-- How can I change the aesthetics (ex. colour, transparency) of my plot?
-- How can I create multiple plots at once?
+- Які компоненти ggplot?
+- Які основні відмінності між базовими графіками R, lattice та ggplot?
+- Як створити діаграми розсіювання, коробкові та стовпчикові?
+- Як змінити естетику (наприклад, колір, прозорість) графіка?
+- Як створити кілька графіків одночасно?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-We start by loading the required package. **`ggplot2`** is also included in the
-**`tidyverse`** package.
+Почнемо із завантаження необхідного пакета. **`ggplot2`** також входить до складу пакету **`tidyverse`**.
 
 ```{r load-package, message=FALSE, purl=FALSE}
 library(tidyverse)
 ```
 
-If not still in the workspace, load the data we saved in the previous lesson.
+Якщо дані ще не знаходяться в робочій області, завантажте ті, які ми зберегли в попередньому уроці.
 
 ```{r load-data, purl=FALSE}
 interviews_plotting <- read_csv("data_output/interviews_plotting.csv")
 ```
 
-If you were unable to complete the previous lesson or did not save the data,
-then you can create it now. Either download it using `read_csv()` (Option 1)
-or create it with the **dplyr** and **tidyr** code (Option 2).
+Якщо ви не змогли завершити попередній урок або не зберегли дані, ви можете створити їх зараз. Або завантажте за допомогою `read_csv()` (варіант 1), або створіть за допомогою **dplyr** та **tidyr** (варіант 2).
 
 ::: tab
 
-### Option 1: Download the data
+### Варіант 1: Завантажте дані
 
 ```{r, purl=FALSE, eval=FALSE}
 interviews_plotting <- read_csv("https://raw.githubusercontent.com/datacarpentry/r-socialsci/main/episodes/data/interviews_plotting.csv")
 ```
 
-### Option 2: Create the data
+### Варіант 2: Створіть дані
 
 ```{r, purl=FALSE, eval=FALSE}
-## Can be used to load in data from previous lesson!
+## Може бути використано для завантаження даних з попереднього уроку!
 interviews_plotting <- interviews %>%
   ## pivot wider by items_owned
   separate_longer_delim(items_owned, delim = ";") %>%
@@ -96,15 +87,15 @@ interviews_plotting <- interviews %>%
 
 :::
 
-## Visualization Options in R
+## Параметри візуалізації в R
 
-Before we start with **`ggplot2`**, it's helpful to know that there are several ways to create visualizations in R. While **`ggplot2`** is great for building complex and highly customizable plots, there are simpler and quicker alternatives that you might encounter or use depending on the context. Let's briefly explore a few of them:
+Перед тим як почати з **`ggplot2`**, корисно знати, що в R існує кілька способів створювати візуалізації. Хоча **`ggplot2`** чудово підходить для створення складних та висококастомізованих графіків, існують простіші та швидші альтернативи, з якими ви можете зіткнутися або використовувати залежно від контексту. Давайте коротко розглянемо декілька з них:
 
-### R Base Plots
+### Базові графіки R
 
-Base R plots are the simplest form of visualization and are great for quick, exploratory analysis. You can create plots with very little code, but customizing them can be cumbersome compared to **`ggplot2`**.
+Базові графіки R є найпростішою формою візуалізації й чудово підходять для швидкого, дослідницького аналізу. Можна створювати графіки за допомогою невеликої кількості коду, але їхнє налаштування може бути громіздким у порівнянні з **`ggplot2`**.
 
-Example of a simple scatterplot in base R using the `no_membrs` and `liv_count` variables:
+Приклад простого точкового графіка у базовому R з використанням змінних `no_membrs` та `liv_count`:
 
 ```{r, purl=FALSE}
 plot(interviews_plotting$no_membrs, interviews_plotting$liv_count,
@@ -115,9 +106,9 @@ plot(interviews_plotting$no_membrs, interviews_plotting$liv_count,
 
 ### **`Lattice`**
 
-Lattice is another plotting system in R, which allows for creating multi-panel plots easily. It’s different from ggplot2 because you define the entire plot in a single function call, and modifications after plotting are limited.
+Lattice — це ще одна система побудови графіків в R, яка дозволяє легко створювати багато панельні графіки у вигляді решітки. Воно відрізняється від ggplot2 тим, що весь графік визначається одним викликом функції та можливості для змін після побудови графіка обмежені.
 
-Example of a lattice plot using `no_membrs` and `liv_count` split by `village`:
+Приклад графіка **lattice** з використанням змінних `no_membrs` та `liv_count`, розбитих за `village`:
 
 ```{r lattice, message=FALSE, purl=FALSE}
 library(lattice)
@@ -130,37 +121,28 @@ xyplot(liv_count ~ no_membrs | village, data = interviews_plotting,
        ylab = "Number of Livestock Owned")
 ```
 
-## Plotting with **`ggplot2`**
+## Побудова графіків за допомогою **`ggplot2`**
 
-**`ggplot2`** is a plotting package that makes it simple to create complex plots
-from data stored in a data frame. It provides a programmatic interface for
-specifying what variables to plot, how they are displayed, and general visual
-properties. Therefore, we only need minimal changes if the underlying data
-change or if we decide to change from a bar plot to a scatterplot. This helps in
-creating publication quality plots with minimal amounts of adjustments and
-tweaking.
+**`ggplot2`** — це пакет для побудови графіків у R, який дозволяє легко створювати складні візуалізації з даних датафрейму. Він забезпечує програмний інтерфейс, який дозволяє задавати, які змінні зображати, як їх показувати та загальні візуальні властивості. Тому нам потрібно внести лише мінімальні зміни, якщо вихідні дані зміняться або якщо ми вирішимо перейти, наприклад, від стовпчикової діаграми до точкової (діаграма розсіювання). Це допомагає створювати графіки публікаційної якості з мінімальною кількістю коригувань і налаштувань.
 
-**`ggplot2`** functions work best with data in the 'long' format, i.e., a column for every
-dimension, and a row for every observation. Well-structured data will save you
-lots of time when making figures with **`ggplot2`**
+Функції **`ggplot2`** найкраще працюють із даними у 'long' форматі, тобто коли кожен вимір представлений окремим стовпцем, а кожне спостереження — окремим рядком. Добре структуровані дані заощадять вам багато часу під час побудови графіків у **`ggplot2`**
 
-ggplot graphics are built step by step by adding new elements. Adding layers in
-this fashion allows for extensive flexibility and customization of plots.
+ggplot графіки будуються крок за кроком шляхом додавання нових елементів. Такий спосіб додавання шарів забезпечує велику гнучкість і дозволяє налаштовувати побудовані графіки.
 
-Each chart built with ggplot2 must include the following
+Кожен графік, побудований за допомогою ggplot2, повинен включати такі елементи
 
-- Data
+- Дані
 
-- Aesthetic mapping (aes)
+- Естетичне відображення (aes)
 
-  - Describes how variables are mapped onto graphical attributes
-  - Visual attribute of data including x-y axes, color, fill, shape, and alpha
+  - Описує як змінні накладаються на графічні атрибути
+  - До таких атрибутів належать осі x і y, колір, заливка, форма точок, прозорість (alpha)
 
-- Geometric objects (geom)
+- Геометричні об'єкти (geom)
 
-  - Determines how values are rendered graphically, as bars (`geom_bar`), scatterplot (`geom_point`), line (`geom_line`), etc.
+  - Визначає, як дані будуть зображені графічно — у вигляді стовпчиків (`geom_bar`), діаграми розсіювання (`geom_point`), лінії (`geom_line`) тощо.
 
-Thus, the template for graphic in ggplot2 is:
+Таким чином, шаблон побудови графіка в ggplot2:
 
 ```
 <DATA> %>%
@@ -168,29 +150,27 @@ Thus, the template for graphic in ggplot2 is:
     <GEOM_FUNCTION>()
 ```
 
-Remember from the last lesson that the pipe operator `%>%` places the result of the previous line(s) into the first argument of the function. **`ggplot`** is a function that expects a data frame to be the first argument. This allows for us to change from specifying the `data =` argument within the `ggplot` function and instead pipe the data into the function.
+Нагадаємо з попереднього уроку, що оператор `%>%` (pipe) передає результат попереднього кроку як вхідні дані для наступної функції. **`ggplot`** — це функція, яка очікує датафрейм як перший аргумент. Це дозволяє не вказувати аргумент `data =` всередині функції `ggplot`, а просто передавати дані через pipe (`%>%`).
 
-- use the `ggplot()` function and bind the plot to a specific data frame.
+- використайте функцію `ggplot()` та прив'яжіть графік до певного датафрейму.
 
 ```{r ggplot-steps-1, eval=FALSE, purl=FALSE}
 interviews_plotting %>%
     ggplot()
 ```
 
-- define a mapping (using the aesthetic (`aes`) function), by selecting the variables to be plotted and specifying how to present them in the graph, e.g. as x/y positions or characteristics such as size, shape, color, etc.
+- визначити відображення (mapping) за допомогою функції `aes()`, обравши змінні для побудови графіка та вказавши, як їх показувати на графіку, наприклад, через позиції по осях x/y або через характеристики, такі як розмір, форма, колір тощо.
 
 ```{r ggplot-steps-2, eval=FALSE, purl=FALSE}
 interviews_plotting %>%
     ggplot(aes(x = no_membrs, y = number_items))
 ```
 
-- add 'geoms' – graphical representations of the data in the plot (points,
-  lines, bars). **`ggplot2`** offers many different geoms; we will use some
-  common ones today, including:
+- додати 'geoms' — графічні представлення даних на графіку (точки, лінії, стовпчики). **`ggplot2`** пропонує багато різних geoms; сьогодні ми використаємо деякі з поширених, зокрема:
 
-  - `geom_point()` for scatter plots, dot plots, etc.
-  - `geom_boxplot()` for, well, boxplots!
-  - `geom_line()` for trend lines, time series, etc.
+  - `geom_point()` для діаграм розсіювання, точкових графіків тощо.
+  - `geom_boxplot()` для коробкових діаграм (boxplots)!
+  - `geom_line()` для ліній тренду, часових рядів тощо.
 
 To add a geom to the plot use the `+` operator. Because we have two continuous variables, let's use `geom_point()` first:
 
