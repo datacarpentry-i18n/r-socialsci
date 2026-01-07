@@ -183,13 +183,9 @@ interviews_items_owned <- interviews %>%
               values_fill = list(items_owned_logical = FALSE))
 ```
 
-Перегляньте дата фрейм `interviews_items_owned`. Він має `rnrow(interviews)` рядків (таку ж кількість, як і спочатку), але додаткові стовпці для кожного предмета. Скільки стовпців було додано? Зверніть увагу, що більше немає стовпця `items_owned`. Це тому, що в `pivot_wider()` за замовчуванням встановлено параметр, який видаляє оригінальний стовпець. The values that
-were in that column have now become columns named `television`, `solar_panel`,
-`table`, etc. You can use `dim(interviews)` and `dim(interviews_wide)` to see
-how the number of columns has changed between the two datasets.
+Перегляньте дата фрейм `interviews_items_owned`. Він має `rnrow(interviews)` рядків (таку ж кількість, як і спочатку), але додаткові стовпці для кожного предмета. Скільки стовпців було додано? Зверніть увагу, що більше немає стовпця `items_owned`. Це тому, що в `pivot_wider()` за замовчуванням встановлено параметр, який видаляє оригінальний стовпець. Значення, які були в цьому стовпці, тепер стали стовпцями з назвами `television`, `solar_panel`, `table` тощо. Ви можете використати `dim(interviews)` та `dim(interviews_wide)`, щоб побачити, як змінилася кількість стовпців між двома наборами даних.
 
-This format of the data allows us to do interesting things, like make a table
-showing the number of respondents in each village who owned a particular item:
+Такий формат даних дозволяє виконувати цікаві операції, наприклад, створювати таблицю, що показує кількість респондентів у кожному селі, які володіли певним предметом:
 
 ```{r, purl=FALSE}
 interviews_items_owned %>%
@@ -198,9 +194,7 @@ interviews_items_owned %>%
   count(bicycle)
 ```
 
-Or below we calculate the average number of items from the list owned by
-respondents in each village using the `number_items` column we created to
-count the items listed by each household.
+Або нижче ми обчислюємо середню кількість предметів зі списку, якими володіли респонденти в кожному селі, використовуючи стовпець `number_items`, який ми створили для підрахунку предметів у кожного домогосподарства.
 
 ```{r, purl=FALSE}
 interviews_items_owned %>%
@@ -210,21 +204,15 @@ interviews_items_owned %>%
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Exercise
+## Завдання
 
-We created `interviews_items_owned` by reshaping the data: first longer and then
-wider. Replicate this process with the `months_lack_food` column in the
-`interviews` dataframe. Create a new dataframe with columns for each of the
-months filled with logical vectors (`TRUE` or `FALSE`) and a summary column
-called `number_months_lack_food` that calculates the number of months each
-household reported a lack of food.
+Ми створили `interviews_items_owned`, переформатувавши дані: спочатку у довгий формат, а потім у широкий. Виконайте цей самий процес для стовпця `months_lack_food у дата фреймі `interviews`. Створіть новий дата фрейм зі стовпцями для кожного місяця, заповненими логічними значеннями (`TRUE`або`FALSE`) та додайте підсумковий стовпець `number_months_lack_food\`, який обчислює кількість місяців, протягом яких домогосподарство повідомляло про нестачу їжі.
 
-Note that if the household did not lack food in the previous 12 months, the
-value input was "none".
+Зверніть увагу: якщо домогосподарство не відчувало нестачі їжі протягом останніх 12 місяців, у стовпці було введено "none".
 
 :::::::::::::::  solution
 
-## Solution
+## Відповідь
 
 ```{r}
 months_lack_food <- interviews %>%
@@ -241,25 +229,19 @@ months_lack_food <- interviews %>%
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Pivoting longer
+## Перетворення у довгий формат
 
-The opposing situation could occur if we had been provided with data in the form
-of `interviews_wide`, where the items owned are column names, but we
-wish to treat them as values of an `items_owned` variable instead.
+Протилежна ситуація може виникнути, якщо нам надали дані у форматі `interviews_wide`, де предмети, якими володіють домогосподарства, записані як назви стовпців, але ми хочемо розглядати їх як значення змінної `items_owned`.
 
-In this situation we are gathering these columns turning them into a pair
-of new variables. One variable includes the column names as values, and the
-other variable contains the values in each cell previously associated with the
-column names. We will do this in two steps to make this process a bit clearer.
+У такій ситуації ми «збираємо» ці стовпці, перетворюючи їх на пару нових змінних. Одна змінна міститиме назви стовпців як значення,
+а інша — значення кожної клітинки, які раніше були пов’язані з цими назвами стовпців. Ми зробимо це у два кроки, щоб процес був зрозумілішим.
 
-`pivot_longer()` takes four principal arguments:
+`pivot_longer()` приймає чотири основні аргументи:
 
-1. the data
-2. _cols_ are the names of the columns we use to fill the a new values variable
-   (or to drop).
-3. the _names\_to_ column variable we wish to create from the _cols_ provided.
-4. the _values\_to_ column variable we wish to create and fill with values
-   associated with the _cols_ provided.
+1. дані
+2. _cols_ - назви стовпців, які ми використовуємо для заповнення нової змінної значень (або для видалення).
+3. _names_to_ - назва нової змінної, яку ми хочемо створити з наданих _cols_.
+4. _values_to_ — назва нової змінної, яку ми хочемо створити та заповнити значеннями, пов’язаними з наданими _cols_.
 
 ```{r, purl=FALSE}
 interviews_long <- interviews_items_owned %>%
@@ -268,24 +250,19 @@ interviews_long <- interviews_items_owned %>%
                values_to = "items_owned_logical")
 ```
 
-View both `interviews_long` and `interviews_items_owned` and compare their structure.
+Перегляньте обидва датафрейми `interviews_long` та `interviews_items_owned` і порівняйте їхню структуру.
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Exercise
+## Завдання
 
-We created some summary tables on `interviews_items_owned` using `count` and
-`summarise`. We can create the same tables on `interviews_long`, but this will
-require a different process.
+Ми створили деякі підсумкові таблиці для `interviews_items_owned` за допомогою `count` та `summarise`. Ми можемо створити ті самі таблиці на основі `interviews_long`, але процес буде іншим.
 
-Make a table showing the number of respondents in each village who owned
-a particular item, and include all items. The difference between this format and
-the wide format is that you can now `count` all the items using the
-`items_owned` variable.
+Створіть таблицю, яка показує кількість респондентів у кожному селі, які володіли певним предметом, включаючи всі предмети. Різниця між цим форматом і широким форматом у тому, що тепер можна рахувати всі предмети, використовуючи змінну `items_owned`.
 
 :::::::::::::::  solution
 
-## Solution
+## Відповідь
 
 ```{r}
 interviews_long %>%
@@ -298,21 +275,14 @@ interviews_long %>%
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Applying what we learned to clean our data
+## Застосування отриманих знань для очищення даних
 
-Now we have simultaneously learned about `pivot_longer()` and `pivot_wider()`,
-and fixed a problem in the way our data is structured. In this dataset, we have
-another column that stores multiple values in a single cell. Some of the cells
-in the `months_lack_food` column contain multiple months which, as before, are
-separated by semi-colons (`;`).
+Тепер ми одночасно ознайомилися з `pivot_longer()` та `pivot_wider()` і виправили проблему в структурі наших даних. У цьому наборі даних є ще один стовпець, який містить кілька значень в одній клітинці. Деякі клітинки стовпця `months_lack_food` містять кілька місяців, які, як і раніше, розділені крапкою з комою (;).
 
-To create a data frame where each of the columns contain only one value per cell,
-we can repeat the steps we applied to `items_owned` and apply them to
-`months_lack_food`. Since we will be using this data frame for the next episode,
-we will call it `interviews_plotting`.
+Щоб створити датафрейм, де кожен стовпець містить лише одне значення в клітинці, ми можемо повторити ті ж кроки, що застосовували для `items_owned`, і застосувати їх до `months_lack_food`. Оскільки цей датафрейм ми будемо використовувати в наступному розділі, назвемо його `interviews_plotting`.
 
 ```{r, purl=FALSE}
-## Plotting data ##
+## Візуалізація даних ##
 interviews_plotting <- interviews %>%
   ## pivot wider by items_owned
   separate_longer_delim(items_owned, delim = ";") %>%
@@ -334,27 +304,15 @@ interviews_plotting <- interviews %>%
 
 ```
 
-## Exporting data
+## Експорт даних
 
-Now that you have learned how to use **`dplyr`** and **`tidyr`** to wrangle your
-raw data, you may want to export these new datasets to share them with your
-collaborators or for archival purposes.
+Тепер, коли ви навчилися використовувати **`dplyr`** та **`tidyr`** для обробки сирих даних, можливо, ви захочете експортувати ці нові набори даних, щоб поділитися ними з колегами або зберегти для архіву.
 
-Similar to the `read_csv()` function used for reading CSV files into R, there is
-a `write_csv()` function that generates CSV files from data frames.
+Подібно до функції `read_csv()`, яка використовується для зчитування CSV-файлів у R, існує функція `write_csv()`, яка дозволяє створювати CSV-файли з датафреймів.
 
-Before using `write_csv()`, we are going to create a new folder, `data_output`,
-in our working directory that will store this generated dataset. We don't want
-to write generated datasets in the same directory as our raw data. It's good
-practice to keep them separate. The `data` folder should only contain the raw,
-unaltered data, and should be left alone to make sure we don't delete or modify
-it. In contrast, our script will generate the contents of the `data_output`
-directory, so even if the files it contains are deleted, we can always
-re-generate them.
+Перед використанням `write_csv()` ми створимо нову теку `data_output` у нашій робочій директорії, куди будемо зберігати згенерований набір даних. Не слід записувати згенеровані набори даних у ту саму директорію, де зберігаються сирі дані. Хорошою практикою є тримати їх окремо. Тека `data` повинна містити лише сирі, незмінені дані, щоб уникнути їх випадкового видалення або зміни. Натомість скрипт буде створювати вміст теки `data_output`, тому навіть якщо файли там будуть видалені, їх завжди можна повторно згенерувати.
 
-In preparation for our next lesson on plotting, we created a version of the
-dataset where each of the columns includes only one data value. Now we can save
-this data frame to our `data_output` directory.
+Для підготовки до наступного уроку з візуалізації ми створили версію набору даних, де кожен стовпець містить лише одне значення. Тепер ми можемо зберегти цей датафрейм у теку `data_output`.
 
 ```{r, purl=FALSE, eval=FALSE}
 write_csv(interviews_plotting, file = "data_output/interviews_plotting.csv")
@@ -367,9 +325,9 @@ write_csv(interviews_plotting, "data_output/interviews_plotting.csv")
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
-- Use the `tidyr` package to change the layout of data frames.
-- Use `pivot_wider()` to go from long to wide format.
-- Use `pivot_longer()` to go from wide to long format.
+- Використовуйте пакет `tidyr`, щоб змінювати структуру датафреймів.
+- Використовуйте `pivot_width()` для переходу від довгого до широкого формату.
+- Використовуйте `pivot_longer()` для переходу від широкого до довгого формату.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
